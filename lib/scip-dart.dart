@@ -8,7 +8,10 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:scip_dart/src/gen/scip.pb.dart';
 import 'package:scip_dart/src/scip_visitor.dart';
 
-Future<Index> indexPackage(String root) async {
+Future<Index> indexPackage(
+  String root, {
+    bool logPerformance = false,
+}) async {
   final dirPath = p.normalize(p.absolute(root));
 
   final metadata = Metadata(
@@ -30,12 +33,21 @@ Future<Index> indexPackage(String root) async {
 
   final collection = AnalysisContextCollection(includedPaths: allPackageRoots);
 
+  if (logPerformance) print('Analyzing Source');
+  final st = Stopwatch()..start();
+
   final context = collection.contextFor(p.join(dirPath, 'lib'));
   final files = context.contextRoot
     .analyzedFiles()
     .where((file) => p.extension(file) == '.dart');
 
   final resolvedUnits = await Future.wait(files.map(context.currentSession.getResolvedUnit));
+
+  if (logPerformance) {
+    print('Analyzing Source took: ${st.elapsedMilliseconds}ms');
+    st.reset();
+    print('Parsing Ast');
+  }
 
   final externalSymbols = <SymbolInformation>[];
   final documents = resolvedUnits
@@ -63,6 +75,10 @@ Future<Index> indexPackage(String root) async {
       );
     })
     .toList();
+
+  if (logPerformance) {
+    print('Parsing Ast took: ${st.elapsedMilliseconds}ms');
+  }
 
   return Index(
     metadata: metadata,

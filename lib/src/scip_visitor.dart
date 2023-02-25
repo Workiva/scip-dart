@@ -59,6 +59,11 @@ class ScipVisitor extends GeneralizingAstVisitor {
   }
 
   void _visitSimpleFormalParameter(SimpleFormalParameter node) {
+    if (node.declaredElement == null) {
+      print('INFO: Received null [declaredElement]');
+      return;
+    }
+    
     final ele = node.declaredElement!;
 
     final symbol = getSymbol(ele, _symbolContext);
@@ -76,7 +81,8 @@ class ScipVisitor extends GeneralizingAstVisitor {
   }
 
   void _visitDeclaration(Declaration node) {
-    if (node is TopLevelVariableDeclaration) {
+    if (node.declaredElement == null) {
+      print('INFO: Received null [declaredElement]');
       return;
     }
 

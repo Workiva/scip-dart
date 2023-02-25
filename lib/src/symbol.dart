@@ -104,21 +104,30 @@ String? _getDescriptor(Element ele, SymbolContext ctx) {
   }
   final sourcePath = ele.source!.fullName;
   
-
   String filePath;
   if (sourcePath.startsWith(ctx.projectRoot)) {
     filePath = sourcePath.substring('${ctx.projectRoot}/'.length);
-  } else if (ele.library?.isDartCore == true) {
-    // TODO: there has to be a better way to get the path to a dart:core file
-    filePath = sourcePath.substring(sourcePath.indexOf('lib/core/'));
+  } else if (ele.library?.isInSdk == true) {
+    // TODO: there has to be a better way to get the path to a 'dart:*' file
+    filePath = sourcePath.substring(sourcePath.indexOf('dart-sdk/lib/') + 'dart-sdk/'.length);
   } else {
     final config = ctx.packageConfig.packageOf(Uri.file(sourcePath));
-    filePath = sourcePath.substring(config!.root.toFilePath().length);
+    if (config == null) {
+      throw Exception('Could not find package for ${sourcePath}. Have you run pub get?');
+    }
+
+    filePath = sourcePath.substring(config.root.toFilePath().length);
   }
 
   final namespace = _escapeNamespacePath(filePath);
 
-  if (ele is ClassElement || ele is EnumElement || ele is ExtensionElement) {
+  if (
+    ele is ClassElement || 
+    ele is MixinElement || 
+    ele is TypeAliasElement || 
+    ele is EnumElement || 
+    ele is ExtensionElement
+  ) {
     return '$namespace/${ele.name}#';
   }
 
