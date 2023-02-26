@@ -2,6 +2,8 @@
 
 Experimental spike on a [scip](https://github.com/sourcegraph/scip) indexer for [dart](https://github.com/dart-lang)
 
+Designed to be a replacement for [lsif_indexer](https://github.com/Workiva/lsif_indexer), with better coverage and reliability
+
 ## Usage
 
 The following command will output a `index.scip` file
@@ -21,3 +23,4 @@ Analysis can be uploaded to sourcegraph using the [src cli](https://docs.sourceg
 ```sh
 src code-intl upload -file=index.scip -github-token="<your gh token>"
 ```
+

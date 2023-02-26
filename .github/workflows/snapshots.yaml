@@ -10,6 +10,8 @@ on:
 jobs:
   snapshots:
     runs-on: workiva-runner-dev
+    name: Snapshots
+    
     steps:
       - uses: actions/checkout@v3
 
