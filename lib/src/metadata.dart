@@ -24,11 +24,15 @@ SymbolMetadata getSymbolMetadata(Element element) {
     multiline: true,
   );
 
+  final docComment = element.documentationComment?.replaceAll(
+    RegExp(r'^\s*///\s*', multiLine: true),
+    '',
+  );
+
   return SymbolMetadata(
     documentation:[
       '```dart\n$displayString\n```',
-      if (element.documentationComment != null) 
-        element.documentationComment!.split('///').join('\n'),
+      if (docComment != null) docComment
     ],
   );
 }
