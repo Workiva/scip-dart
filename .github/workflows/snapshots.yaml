@@ -1,0 +1,39 @@
+name: Snapshot Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+
+jobs:
+  snapshots:
+    runs-on: workiva-runner-dev
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: dart-lang/setup-dart@1.3
+        with:
+          sdk: 2.18.7
+      
+      # run `pub get` for the scip-dart package
+      - name: Pub get cli
+        uses: Workiva/gh-dart/pub-get
+
+      # run `pub get` for `snapshots`
+      - name: Pub get snapshots dir
+        uses: Workiva/gh-dart/pub-get
+        with:
+          package-path: ./snapshots/input/basic-project
+      
+      - name: Snapshots Diff Check
+        run: |
+          dart ./bin/main.dart ./snapshots/input/basic-project
+
+          if [[ -z "$(git status --porcelain ./snapshots)" ]];
+          then
+            echo "No changes to snapshot files"
+          else
+            exit 1
+          fi
