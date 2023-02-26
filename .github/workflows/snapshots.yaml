@@ -19,11 +19,11 @@ jobs:
       
       # run `pub get` for the scip-dart package
       - name: Pub get cli
-        uses: Workiva/gh-dart/pub-get
+        uses: Workiva/gh-dart/pub-get@master
 
       # run `pub get` for `snapshots`
       - name: Pub get snapshots dir
-        uses: Workiva/gh-dart/pub-get
+        uses: Workiva/gh-dart/pub-get@master
         with:
           package-path: ./snapshots/input/basic-project
       

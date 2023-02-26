@@ -1,1 +1,1 @@
-from scratch
+FROM scratch
