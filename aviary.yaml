@@ -1,0 +1,6 @@
+version: 1
+
+exclude:
+  # generated protobuf files have encoded base64 files that 
+  # aviary thinks are secrets. They are not, so tell aviary to ignore these files
+  - ^lib/src/gen
