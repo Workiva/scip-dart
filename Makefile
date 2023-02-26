@@ -1,8 +1,8 @@
 run:
-	dart bin/main.dart ./test/example-package
+	dart bin/main.dart ./snapshots/input/basic-project
 
 snap:
-	scip snapshot --to ./test/example-snapshot
+	scip snapshot --to ./snapshots/output/basic-project
 
 lint:
 	scip lint ./index.scip

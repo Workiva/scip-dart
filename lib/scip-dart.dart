@@ -1,16 +1,17 @@
-import 'dart:io';
-
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:path/path.dart' as p;
 import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
+
 import 'package:scip_dart/src/gen/scip.pb.dart';
 import 'package:scip_dart/src/scip_visitor.dart';
 
 Future<Index> indexPackage(
-  String root, {
-    bool logPerformance = false,
+  String root,
+  PackageConfig packageConfig,
+  Pubspec pubspec, {
+  bool logPerformance = false,
 }) async {
   final dirPath = p.normalize(p.absolute(root));
 
@@ -24,10 +25,7 @@ Future<Index> indexPackage(
     )
   );
 
-  final packageConfig = await findPackageConfig(Directory(dirPath));
-  final pubspec = Pubspec.parse(File(p.join(dirPath, 'pubspec.yaml')).readAsStringSync());
-
-  final allPackageRoots = packageConfig!.packages
+  final allPackageRoots = packageConfig.packages
       .map((package) => p.normalize(package.packageUriRoot.toFilePath()))
       .toList();
 
@@ -49,7 +47,6 @@ Future<Index> indexPackage(
     print('Parsing Ast');
   }
 
-  final externalSymbols = <SymbolInformation>[];
   final documents = resolvedUnits
     .whereType<ResolvedUnitResult>()
     .map((resUnit) {
@@ -64,8 +61,6 @@ Future<Index> indexPackage(
         pubspec,
       );
       resUnit.unit.accept(visitor);
-
-      externalSymbols.addAll(visitor.externalSymbols);
 
       return Document(
         language: Language.Dart.name,
@@ -83,6 +78,6 @@ Future<Index> indexPackage(
   return Index(
     metadata: metadata,
     documents: documents,
-    externalSymbols: externalSymbols,
+    externalSymbols: globalExternalSymbols,
   );
 }

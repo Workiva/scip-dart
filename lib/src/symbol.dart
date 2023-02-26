@@ -62,27 +62,32 @@ String getFileSymbol(String path, SymbolContext ctx) {
   ].join(' ');
 }
 
-/// Returns a scip package for a provided [Element]. 
+/// Returns a scip package symbol for a provided [Element]. 
 /// 
-/// package        ::= <manager> ' ' <package-name> ' ' <version>
+/// <package>      ::= <manager> ' ' <package-name> ' ' <version>
 /// <scheme>       ::= any UTF-8, escape spaces with double space.
 /// <manager>      ::= same as above, use the placeholder '.' to indicate an empty value
 /// <package-name> ::= same as above
 /// <version>      ::= same as above
 String _getPackage(Element ele, SymbolContext ctx) {
-  final prefix = 'pub';
-
-  if (ele.library?.isInSdk == true) {
-    final subPackage = ele.library!.isDartCore ? 'core' : 'async';
-    return '$prefix dart:$subPackage ${ele.library!.languageVersion.package}';
-  }
+  String packageName;
+  String packageVersion;
 
   if (ele.source == null) {
     throw Exception('Not really sure what to do here');
-  };
+  }
 
-  if (ele.source!.fullName.startsWith(ctx.projectRoot)) {
-    return '$prefix ${ctx.pubspec.name} ${ctx.pubspec.version}';
+  if (ele.library?.isInSdk == true) {
+    final match = RegExp('dart-sdk/lib/(.+?)/').firstMatch(ele.source!.fullName);
+    if (match == null) {
+      throw Exception('Dart sdk path was not incorrect format: ${ele.source!.fullName}');
+    }
+
+    packageName = 'dart:${match[1]}';
+    packageVersion = ele.library!.languageVersion.package.toString();
+  } else if (ele.source!.fullName.startsWith(ctx.projectRoot)) {
+    packageName = ctx.pubspec.name;
+    packageVersion = ctx.pubspec.version.toString();
   } else {
     final package = ctx.packageConfig.packageOf(Uri.file(ele.source!.fullName));
     if (package == null) {
@@ -91,12 +96,33 @@ String _getPackage(Element ele, SymbolContext ctx) {
       throw Exception('Unable to find package within packageConfig');
     }
     final rootPath = p.basename(package.root.toString());
-    final packageVersion = rootPath.substring(rootPath.lastIndexOf('-')+1);
-
-    return '$prefix ${package.name} $packageVersion';
+    packageVersion = rootPath.substring(rootPath.lastIndexOf('-')+1);
+    packageName = package.name;
   }
+
+  return 'pub $packageName $packageVersion';
 }
 
+
+/// Returns a scip symbol descriptor for a provided [Element].
+///
+///```
+/// <descriptor>           ::= <namespace> | <type> | <term> | <method> | <type-parameter> | <parameter> | <meta>
+/// <namespace>            ::= <name> '/'
+/// <type>                 ::= <name> '#'
+/// <term>                 ::= <name> '.'
+/// <meta>                 ::= <name> ':'
+/// <method>               ::= <name> '(' <method-disambiguator> ').'
+/// <type-parameter>       ::= '[' <name> ']'
+/// <parameter>            ::= '(' <name> ')'
+/// <name>                 ::= <identifier>
+/// <method-disambiguator> ::= <simple-identifier>
+/// <identifier>           ::= <simple-identifier> | <escaped-identifier>
+/// <simple-identifier>    ::= (<identifier-character>)+
+/// <identifier-character> ::= '_' | '+' | '-' | '$' | ASCII letter or digit
+/// <escaped-identifier>   ::= '`' (<escaped-character>)+ '`'
+/// <escaped-characters>   ::= any UTF-8 character, escape backticks with double backtick.
+/// ```
 String? _getDescriptor(Element ele, SymbolContext ctx) {
   if (ele.source == null) {
     print('WARN: Element has null source: ${ele.runtimeType} (${ele}) ${ele.location?.components}');
@@ -113,7 +139,7 @@ String? _getDescriptor(Element ele, SymbolContext ctx) {
   } else {
     final config = ctx.packageConfig.packageOf(Uri.file(sourcePath));
     if (config == null) {
-      throw Exception('Could not find package for ${sourcePath}. Have you run pub get?');
+      throw Exception('Could not find package for $sourcePath. Have you run pub get?');
     }
 
     filePath = sourcePath.substring(config.root.toFilePath().length);
@@ -122,23 +148,13 @@ String? _getDescriptor(Element ele, SymbolContext ctx) {
   final namespace = _escapeNamespacePath(filePath);
 
   if (
-    ele is ClassElement || 
-    ele is MixinElement || 
+    ele is InterfaceElement || // class, mixin, enum
     ele is TypeAliasElement || 
-    ele is EnumElement || 
     ele is ExtensionElement
   ) {
     return '$namespace/${ele.name}#';
   }
 
-  if (ele is TypeParameterElement) {
-    final encEle = ele.enclosingElement;
-    if (encEle != null) {
-      return '${_getDescriptor(encEle, ctx)}[${ele.name}]';
-    }
-    return '$namespace/[${ele.name}]';
-  }
-  
   if (ele is ConstructorElement) {
     final className = ele.enclosingElement.name;
     final constructorName = ele.name.isNotEmpty ? ele.name : '`<constructor>`';
@@ -154,14 +170,30 @@ String? _getDescriptor(Element ele, SymbolContext ctx) {
     return '$namespace/${ele.name}().';
   }
 
+  if (ele is TopLevelVariableElement || ele is PrefixElement) {
+    return '$namespace/${ele.name}.';
+  }
+
+  if (ele is TypeParameterElement) {
+    final encEle = ele.enclosingElement;
+    if (encEle == null) return '$namespace/[${ele.name}]';
+    return '${_getDescriptor(encEle, ctx)}[${ele.name}]';
+  }
+
+  // only generate symbols for named parameters, all others are 'local x'
   if (ele is ParameterElement && ele.isNamed) {
-    if (ele.enclosingElement == null) {
-      print('WARN: Parameter element has null enclosingElement ${ele}');
+    final encEle = ele.enclosingElement;
+    if (encEle == null) {
+      print('WARN: ParameterElement has null enclosingElement $ele');
       return null;
     }
 
-    final parentSymbol = _getDescriptor(ele.enclosingElement!, ctx);
-    return '$parentSymbol(${ele.name})';
+    // If encEle is a GenericFunctionTypeElement, the function is a 
+    // `void Function({String param})` type. For this case, [param]
+    // is not indexable, so do not generate a symbol for it
+    if (encEle is GenericFunctionTypeElement) return null;
+
+    return '${_getDescriptor(encEle, ctx)}(${ele.name})';
   }
   
   if (ele is PropertyAccessorElement) {
@@ -170,14 +202,15 @@ String? _getDescriptor(Element ele, SymbolContext ctx) {
       '$namespace/',
       if (parentName != null) '$parentName#',
       '${ele.name}.'
-    ].join('');
+    ].join();
   }
 
-  if (ele is TopLevelVariableElement) {
-    return '$namespace/${ele.name}.';
+  if (ele is FieldElement) {
+    final encEle = ele.enclosingElement;
+    return '${_getDescriptor(encEle, ctx)}${ele.name}.';
   }
 
-  print('WARN: Received unknown type ${ele.runtimeType}');
+  print('WARN: Received unknown type ${ele.runtimeType} (${ele.library!.source.fullName})');
   return null;
 }
 
