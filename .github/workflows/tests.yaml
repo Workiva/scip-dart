@@ -42,14 +42,11 @@ jobs:
 
   consumer:
     runs-on: workiva-runner-dev
-    name: "Consumer Test - wdesk_sdk"
+    strategy:
+      matrix:
+        repo: ["Workiva/wdesk_sdk", "Workiva/syncdeps_dart"]
 
     steps:
-      # - uses: Workiva/gha-setup-credentials@master
-      #   with:
-      #     vault-url: https://vault-dev.workiva.org
-      #     vault-env: dev
-
       # Setup scip-dart
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
@@ -60,11 +57,11 @@ jobs:
       # Setup wdesk_sdk
       - uses: actions/checkout@v3
         with:
-          repo: Workiva/wdesk_sdk
-          path: wdesk_sdk
+          repo: ${{ matrix.repo }}
+          path: ${{ matrix.repo }}
       - uses: Workiva/gha-dart/pub-get@master
         with:
-          package-path: wdesk_sdk
+          package-path: ${{ matrix.repo }}
 
       - run: |
-          dart ./bin/main.dart ./wdesk_sdk || exit 1
+          dart ./bin/main.dart ./${{ matrix.repo }} || exit 1
