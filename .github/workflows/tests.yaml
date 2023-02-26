@@ -42,6 +42,8 @@ jobs:
 
   consumer:
     runs-on: workiva-runner-dev
+    name: Consumer
+    
     strategy:
       matrix:
         repo: ["Workiva/wdesk_sdk", "Workiva/syncdeps_dart"]
