@@ -2,6 +2,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:package_config/package_config.dart';
 import 'package:path/path.dart' as p;
+import 'package:scip_dart/src/utils.dart';
 
 class SymbolContext {
   PackageConfig packageConfig;
@@ -184,7 +185,7 @@ String? _getDescriptor(Element ele, SymbolContext ctx) {
   if (ele is ParameterElement && ele.isNamed) {
     final encEle = ele.enclosingElement;
     if (encEle == null) {
-      print('WARN: ParameterElement has null enclosingElement $ele');
+      display('Parameter element has null enclosingElement "$ele"');
       return null;
     }
 
@@ -211,6 +212,12 @@ String? _getDescriptor(Element ele, SymbolContext ctx) {
   }
 
   print('WARN: Received unknown type ${ele.runtimeType} (${ele.library!.source.fullName})');
+  display(
+    'Received unknown\n'
+    '\ttype: ${ele.runtimeType}\n'
+    '\tname: ${ele.name}\n'
+    '\tpath: (${ele.library!.source.fullName})',
+  );
   return null;
 }
 

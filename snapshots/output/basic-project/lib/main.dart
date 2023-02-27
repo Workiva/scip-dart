@@ -1,8 +1,15 @@
-  int fib(int n){
+  import 'package:dart_test/other.dart';
 // definition scip-dart pub dart_test 1.0.0 lib/main.dart/
+  
+  /// This is a fib function
+  /// 
+  /// Takes a number
+  /// Returns a number
+  int fib(int n){
 //^^^ reference scip-dart pub dart:core 2.18.0 lib/core/int.dart/int#
 //    ^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/fib().
 //    documentation ```dart
+//    documentation This is a fib function
 //        ^^^ reference scip-dart pub dart:core 2.18.0 lib/core/int.dart/int#
 //            ^ definition local 0
 //            documentation ```dart
@@ -74,4 +81,12 @@
 //     documentation ```dart
     return forever();
 //         ^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/forever().
+  }
+  
+  void fromOther() {
+//     ^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/fromOther().
+//     documentation ```dart
+    print(Foo(3));
+//  ^^^^^ reference scip-dart pub dart:core 2.18.0 lib/core/print.dart/print().
+//        ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
   }

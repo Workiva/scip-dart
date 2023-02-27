@@ -5,11 +5,15 @@ import 'package:scip_dart/scip-dart.dart';
 import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:path/path.dart' as p;
+import 'package:scip_dart/src/flags.dart';
 
 Future<void> main(List<String> args) async {
   final result = (ArgParser()
     ..addFlag('performance', aliases: ['pref'], defaultsTo: false)
+    ..addFlag('verbose', abbr: 'v', defaultsTo: false)
   ).parse(args);
+
+  Flags.instance.init(result);
 
   final packageRoot = result.rest.length > 0 ? result.rest.first : Directory.current.path;
 
@@ -26,12 +30,7 @@ Future<void> main(List<String> args) async {
   }
   final pubspec = Pubspec.parse(pubspecFile.readAsStringSync());
 
-  final index = await indexPackage(
-    packageRoot,
-    packageConfig,
-    pubspec,
-    logPerformance: result['performance'],
-  );
+  final index = await indexPackage(packageRoot, packageConfig, pubspec);
 
   File('index.scip').writeAsBytesSync(index.writeToBuffer());
 }
