@@ -4,225 +4,254 @@ import 'package:package_config/package_config.dart';
 import 'package:path/path.dart' as p;
 import 'package:scip_dart/src/utils.dart';
 
-class SymbolContext {
-  PackageConfig packageConfig;
-  String projectRoot;
-  Pubspec pubspec;
 
-  SymbolContext(
-    this.packageConfig,
-    this.projectRoot,
-    this.pubspec,
+/// Generates symbols for a specific file.
+/// 
+/// Each sourcefile should use its own instance of `SymbolGenerator`
+class SymbolGenerator {
+  PackageConfig _packageConfig;
+  String _projectRoot;
+  Pubspec _pubspec;
+
+  SymbolGenerator(
+    this._packageConfig,
+    this._projectRoot,
+    this._pubspec,
   );
-}
 
-int _localElementIndex = 0;
-Map<Element, String> _localElementCache = {};
-String _getLocalSymbol(Element ele) {
-  _localElementCache.putIfAbsent(ele, () => 'local ${_localElementIndex++}');
-  return _localElementCache[ele]!;
-}
-
-/// For a given `Element` returns the scip symbol form.
-/// 
-/// Returns [null] if symbol cannot be created for provided element
-String? getSymbol(
-  Element ele,
-  SymbolContext ctx,
-) {
-  if (ele is LocalVariableElement) {
-    return _getLocalSymbol(ele);
-  }
-
-  // named parameters can be "goto'd" on the consuming symbol, and are not "local"
-  if (ele is ParameterElement && !ele.isNamed) {
-    return _getLocalSymbol(ele);
-  }
-
-  // for some reason, LibraryImportElement is considered to be "private"
-  if (ele.isPrivate && ele is! LibraryImportElement) {
-    return _getLocalSymbol(ele);
-  }
-
-  final descriptor = _getDescriptor(ele, ctx);
-  if (descriptor == null) return null;
-
-  // Symbol Form: '<scheme> ' ' <package> ' ' (<descriptor>)+ | 'local ' <local-id>'
-  return [
-    'scip-dart',
-    _getPackage(ele, ctx),
-    _getDescriptor(ele, ctx),
-  ].join(' ');
-}
-
-String getFileSymbol(String path, SymbolContext ctx) {
-  return [
-    'scip-dart',
-    'pub ${ctx.pubspec.name} ${ctx.pubspec.version}',
-    '${_escapeNamespacePath(path)}/',
-  ].join(' ');
-}
-
-/// Returns a scip package symbol for a provided [Element]. 
-/// 
-/// <package>      ::= <manager> ' ' <package-name> ' ' <version>
-/// <scheme>       ::= any UTF-8, escape spaces with double space.
-/// <manager>      ::= same as above, use the placeholder '.' to indicate an empty value
-/// <package-name> ::= same as above
-/// <version>      ::= same as above
-String _getPackage(Element ele, SymbolContext ctx) {
-  String packageName;
-  String packageVersion;
-
-  if (ele.source == null) {
-    throw Exception('Not really sure what to do here');
-  }
-
-  if (ele.library?.isInSdk == true) {
-    final match = RegExp('dart-sdk/lib/(.+?)/').firstMatch(ele.source!.fullName);
-    if (match == null) {
-      throw Exception('Dart sdk path was not incorrect format: ${ele.source!.fullName}');
+  /// For a given `Element` returns the scip symbol form.
+  /// 
+  /// Returns [null] if symbol cannot be created for provided element
+  String? symbol(Element element) {
+    if (element is LocalVariableElement) {
+      return _generateLocalSymbol(element);
     }
 
-    packageName = 'dart:${match[1]}';
-    packageVersion = ele.library!.languageVersion.package.toString();
-  } else if (ele.source!.fullName.startsWith(ctx.projectRoot)) {
-    packageName = ctx.pubspec.name;
-    packageVersion = ctx.pubspec.version.toString();
-  } else {
-    final package = ctx.packageConfig.packageOf(Uri.file(ele.source!.fullName));
+    // named parameters can be "goto'd" on the consuming symbol, and are not "local"
+    if (element is ParameterElement && !element.isNamed) {
+      return _generateLocalSymbol(element);
+    }
+
+    // for some reason, LibraryImportElement is considered to be "private"
+    if (element.isPrivate && element is! LibraryImportElement) {
+      return _generateLocalSymbol(element);
+    }
+
+    final descriptor = _getDescriptor(element);
+    if (descriptor == null) return null;
+
+    // Symbol Form: '<scheme> ' ' <package> ' ' (<descriptor>)+ | 'local ' <local-id>'
+    return [
+      'scip-dart',
+      _getPackage(element),
+      _getDescriptor(element),
+    ].join(' ');
+  }
+
+
+  String fileSymbol(String path) {
+    return [
+      'scip-dart',
+      'pub ${_pubspec.name} ${_pubspec.version}',
+      '${_escapeNamespacePath(path)}/',
+    ].join(' ');
+  }
+
+
+  /// Returns a scip package symbol for a provided [Element]. 
+  /// 
+  /// <package>      ::= <manager> ' ' <package-name> ' ' <version>
+  /// <scheme>       ::= any UTF-8, escape spaces with double space.
+  /// <manager>      ::= same as above, use the placeholder '.' to indicate an empty value
+  /// <package-name> ::= same as above
+  /// <version>      ::= same as above
+  String _getPackage(Element element) {
+    if (element.source == null) {
+      throw Exception('Not really sure what to do here');
+    }
+
+    if (_isInSdk(element)) {
+      return _sdkPackageSymbolFor(element);
+    } else if (_isInCurrentPackage(element)) {
+      return _currentPackageSymbolFor(element);
+    }
+
+    return _externalPackageSymbolFor(element);
+  }
+  
+  String _sdkPackageSymbolFor(Element element) {
+    final path = element.source!.fullName;
+    
+    final searchPrefix = 'dart-sdk/lib/';
+    if (!path.contains(searchPrefix)) {
+      throw Exception('Dart sdk path was not incorrect format: ${path}');
+    }
+    final partialPath = path.substring(path.indexOf(searchPrefix) + searchPrefix.length);
+    final dependencyName = partialPath.substring(0, partialPath.indexOf('/'));
+
+
+    final packageName = 'dart:$dependencyName';
+    final packageVersion = element.library!.languageVersion.package.toString();
+
+    return 'pub $packageName $packageVersion';
+  }
+
+  String _currentPackageSymbolFor(Element element) {
+    final packageName = _pubspec.name;
+    final packageVersion = _pubspec.version.toString();
+    return 'pub $packageName $packageVersion';
+  }
+
+  String _externalPackageSymbolFor(Element element) {
+    final package = _packageConfig.packageOf(Uri.file(element.source!.fullName));
     if (package == null) {
       // this should only happen if the source references a package that is not defined
       // in the pubspec (as a main or transitive dep)
       throw Exception('Unable to find package within packageConfig');
     }
+
+    final packageName = package.name;
+
     final rootPath = p.basename(package.root.toString());
-    packageVersion = rootPath.substring(rootPath.lastIndexOf('-')+1);
-    packageName = package.name;
+    final packageVersion = rootPath.substring(rootPath.lastIndexOf('-')+1);
+
+    return 'pub $packageName $packageVersion';
   }
 
-  return 'pub $packageName $packageVersion';
-}
-
-
-/// Returns a scip symbol descriptor for a provided [Element].
-///
-///```
-/// <descriptor>           ::= <namespace> | <type> | <term> | <method> | <type-parameter> | <parameter> | <meta>
-/// <namespace>            ::= <name> '/'
-/// <type>                 ::= <name> '#'
-/// <term>                 ::= <name> '.'
-/// <meta>                 ::= <name> ':'
-/// <method>               ::= <name> '(' <method-disambiguator> ').'
-/// <type-parameter>       ::= '[' <name> ']'
-/// <parameter>            ::= '(' <name> ')'
-/// <name>                 ::= <identifier>
-/// <method-disambiguator> ::= <simple-identifier>
-/// <identifier>           ::= <simple-identifier> | <escaped-identifier>
-/// <simple-identifier>    ::= (<identifier-character>)+
-/// <identifier-character> ::= '_' | '+' | '-' | '$' | ASCII letter or digit
-/// <escaped-identifier>   ::= '`' (<escaped-character>)+ '`'
-/// <escaped-characters>   ::= any UTF-8 character, escape backticks with double backtick.
-/// ```
-String? _getDescriptor(Element ele, SymbolContext ctx) {
-  if (ele.source == null) {
-    print('WARN: Element has null source: ${ele.runtimeType} (${ele}) ${ele.location?.components}');
-    return null;
-  }
-  final sourcePath = ele.source!.fullName;
-  
-  String filePath;
-  if (sourcePath.startsWith(ctx.projectRoot)) {
-    filePath = sourcePath.substring('${ctx.projectRoot}/'.length);
-  } else if (ele.library?.isInSdk == true) {
-    // TODO: there has to be a better way to get the path to a 'dart:*' file
-    filePath = sourcePath.substring(sourcePath.indexOf('dart-sdk/lib/') + 'dart-sdk/'.length);
-  } else {
-    final config = ctx.packageConfig.packageOf(Uri.file(sourcePath));
-    if (config == null) {
-      throw Exception('Could not find package for $sourcePath. Have you run pub get?');
-    }
-
-    filePath = sourcePath.substring(config.root.toFilePath().length);
-  }
-
-  final namespace = _escapeNamespacePath(filePath);
-
-  if (
-    ele is TypeDefiningElement || // class, mixin, enum, type-alias
-    ele is ExtensionElement
-  ) {
-    return '$namespace/${ele.name}#';
-  }
-
-  if (ele is ConstructorElement) {
-    final className = ele.enclosingElement.name;
-    final constructorName = ele.name.isNotEmpty ? ele.name : '`<constructor>`';
-    return '$namespace/$className#$constructorName().';
-  }
-  
-  if (ele is MethodElement) {
-    final className = ele.enclosingElement.name;
-    return '$namespace/$className#${ele.name}().';
-  }
-  
-  if (ele is FunctionElement) {
-    return '$namespace/${ele.name}().';
-  }
-
-  if (ele is TopLevelVariableElement || ele is PrefixElement) {
-    return '$namespace/${ele.name}.';
-  }
-
-  if (ele is TypeParameterElement) {
-    final encEle = ele.enclosingElement;
-    if (encEle == null) return '$namespace/[${ele.name}]';
-    return '${_getDescriptor(encEle, ctx)}[${ele.name}]';
-  }
-
-  // only generate symbols for named parameters, all others are 'local x'
-  if (ele is ParameterElement && ele.isNamed) {
-    final encEle = ele.enclosingElement;
-    if (encEle == null) {
-      display('Parameter element has null enclosingElement "$ele"');
+  /// Returns a scip symbol descriptor for a provided [Element].
+  ///
+  ///```
+  /// <descriptor>           ::= <namespace> | <type> | <term> | <method> | <type-parameter> | <parameter> | <meta>
+  /// <namespace>            ::= <name> '/'
+  /// <type>                 ::= <name> '#'
+  /// <term>                 ::= <name> '.'
+  /// <meta>                 ::= <name> ':'
+  /// <method>               ::= <name> '(' <method-disambiguator> ').'
+  /// <type-parameter>       ::= '[' <name> ']'
+  /// <parameter>            ::= '(' <name> ')'
+  /// <name>                 ::= <identifier>
+  /// <method-disambiguator> ::= <simple-identifier>
+  /// <identifier>           ::= <simple-identifier> | <escaped-identifier>
+  /// <simple-identifier>    ::= (<identifier-character>)+
+  /// <identifier-character> ::= '_' | '+' | '-' | '$' | ASCII letter or digit
+  /// <escaped-identifier>   ::= '`' (<escaped-character>)+ '`'
+  /// <escaped-characters>   ::= any UTF-8 character, escape backticks with double backtick.
+  /// ```
+  String? _getDescriptor(Element element) {
+    if (element.source == null) {
+      print('WARN: Element has null source: ${element.runtimeType} (${element}) ${element.location?.components}');
       return null;
     }
+    final sourcePath = element.source!.fullName;
+    
+    String filePath;
+    if (sourcePath.startsWith(_projectRoot)) {
+      filePath = sourcePath.substring('${_projectRoot}/'.length);
+    } else if (element.library?.isInSdk == true) {
+      // TODO: there has to be a better way to get the path to a 'dart:*' file
+      filePath = sourcePath.substring(sourcePath.indexOf('dart-sdk/lib/') + 'dart-sdk/'.length);
+    } else {
+      final config = _packageConfig.packageOf(Uri.file(sourcePath));
+      if (config == null) {
+        throw Exception('Could not find package for $sourcePath. Have you run pub get?');
+      }
 
-    // If encEle is a GenericFunctionTypeElement, the function is a 
-    // `void Function({String param})` type. For this case, [param]
-    // is not indexable, so do not generate a symbol for it
-    if (encEle is GenericFunctionTypeElement) return null;
+      filePath = sourcePath.substring(config.root.toFilePath().length);
+    }
 
-    return '${_getDescriptor(encEle, ctx)}(${ele.name})';
+    final namespace = _escapeNamespacePath(filePath);
+
+    if (
+      element is TypeDefiningElement || // class, mixin, enum, type-alias
+      element is ExtensionElement
+    ) {
+      return '$namespace/${element.name}#';
+    }
+
+    if (element is ConstructorElement) {
+      final className = element.enclosingElement.name;
+      final constructorName = element.name.isNotEmpty ? element.name : '`<constructor>`';
+      return '$namespace/$className#$constructorName().';
+    }
+    
+    if (element is MethodElement) {
+      final className = element.enclosingElement.name;
+      return '$namespace/$className#${element.name}().';
+    }
+    
+    if (element is FunctionElement) {
+      return '$namespace/${element.name}().';
+    }
+
+    if (element is TopLevelVariableElement || element is PrefixElement) {
+      return '$namespace/${element.name}.';
+    }
+
+    if (element is TypeParameterElement) {
+      final encEle = element.enclosingElement;
+      if (encEle == null) return '$namespace/[${element.name}]';
+      return '${_getDescriptor(encEle)}[${element.name}]';
+    }
+
+    // only generate symbols for named parameters, all others are 'local x'
+    if (element is ParameterElement && element.isNamed) {
+      final encEle = element.enclosingElement;
+      if (encEle == null) {
+        display('Parameter element has null enclosingElement "$element"');
+        return null;
+      }
+
+      // If element is a GenericFunctionTypeElement, the function is a 
+      // `void Function({String param})` type. For this case, [param]
+      // is not indexable, so do not generate a symbol for it
+      if (element is GenericFunctionTypeElement) return null;
+
+      return '${_getDescriptor(encEle)}(${element.name})';
+    }
+    
+    if (element is PropertyAccessorElement) {
+      final parentName = element.enclosingElement.name;
+      return [
+        '$namespace/',
+        if (parentName != null) '$parentName#',
+        '${element.name}.'
+      ].join();
+    }
+
+    if (element is FieldElement) {
+      final encEle = element.enclosingElement;
+      return '${_getDescriptor(encEle)}${element.name}.';
+    }
+
+    display(
+      '\n'
+      'Received unknown type (${element.runtimeType})\n'
+      '\tname: ${element.name}\n'
+      '\tpath: (${element.library!.source.fullName})'
+      '\n'
+    );
+    return null;
   }
-  
-  if (ele is PropertyAccessorElement) {
-    final parentName = ele.enclosingElement.name;
-    return [
-      '$namespace/',
-      if (parentName != null) '$parentName#',
-      '${ele.name}.'
-    ].join();
+
+  int _localElementIndex = 0;
+  Map<Element, String> _localElementCache = {};
+  String _generateLocalSymbol(Element ele) {
+    _localElementCache.putIfAbsent(ele, () => 'local ${_localElementIndex++}');
+    return _localElementCache[ele]!;
   }
 
-  if (ele is FieldElement) {
-    final encEle = ele.enclosingElement;
-    return '${_getDescriptor(encEle, ctx)}${ele.name}.';
+  String _escapeNamespacePath(String path) {
+    return path
+      .split('/')
+      .map((segment) => segment.contains('.') ? '`$segment`' : segment)
+      .join('/');
   }
 
-  display(
-    '\n'
-    'Received unknown type (${ele.runtimeType})\n'
-    '\tname: ${ele.name}\n'
-    '\tpath: (${ele.library!.source.fullName})'
-    '\n'
-  );
-  return null;
-}
+  bool _isInSdk(Element element) {
+    return element.library?.isInSdk == true;
+  }
 
-String _escapeNamespacePath(String path) {
-  return path
-    .split('/')
-    .map((segment) => segment.contains('.') ? '`$segment`' : segment)
-    .join('/');
+  bool _isInCurrentPackage(Element element){
+    return element.source!.fullName.startsWith(_projectRoot);
+  }
 }

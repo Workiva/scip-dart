@@ -12,29 +12,27 @@ import 'package:scip_dart/src/utils.dart';
 List<SymbolInformation> globalExternalSymbols = [];
 
 class ScipVisitor extends GeneralizingAstVisitor {
-  String _relativePath;
-  String _projectRoot;
-  LineInfo _lineInfo;
-  PackageConfig _packageConfig;
-  Pubspec _pubspec;
+  final String _relativePath;
+  final String _projectRoot;
+  final LineInfo _lineInfo;
 
-  SymbolContext get _symbolContext => SymbolContext(
-    _packageConfig,
-    _projectRoot,
-    _pubspec,
-  );
+  final SymbolGenerator _symbolGenerator;
 
-  List<Occurrence> occurrences = [];
-  List<SymbolInformation> symbols = [];
+  final List<Occurrence> occurrences = [];
+  final List<SymbolInformation> symbols = [];
 
   ScipVisitor(
     this._relativePath,
     this._projectRoot,
     this._lineInfo,
-    this._packageConfig,
-    this._pubspec,
+    PackageConfig packageConfig,
+    Pubspec pubspec,
+  ) : _symbolGenerator = SymbolGenerator(
+    packageConfig,
+    _projectRoot,
+    pubspec,
   ) {
-    final fileSymbol = getFileSymbol(_relativePath, _symbolContext);
+    final fileSymbol = _symbolGenerator.fileSymbol(_relativePath);
     occurrences.add(Occurrence(
       symbol: fileSymbol,
       range: [0, 0, 0],
@@ -46,7 +44,6 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
   @override
   void visitNode(AstNode node) {
-    // print(':: ${node} : ${node.runtimeType}');
 
     if (node is Comment) {
       // For now, don't parse anything within comments (this was broken for
@@ -54,6 +51,9 @@ class ScipVisitor extends GeneralizingAstVisitor {
       return;
     }
 
+    // [visitDeclaration] on the [GeneralizingAstVisitor] does not match parameters
+    // even though the parameter node extends [Declaration]. This is a workaround
+    // to correctly parse all [Declaration] ast nodes. 
     if (node is Declaration) {
       _visitDeclaration(node);
     } else if (node is SimpleFormalParameter) {
@@ -68,14 +68,14 @@ class ScipVisitor extends GeneralizingAstVisitor {
   void _visitDeclaration(Declaration node) {
     if (node.declaredElement == null) return;
 
-    final ele = node.declaredElement!;
+    final element = node.declaredElement!;
 
-    final symbol = getSymbol(ele, _symbolContext);
+    final symbol = _symbolGenerator.symbol(element);
     if (symbol != null) {
-      _registerSymbol(symbol, ele);
+      _registerSymbol(symbol, element);
 
       occurrences.add(Occurrence(
-        range: _lineInfo.getRange(ele.nameOffset, ele.nameLength),
+        range: _lineInfo.getRange(element.nameOffset, element.nameLength),
         symbol: symbol,
         symbolRoles: SymbolRole.Definition.value,
       ));
@@ -85,14 +85,14 @@ class ScipVisitor extends GeneralizingAstVisitor {
   void _visitSimpleFormalParameter(SimpleFormalParameter node) {
     if (node.declaredElement == null) return;
 
-    final ele = node.declaredElement!;
+    final element = node.declaredElement!;
 
-    final symbol = getSymbol(ele, _symbolContext);
+    final symbol = _symbolGenerator.symbol(element);
     if (symbol != null) {
-      _registerSymbol(symbol, ele);
+      _registerSymbol(symbol, element);
 
       occurrences.add(Occurrence(
-        range: _lineInfo.getRange(ele.nameOffset, ele.nameLength),
+        range: _lineInfo.getRange(element.nameOffset, element.nameLength),
         symbol: symbol,
         symbolRoles: SymbolRole.Definition.value,
       ));
@@ -102,23 +102,23 @@ class ScipVisitor extends GeneralizingAstVisitor {
   // references to a type, String, int, SomeClass... anything that can be GoTo'ed
   // This will be utilized for defining `Occurrences`
   void _visitSimpleIdentifier(SimpleIdentifier node) {
-    final ele = node.staticElement;
+    final element = node.staticElement;
 
-    // ele is null if there's nothing really to do for this node. Example: `void`
-    // TODO: One weird issue found: named parameters of external symbols were ele.source 
+    // element is null if there's nothing really to do for this node. Example: `void`
+    // TODO: One weird issue found: named parameters of external symbols were element.source 
     //       EX: `color(path, front: Styles.YELLOW);` where `color` comes from the chalk-dart package
-    if (ele == null || ele.source == null) return;
+    if (element == null || element.source == null) return;
 
-    final symbol = getSymbol(ele, _symbolContext);
+    final symbol = _symbolGenerator.symbol(element);
     if (symbol != null) {
       occurrences.add(Occurrence(
         range: _lineInfo.getRange(node.offset, node.name.length),
         symbol: symbol,
       ));
 
-      if (!ele.source!.fullName.startsWith(_projectRoot)) {
+      if (!element.source!.fullName.startsWith(_projectRoot)) {
         if (globalExternalSymbols.every((symbolInfo) => symbolInfo.symbol != symbol)) {
-          final meta = getSymbolMetadata(ele);
+          final meta = getSymbolMetadata(element);
           globalExternalSymbols.add(SymbolInformation(
             symbol: symbol,
             documentation: meta.documentation,
