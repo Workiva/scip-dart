@@ -14,6 +14,10 @@ jobs:
     
     steps:
       - uses: actions/checkout@v3
+      - name: Install scip cli
+        run: |
+          bash -c 'curl -L "https://github.com/sourcegraph/scip/releases/download/v0.2.3/scip-linux-amd64.tar.gz"' | tar xzf - scip
+          ./scip --version
 
       - uses: dart-lang/setup-dart@v1
         with:
@@ -32,11 +36,16 @@ jobs:
       - name: Snapshots Diff Check
         run: |
           dart ./bin/main.dart ./snapshots/input/basic-project
+          ./scip snapshot --to ./snapshots/output/basic-project
 
-          if [[ -z "$(git status --porcelain ./snapshots)" ]];
+          if [[ -z "$(git status --porcelain ./snapshots/output)" ]];
           then
             echo "No changes to snapshot files"
           else
+            echo
+            echo "Snapshot diff detected differences, run 'make run snap' to re-generate snapshots"
+            git status --short ./snapshots/output
+            echo
             exit 1
           fi
 

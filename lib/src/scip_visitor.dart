@@ -74,12 +74,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
     if (symbol != null) {
       _registerSymbol(symbol, ele);
 
-      final occMeta = getOccurrenceMetadata(node);
       occurrences.add(Occurrence(
         range: _lineInfo.getRange(ele.nameOffset, ele.nameLength),
         symbol: symbol,
         symbolRoles: SymbolRole.Definition.value,
-        syntaxKind: occMeta.syntaxKind,
       ));
     }
   }
@@ -93,12 +91,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
     if (symbol != null) {
       _registerSymbol(symbol, ele);
 
-      final occMeta = getOccurrenceMetadata(node);
       occurrences.add(Occurrence(
         range: _lineInfo.getRange(ele.nameOffset, ele.nameLength),
         symbol: symbol,
         symbolRoles: SymbolRole.Definition.value,
-        syntaxKind: occMeta.syntaxKind,
       ));
     }
   }
@@ -115,11 +111,9 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
     final symbol = getSymbol(ele, _symbolContext);
     if (symbol != null) {
-      final occMeta = getOccurrenceMetadata(node);
       occurrences.add(Occurrence(
         range: _lineInfo.getRange(node.offset, node.name.length),
         symbol: symbol,
-        syntaxKind: occMeta.syntaxKind,
       ));
 
       if (!ele.source!.fullName.startsWith(_projectRoot)) {

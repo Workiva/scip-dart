@@ -149,8 +149,7 @@ String? _getDescriptor(Element ele, SymbolContext ctx) {
   final namespace = _escapeNamespacePath(filePath);
 
   if (
-    ele is InterfaceElement || // class, mixin, enum
-    ele is TypeAliasElement || 
+    ele is TypeDefiningElement || // class, mixin, enum, type-alias
     ele is ExtensionElement
   ) {
     return '$namespace/${ele.name}#';
@@ -211,12 +210,12 @@ String? _getDescriptor(Element ele, SymbolContext ctx) {
     return '${_getDescriptor(encEle, ctx)}${ele.name}.';
   }
 
-  print('WARN: Received unknown type ${ele.runtimeType} (${ele.library!.source.fullName})');
   display(
-    'Received unknown\n'
-    '\ttype: ${ele.runtimeType}\n'
+    '\n'
+    'Received unknown type (${ele.runtimeType})\n'
     '\tname: ${ele.name}\n'
-    '\tpath: (${ele.library!.source.fullName})',
+    '\tpath: (${ele.library!.source.fullName})'
+    '\n'
   );
   return null;
 }
