@@ -4,6 +4,9 @@ version: 1.0.0
 environment:
   sdk: ">=2.18.0 <3.0.0"
 
+executables:
+  scip-dart:
+
 dependencies:
   analyzer: ^5.4.0
   args: ^2.4.0
