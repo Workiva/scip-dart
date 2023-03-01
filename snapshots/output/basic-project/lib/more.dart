@@ -102,17 +102,17 @@
 //    documentation ```dart
 //                 ^^^^ reference scip-dart pub dart:core 2.18.0 lib/core/list.dart/List#
 //                      ^^^ reference scip-dart pub dart:core 2.18.0 lib/core/int.dart/int#
-//                           ^^^^^^^ definition local 6
+//                           ^^^^^^^ definition local 0
 //                           documentation ```dart
     return numbers.reduce((value, element) => value + element);
-//         ^^^^^^^ reference local 6
+//         ^^^^^^^ reference local 0
 //                 ^^^^^^ reference scip-dart pub dart:core 2.18.0 lib/core/iterable.dart/Iterable#reduce().
-//                         ^^^^^ definition local 7
+//                         ^^^^^ definition local 1
 //                         documentation ```dart
-//                                ^^^^^^^ definition local 8
+//                                ^^^^^^^ definition local 2
 //                                documentation ```dart
-//                                            ^^^^^ reference local 7
-//                                                    ^^^^^^^ reference local 8
+//                                            ^^^^^ reference local 1
+//                                                    ^^^^^^^ reference local 2
   }
   
   void main() {
@@ -121,52 +121,52 @@
     List<int> numbers = [1, 2, 3, 4, 5];
 //  ^^^^ reference scip-dart pub dart:core 2.18.0 lib/core/list.dart/List#
 //       ^^^ reference scip-dart pub dart:core 2.18.0 lib/core/int.dart/int#
-//            ^^^^^^^ definition local 9
+//            ^^^^^^^ definition local 3
 //            documentation ```dart
     int sum = calculateSum(numbers);
 //  ^^^ reference scip-dart pub dart:core 2.18.0 lib/core/int.dart/int#
-//      ^^^ definition local 10
+//      ^^^ definition local 4
 //      documentation ```dart
 //            ^^^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/calculateSum().
-//                         ^^^^^^^ reference local 9
+//                         ^^^^^^^ reference local 3
   
     Animal cat = Animal('Kitty', AnimalType.cat);
 //  ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#
-//         ^^^ definition local 11
+//         ^^^ definition local 5
 //         documentation ```dart
 //               ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#
 //                               ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#
 //                                          ^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#cat.
     Animal dog = Animal('Buddy', AnimalType.dog);
 //  ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#
-//         ^^^ definition local 12
+//         ^^^ definition local 6
 //         documentation ```dart
 //               ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#
 //                               ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#
 //                                          ^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#dog.
   
     cat.makeSound();
-//  ^^^ reference local 11
+//  ^^^ reference local 5
 //      ^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#makeSound().
     cat.sleep();
-//  ^^^ reference local 11
+//  ^^^ reference local 5
 //      ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/SleepMixin#sleep().
   
     dog.makeSound();
-//  ^^^ reference local 12
+//  ^^^ reference local 6
 //      ^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#makeSound().
     dog.sleep();
-//  ^^^ reference local 12
+//  ^^^ reference local 6
 //      ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/SleepMixin#sleep().
   
     print(cat);
 //  ^^^^^ reference scip-dart pub dart:core 2.18.0 lib/core/print.dart/print().
-//        ^^^ reference local 11
+//        ^^^ reference local 5
     print(dog);
 //  ^^^^^ reference scip-dart pub dart:core 2.18.0 lib/core/print.dart/print().
-//        ^^^ reference local 12
+//        ^^^ reference local 6
     print('The sum of $numbers is $sum');
 //  ^^^^^ reference scip-dart pub dart:core 2.18.0 lib/core/print.dart/print().
-//                     ^^^^^^^ reference local 9
-//                                 ^^^ reference local 10
+//                     ^^^^^^^ reference local 3
+//                                 ^^^ reference local 4
   }
