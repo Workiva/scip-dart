@@ -32,7 +32,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
     _projectRoot,
     pubspec,
   ) {
-    final fileSymbol = _symbolGenerator.fileSymbol(_relativePath);
+    final fileSymbol = _symbolGenerator.fileSymbolFor(_relativePath);
     occurrences.add(Occurrence(
       symbol: fileSymbol,
       range: [0, 0, 0],
@@ -70,7 +70,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
     final element = node.declaredElement!;
 
-    final symbol = _symbolGenerator.symbol(element);
+    final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
       _registerSymbol(symbol, element);
 
@@ -87,7 +87,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
     final element = node.declaredElement!;
 
-    final symbol = _symbolGenerator.symbol(element);
+    final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
       _registerSymbol(symbol, element);
 
@@ -109,7 +109,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
     //       EX: `color(path, front: Styles.YELLOW);` where `color` comes from the chalk-dart package
     if (element == null || element.source == null) return;
 
-    final symbol = _symbolGenerator.symbol(element);
+    final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
       occurrences.add(Occurrence(
         range: _lineInfo.getRange(node.offset, node.name.length),

@@ -9,9 +9,18 @@ import 'package:scip_dart/src/utils.dart';
 /// 
 /// Each sourcefile should use its own instance of `SymbolGenerator`
 class SymbolGenerator {
-  PackageConfig _packageConfig;
-  String _projectRoot;
-  Pubspec _pubspec;
+  final PackageConfig _packageConfig;
+  final String _projectRoot;
+  final Pubspec _pubspec;
+
+  int _localElementIndex = 0;
+
+  /// A mapping between resolved local [Element]s and the [symbol]
+  /// that should be used for the element. If no element is found,
+  /// [_localElementIndex] should be used to generate one.
+  /// 
+  /// Use []
+  Map<Element, String> _localElementRegistry = {};
 
   SymbolGenerator(
     this._packageConfig,
@@ -22,19 +31,19 @@ class SymbolGenerator {
   /// For a given `Element` returns the scip symbol form.
   /// 
   /// Returns [null] if symbol cannot be created for provided element
-  String? symbol(Element element) {
+  String? symbolFor(Element element) {
     if (element is LocalVariableElement) {
-      return _generateLocalSymbol(element);
+      return _localSymbolFor(element);
     }
 
     // named parameters can be "goto'd" on the consuming symbol, and are not "local"
     if (element is ParameterElement && !element.isNamed) {
-      return _generateLocalSymbol(element);
+      return _localSymbolFor(element);
     }
 
     // for some reason, LibraryImportElement is considered to be "private"
     if (element.isPrivate && element is! LibraryImportElement) {
-      return _generateLocalSymbol(element);
+      return _localSymbolFor(element);
     }
 
     final descriptor = _getDescriptor(element);
@@ -49,7 +58,7 @@ class SymbolGenerator {
   }
 
 
-  String fileSymbol(String path) {
+  String fileSymbolFor(String path) {
     return [
       'scip-dart',
       'pub ${_pubspec.name} ${_pubspec.version}',
@@ -233,11 +242,10 @@ class SymbolGenerator {
     return null;
   }
 
-  int _localElementIndex = 0;
-  Map<Element, String> _localElementCache = {};
-  String _generateLocalSymbol(Element ele) {
-    _localElementCache.putIfAbsent(ele, () => 'local ${_localElementIndex++}');
-    return _localElementCache[ele]!;
+  
+  String _localSymbolFor(Element ele) {
+    _localElementRegistry.putIfAbsent(ele, () => 'local ${_localElementIndex++}');
+    return _localElementRegistry[ele]!;
   }
 
   String _escapeNamespacePath(String path) {
