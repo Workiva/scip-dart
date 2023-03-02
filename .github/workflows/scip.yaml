@@ -1,0 +1,41 @@
+name: Scip
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  index:
+    runs-on: workiva-runner-dev
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@v3
+        with:
+          sdk: ${{ inputs.sdk }}
+
+      - run: dart pub global activate --hosted-url https://pub.workiva.org scip-dart
+
+      - run: dart pub get
+
+      - name: scip index
+        run: pub global run scip-dart ./
+
+      # provides SRC_ENDPOINT and SRC_ACCESS_TOKEN to the src installation step
+      - uses: Workiva/gha-setup-credentials@v1
+        with:
+          vault-url: https://vault-dev.workiva.org
+          vault-env: dev
+
+      # Install src cli
+      - name: Install Sourcegraph CLI
+        run: |
+          curl -L https://sourcegraph.com/.api/src-cli/src_linux_amd64 -o ${HOME}/bin/src
+          chmod +x ${HOME}/bin/src
+          src login
+          echo src endpoint $SRC_ENDPOINT
+          echo src access token $SRC_ACCESS_TOKEN
+      
+      - name: Upload scip to sourcegraph
+        run: src code-intel upload -file=index.scip -github-token="${{ env.FEF_GH_TOKEN }}"
