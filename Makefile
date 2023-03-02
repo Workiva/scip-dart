@@ -7,5 +7,8 @@ snap:
 lint:
 	scip lint ./index.scip
 
+gen-proto:
+	protoc --dart_out=. ./lib/src/gen/scip.proto
+
 print:
 	scip print ./index.scip
