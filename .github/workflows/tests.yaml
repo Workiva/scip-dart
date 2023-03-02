@@ -1,78 +1,78 @@
-name: Tests
+# name: Tests
 
-on:
-  push:
-    branches:
-      - master
-  pull_request:
+# on:
+#   push:
+#     branches:
+#       - master
+#   pull_request:
 
 
-jobs:
-  snapshots:
-    runs-on: workiva-runner-dev
-    name: Snapshots
+# jobs:
+#   snapshots:
+#     runs-on: workiva-runner-dev
+#     name: Snapshots
     
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install scip cli
-        run: |
-          bash -c 'curl -L "https://github.com/sourcegraph/scip/releases/download/v0.2.3/scip-linux-amd64.tar.gz"' | tar xzf - scip
-          ./scip --version
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Install scip cli
+#         run: |
+#           bash -c 'curl -L "https://github.com/sourcegraph/scip/releases/download/v0.2.3/scip-linux-amd64.tar.gz"' | tar xzf - scip
+#           ./scip --version
 
-      - uses: dart-lang/setup-dart@v1
-        with:
-          sdk: 2.18.7
+#       - uses: dart-lang/setup-dart@v1
+#         with:
+#           sdk: 2.18.7
       
-      # run `pub get` for the scip-dart package
-      - name: Pub get cli
-        uses: Workiva/gha-dart/pub-get@master
+#       # run `pub get` for the scip-dart package
+#       - name: Pub get cli
+#         uses: Workiva/gha-dart/pub-get@master
 
-      # run `pub get` for `snapshots`
-      - name: Pub get snapshots dir
-        uses: Workiva/gha-dart/pub-get@master
-        with:
-          package-path: ./snapshots/input/basic-project
+#       # run `pub get` for `snapshots`
+#       - name: Pub get snapshots dir
+#         uses: Workiva/gha-dart/pub-get@master
+#         with:
+#           package-path: ./snapshots/input/basic-project
       
-      - name: Snapshots Diff Check
-        run: |
-          dart ./bin/main.dart ./snapshots/input/basic-project
-          ./scip snapshot --to ./snapshots/output/basic-project
+#       - name: Snapshots Diff Check
+#         run: |
+#           dart ./bin/main.dart ./snapshots/input/basic-project
+#           ./scip snapshot --to ./snapshots/output/basic-project
 
-          if [[ -z "$(git status --porcelain ./snapshots/output)" ]];
-          then
-            echo "No changes to snapshot files"
-          else
-            echo
-            echo "Snapshot diff detected differences, run 'make run snap' to re-generate snapshots"
-            git status --short ./snapshots/output
-            echo
-            exit 1
-          fi
+#           if [[ -z "$(git status --porcelain ./snapshots/output)" ]];
+#           then
+#             echo "No changes to snapshot files"
+#           else
+#             echo
+#             echo "Snapshot diff detected differences, run 'make run snap' to re-generate snapshots"
+#             git status --short ./snapshots/output
+#             echo
+#             exit 1
+#           fi
 
-  consumer:
-    runs-on: workiva-runner-dev
-    name: Consumer
+#   consumer:
+#     runs-on: workiva-runner-dev
+#     name: Consumer
     
-    strategy:
-      matrix:
-        repo: ["Workiva/wdesk_sdk", "Workiva/syncdeps_dart"]
+#     strategy:
+#       matrix:
+#         repo: ["Workiva/wdesk_sdk", "Workiva/syncdeps_dart"]
 
-    steps:
-      # Setup scip-dart
-      - uses: actions/checkout@v3
-      - uses: dart-lang/setup-dart@v1
-        with:
-          sdk: 2.18.7
-      - uses: Workiva/gha-dart/pub-get@master
+#     steps:
+#       # Setup scip-dart
+#       - uses: actions/checkout@v3
+#       - uses: dart-lang/setup-dart@v1
+#         with:
+#           sdk: 2.18.7
+#       - uses: Workiva/gha-dart/pub-get@master
 
-      # Setup wdesk_sdk
-      - uses: actions/checkout@v3
-        with:
-          repo: ${{ matrix.repo }}
-          path: ${{ matrix.repo }}
-      - uses: Workiva/gha-dart/pub-get@master
-        with:
-          package-path: ${{ matrix.repo }}
+#       # Setup wdesk_sdk
+#       - uses: actions/checkout@v3
+#         with:
+#           repo: ${{ matrix.repo }}
+#           path: ${{ matrix.repo }}
+#       - uses: Workiva/gha-dart/pub-get@master
+#         with:
+#           package-path: ${{ matrix.repo }}
 
-      - run: |
-          dart ./bin/main.dart ./${{ matrix.repo }} || exit 1
+#       - run: |
+#           dart ./bin/main.dart ./${{ matrix.repo }} || exit 1

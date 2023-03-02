@@ -11,7 +11,7 @@ jobs:
     runs-on: workiva-runner-dev
     steps:
       - uses: actions/checkout@v3
-      - uses: dart-lang/setup-dart@v3
+      - uses: dart-lang/setup-dart@v1
         with:
           sdk: ${{ inputs.sdk }}
 
@@ -23,7 +23,7 @@ jobs:
         run: pub global run scip-dart ./
 
       # provides SRC_ENDPOINT and SRC_ACCESS_TOKEN to the src installation step
-      - uses: Workiva/gha-setup-credentials@v1
+      - uses: Workiva/gha-setup-credentials@v1.0.0
         with:
           vault-url: https://vault-dev.workiva.org
           vault-env: dev
