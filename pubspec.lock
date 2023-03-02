@@ -163,7 +163,7 @@ packages:
     source: hosted
     version: "3.2.0"
   glob:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: glob
       url: "https://pub.dartlang.org"
