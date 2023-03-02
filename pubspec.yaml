@@ -1,5 +1,6 @@
 name: scip_dart
 version: 1.0.0
+description: generates scip bindings for dart files
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
