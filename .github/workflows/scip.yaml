@@ -37,11 +37,11 @@ jobs:
       # Install src cli
       - name: Install Sourcegraph CLI
         run: |
-          curl -L https://sourcegraph.com/.api/src-cli/src_linux_amd64 -o ${HOME}/bin/src
-          chmod +x ${HOME}/bin/src
-          src login
-          echo src endpoint $SRC_ENDPOINT
-          echo src access token $SRC_ACCESS_TOKEN
+          curl -L https://sourcegraph.com/.api/src-cli/src_linux_amd64 -o _src-cli
+          chmod +x _src-cli
+          _src-cli login
+          echo _src-cli endpoint $SRC_ENDPOINT
+          echo _src-cli access token $SRC_ACCESS_TOKEN
       
       - name: Upload scip to sourcegraph
-        run: src code-intel upload -file=index.scip -github-token="${{ env.FEF_GH_TOKEN }}"
+        run: _src-cli code-intel upload -file=index.scip -github-token="${{ env.FEF_GH_TOKEN }}"
