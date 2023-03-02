@@ -20,7 +20,7 @@ jobs:
       - run: dart pub get
 
       - name: scip index
-        run: pub global run scip-dart ./
+        run: dart pub global run scip-dart ./
 
       # provides SRC_ENDPOINT and SRC_ACCESS_TOKEN to the src installation step
       - uses: Workiva/gha-setup-credentials@v1.0.0
