@@ -9,13 +9,14 @@ import 'package:scip_dart/src/flags.dart';
 
 Future<void> main(List<String> args) async {
   final result = (ArgParser()
-    ..addFlag('performance', aliases: ['perf'], defaultsTo: false)
-    ..addFlag('verbose', abbr: 'v', defaultsTo: false)
-  ).parse(args);
+        ..addFlag('performance', aliases: ['perf'], defaultsTo: false)
+        ..addFlag('verbose', abbr: 'v', defaultsTo: false))
+      .parse(args);
 
   Flags.instance.init(result);
 
-  final packageRoot = result.rest.length > 0 ? result.rest.first : Directory.current.path;
+  final packageRoot =
+      result.rest.length > 0 ? result.rest.first : Directory.current.path;
 
   final packageConfig = await findPackageConfig(Directory(packageRoot));
   if (packageConfig == null) {

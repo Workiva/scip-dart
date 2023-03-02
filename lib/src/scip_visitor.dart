@@ -28,10 +28,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
     PackageConfig packageConfig,
     Pubspec pubspec,
   ) : _symbolGenerator = SymbolGenerator(
-    packageConfig,
-    _projectRoot,
-    pubspec,
-  ) {
+          packageConfig,
+          _projectRoot,
+          pubspec,
+        ) {
     final fileSymbol = _symbolGenerator.fileSymbolFor(_relativePath);
     occurrences.add(Occurrence(
       symbol: fileSymbol,
@@ -44,7 +44,6 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
   @override
   void visitNode(AstNode node) {
-
     if (node is Comment) {
       // For now, don't parse anything within comments (this was broken for
       // local references). Later update to support this
@@ -53,7 +52,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
     // [visitDeclaration] on the [GeneralizingAstVisitor] does not match parameters
     // even though the parameter node extends [Declaration]. This is a workaround
-    // to correctly parse all [Declaration] ast nodes. 
+    // to correctly parse all [Declaration] ast nodes.
     if (node is Declaration) {
       _visitDeclaration(node);
     } else if (node is SimpleFormalParameter) {
@@ -105,7 +104,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
     final element = node.staticElement;
 
     // element is null if there's nothing really to do for this node. Example: `void`
-    // TODO: One weird issue found: named parameters of external symbols were element.source 
+    // TODO: One weird issue found: named parameters of external symbols were element.source
     //       EX: `color(path, front: Styles.YELLOW);` where `color` comes from the chalk-dart package
     if (element == null || element.source == null) return;
 
@@ -117,7 +116,8 @@ class ScipVisitor extends GeneralizingAstVisitor {
       ));
 
       if (!element.source!.fullName.startsWith(_projectRoot)) {
-        if (globalExternalSymbols.every((symbolInfo) => symbolInfo.symbol != symbol)) {
+        if (globalExternalSymbols
+            .every((symbolInfo) => symbolInfo.symbol != symbol)) {
           final meta = getSymbolMetadata(element);
           globalExternalSymbols.add(SymbolInformation(
             symbol: symbol,

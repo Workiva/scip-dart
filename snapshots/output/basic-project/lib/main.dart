@@ -1,9 +1,9 @@
   /// This is a fib function
 // definition scip-dart pub dart_test 1.0.0 lib/main.dart/
-  /// 
+  ///
   /// Takes a number
   /// Returns a number
-  int fib(int n){
+  int fib(int n) {
 //^^^ reference scip-dart pub dart:core 2.18.0 lib/core/int.dart/int#
 //    ^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/fib().
 //    documentation ```dart
@@ -42,6 +42,7 @@
     return y;
 //         ^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/y.
   }
+  
   final capture_lambda = () => y;
 //      ^^^^^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/capture_lambda.
 //      documentation ```dart
@@ -50,13 +51,13 @@
   void main() {
 //     ^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/main().
 //     documentation ```dart
-    for (var i = 0; i <= 10; i ++) {}
+    for (var i = 0; i <= 10; i++) {}
 //           ^ definition local 2
 //           documentation ```dart
 //                  ^ reference local 2
 //                           ^ reference local 2
   
-    for (var i in [1,2,3]) {
+    for (var i in [1, 2, 3]) {
 //           ^ definition local 3
 //           documentation ```dart
       print(i);
@@ -80,3 +81,4 @@
     return forever();
 //         ^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/forever().
   }
+  

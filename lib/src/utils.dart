@@ -8,6 +8,7 @@ enum DisplayLevel {
   warn,
   error,
 }
+
 void display(String input, {DisplayLevel level = DisplayLevel.warn}) {
   if (!Flags.instance.verbose) return;
 

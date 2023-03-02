@@ -1,13 +1,22 @@
 name: scip_dart
 version: 1.0.0
+description: generates scip bindings for dart files
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
 
+executables:
+  scip-dart:
+
 dependencies:
   analyzer: ^5.4.0
   args: ^2.4.0
-  collection: ^1.17.1
+  package_config: ^2.1.0
   path: ^1.8.3
   protobuf: ^2.1.0
   pubspec_parse: ^1.2.1
+
+dev_dependencies:
+  dependency_validator: ^3.2.2
+  dart_dev: ^3.9.2
+  glob: ^2.1.1
