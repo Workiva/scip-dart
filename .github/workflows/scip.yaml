@@ -10,6 +10,9 @@ permissions:
   contents: read
   id-token: write
 
+
+# TODO: replace this implementation with gha-dart once this: 
+#       https://github.com/Workiva/gha-dart/pull/7 merges
 jobs:
   index:
     runs-on: workiva-runner-dev
@@ -23,7 +26,6 @@ jobs:
 
       # - run: dart pub global activate --hosted-url https://pub.workiva.org scip_dart
       - run: dart pub global activate -spath .
-
 
       - name: scip index
         run: dart pub global run scip_dart ./
