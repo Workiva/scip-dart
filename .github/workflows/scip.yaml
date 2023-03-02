@@ -15,7 +15,7 @@ jobs:
         with:
           sdk: 2.18.7
 
-      - run: dart pub global activate --hosted-url https://pub.workiva.org scip-dart
+      - run: dart pub global activate --hosted-url https://pub.workiva.org scip_dart
 
       - run: dart pub get
 
