@@ -24,7 +24,6 @@ jobs:
 
       - run: dart pub get
 
-      # - run: dart pub global activate --hosted-url https://pub.workiva.org scip_dart
       - run: dart pub global activate -spath .
 
       - name: scip index
