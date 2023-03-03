@@ -31,19 +31,7 @@ class SymbolGenerator {
   ///
   /// Returns [null] if symbol cannot be created for provided element
   String? symbolFor(Element element) {
-    if (element is LocalVariableElement) {
-      return _localSymbolFor(element);
-    }
-
-    // named parameters can be "goto'd" on the consuming symbol, and are not "local"
-    if (element is ParameterElement && !element.isNamed) {
-      return _localSymbolFor(element);
-    }
-
-    // for some reason, LibraryImportElement is considered to be "private"
-    if (element.isPrivate && element is! LibraryImportElement) {
-      return _localSymbolFor(element);
-    }
+    if (_isLocalElement(element)) return _localSymbolFor(element);
 
     final descriptor = _getDescriptor(element);
     if (descriptor == null) return null;
@@ -52,7 +40,7 @@ class SymbolGenerator {
     return [
       'scip-dart',
       _getPackage(element),
-      _getDescriptor(element),
+      descriptor,
     ].join(' ');
   }
 
@@ -76,51 +64,38 @@ class SymbolGenerator {
       throw Exception('Not really sure what to do here');
     }
 
-    if (_isInSdk(element)) {
-      return _sdkPackageSymbolFor(element);
-    } else if (_isInCurrentPackage(element)) {
-      return _currentPackageSymbolFor(element);
+    String packageVersion;
+    String packageName;
+    if (element.library?.isInSdk == true) {
+      final path = element.source!.fullName;
+
+      final searchPrefix = 'dart-sdk/lib/';
+      if (!path.contains(searchPrefix)) {
+        throw Exception('Dart sdk path was not incorrect format: ${path}');
+      }
+      final partialPath = path.substring(
+        path.indexOf(searchPrefix) + searchPrefix.length,
+      );
+      final dependencyName = partialPath.substring(0, partialPath.indexOf('/'));
+
+      packageName = 'dart:$dependencyName';
+      packageVersion = element.library!.languageVersion.package.toString();
+    } else if (element.source!.fullName.startsWith(_projectRoot)) {
+      packageName = _pubspec.name;
+      packageVersion = _pubspec.version.toString();
+    } else {
+      final package = _packageConfig.packageOf(Uri.file(element.source!.fullName));
+      if (package == null) {
+        // this should only happen if the source references a package that is not defined
+        // in the pubspec (as a main or transitive dep)
+        throw Exception('Unable to find package within packageConfig');
+      }
+
+      packageName = package.name;
+
+      final rootPath = p.basename(package.root.toString());
+      packageVersion = rootPath.substring(rootPath.lastIndexOf('-') + 1);
     }
-
-    return _externalPackageSymbolFor(element);
-  }
-
-  String _sdkPackageSymbolFor(Element element) {
-    final path = element.source!.fullName;
-
-    final searchPrefix = 'dart-sdk/lib/';
-    if (!path.contains(searchPrefix)) {
-      throw Exception('Dart sdk path was not incorrect format: ${path}');
-    }
-    final partialPath =
-        path.substring(path.indexOf(searchPrefix) + searchPrefix.length);
-    final dependencyName = partialPath.substring(0, partialPath.indexOf('/'));
-
-    final packageName = 'dart:$dependencyName';
-    final packageVersion = element.library!.languageVersion.package.toString();
-
-    return 'pub $packageName $packageVersion';
-  }
-
-  String _currentPackageSymbolFor(Element element) {
-    final packageName = _pubspec.name;
-    final packageVersion = _pubspec.version.toString();
-    return 'pub $packageName $packageVersion';
-  }
-
-  String _externalPackageSymbolFor(Element element) {
-    final package =
-        _packageConfig.packageOf(Uri.file(element.source!.fullName));
-    if (package == null) {
-      // this should only happen if the source references a package that is not defined
-      // in the pubspec (as a main or transitive dep)
-      throw Exception('Unable to find package within packageConfig');
-    }
-
-    final packageName = package.name;
-
-    final rootPath = p.basename(package.root.toString());
-    final packageVersion = rootPath.substring(rootPath.lastIndexOf('-') + 1);
 
     return 'pub $packageName $packageVersion';
   }
@@ -151,25 +126,11 @@ class SymbolGenerator {
       return null;
     }
     final sourcePath = element.source!.fullName;
+    final namespace = _escapeNamespacePath(_relativeToPackageRoot(sourcePath));
 
-    String filePath;
-    if (sourcePath.startsWith(_projectRoot)) {
-      filePath = sourcePath.substring('${_projectRoot}/'.length);
-    } else if (element.library?.isInSdk == true) {
-      // TODO: there has to be a better way to get the path to a 'dart:*' file
-      filePath = sourcePath
-          .substring(sourcePath.indexOf('dart-sdk/lib/') + 'dart-sdk/'.length);
-    } else {
-      final config = _packageConfig.packageOf(Uri.file(sourcePath));
-      if (config == null) {
-        throw Exception(
-            'Could not find package for $sourcePath. Have you run pub get?');
-      }
-
-      filePath = sourcePath.substring(config.root.toFilePath().length);
+    if (element is LibraryElement) {
+      return '$namespace/';
     }
-
-    final namespace = _escapeNamespacePath(filePath);
 
     if (element is TypeDefiningElement || // class, mixin, enum, type-alias
         element is ExtensionElement) {
@@ -240,10 +201,24 @@ class SymbolGenerator {
     return null;
   }
 
-  String _localSymbolFor(Element ele) {
+  String _localSymbolFor(Element element) {
     _localElementRegistry.putIfAbsent(
-        ele, () => 'local ${_localElementIndex++}');
-    return _localElementRegistry[ele]!;
+      element, 
+      () => 'local ${_localElementIndex++}',
+    );
+    return _localElementRegistry[element]!;
+  }
+
+  bool _isLocalElement(Element element) {
+    if (element is LocalVariableElement) true;
+
+    // named parameters can be "goto'd" on the consuming symbol, and are not "local"
+    if (element is ParameterElement && !element.isNamed) return true;
+
+    // for some reason, LibraryImportElement is considered to be "private"
+    if (element.isPrivate && element is! LibraryImportElement) return true;
+
+    return false;
   }
 
   String _escapeNamespacePath(String path) {
@@ -253,11 +228,28 @@ class SymbolGenerator {
         .join('/');
   }
 
-  bool _isInSdk(Element element) {
-    return element.library?.isInSdk == true;
-  }
+  /// Returns [sourcePath] as a relative path to the root of the package
+  /// which it exists within.
+  /// 
+  /// If no package for the provided path exists in the package config. An
+  /// exception will be thrown. This is most likely due to not running pub-get
+  /// before scip indexing.
+  String _relativeToPackageRoot(String sourcePath) {
+    if (sourcePath.startsWith(_projectRoot)) {
+      return sourcePath.substring('${_projectRoot}/'.length);
+    } else if (sourcePath.contains('dart-sdk/lib')) {
+      // TODO: there has to be a better way to get the path to a 'dart:*' file
+      return sourcePath.substring(
+        sourcePath.indexOf('dart-sdk/lib/') + 'dart-sdk/'.length,
+      );
+    } else {
+      final config = _packageConfig.packageOf(Uri.file(sourcePath));
+      if (config == null) {
+        throw Exception(
+            'Could not find package for $sourcePath. Have you run pub get?');
+      }
 
-  bool _isInCurrentPackage(Element element) {
-    return element.source!.fullName.startsWith(_projectRoot);
+      return sourcePath.substring(config.root.toFilePath().length);
+    }
   }
 }

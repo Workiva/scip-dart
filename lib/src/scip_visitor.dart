@@ -59,6 +59,8 @@ class ScipVisitor extends GeneralizingAstVisitor {
       _visitSimpleFormalParameter(node);
     } else if (node is SimpleIdentifier) {
       _visitSimpleIdentifier(node);
+    } else if (node is UriBasedDirective) {
+      _visitUriBasedDirective(node);
     }
 
     super.visitNode(node);
@@ -115,7 +117,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
         symbol: symbol,
       ));
 
-      if (!element.source!.fullName.startsWith(_projectRoot)) {
+      if (_isExternalElement(element)) {
         if (globalExternalSymbols
             .every((symbolInfo) => symbolInfo.symbol != symbol)) {
           final meta = getSymbolMetadata(element);
@@ -128,11 +130,37 @@ class ScipVisitor extends GeneralizingAstVisitor {
     }
   }
 
+  void _visitUriBasedDirective(UriBasedDirective node) {
+    if (node.element is! LibraryImportElement) return;
+
+    final element = (node.element as LibraryImportElement).importedLibrary!;
+
+    final symbol = _symbolGenerator.symbolFor(element);
+    if (symbol != null) {
+      occurrences.add(Occurrence(
+        range: _lineInfo.getRange(node.uri.offset, node.uri.length),
+        symbol: symbol,
+      ));
+      
+      if (_isExternalElement(element)) {
+        final meta = getSymbolMetadata(element);
+        globalExternalSymbols.add(SymbolInformation(
+          symbol: symbol,
+          documentation: meta.documentation
+        ));
+      }
+    }
+  }
+
   void _registerSymbol(String symbol, Element ele) {
     final meta = getSymbolMetadata(ele);
     symbols.add(SymbolInformation(
       symbol: symbol,
       documentation: meta.documentation,
     ));
+  }
+
+  bool _isExternalElement(Element element) {
+    return !element.source!.fullName.startsWith(_projectRoot);
   }
 }
