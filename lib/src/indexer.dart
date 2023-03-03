@@ -16,13 +16,14 @@ Future<Index> indexPackage(
   final dirPath = p.normalize(p.absolute(root));
 
   final metadata = Metadata(
-      projectRoot: 'file:/' + dirPath,
-      textDocumentEncoding: TextEncoding.UTF8,
-      toolInfo: ToolInfo(
-        name: 'scip-dart',
-        version: '0.0.1',
-        arguments: [],
-      ));
+    projectRoot: 'file:/' + dirPath,
+    textDocumentEncoding: TextEncoding.UTF8,
+    toolInfo: ToolInfo(
+      name: 'scip-dart',
+      version: '0.0.1',
+      arguments: [],
+    ),
+  );
 
   final allPackageRoots = packageConfig.packages
       .map((package) => p.normalize(package.packageUriRoot.toFilePath()))

@@ -44,6 +44,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
   @override
   void visitNode(AstNode node) {
+    // print(':: $node - ${node.runtimeType}');
     if (node is Comment) {
       // For now, don't parse anything within comments (this was broken for
       // local references). Later update to support this
@@ -59,8 +60,8 @@ class ScipVisitor extends GeneralizingAstVisitor {
       _visitSimpleFormalParameter(node);
     } else if (node is SimpleIdentifier) {
       _visitSimpleIdentifier(node);
-    } else if (node is UriBasedDirective) {
-      _visitUriBasedDirective(node);
+    } else if (node is Directive) {
+      _visitDirective(node);
     }
 
     super.visitNode(node);
@@ -130,22 +131,32 @@ class ScipVisitor extends GeneralizingAstVisitor {
     }
   }
 
-  void _visitUriBasedDirective(UriBasedDirective node) {
-    if (node.element is! LibraryImportElement) return;
+  void _visitDirective(Directive node) {
+    final directiveElement = node.element!;
 
-    final element = (node.element as LibraryImportElement).importedLibrary!;
+    late Element element;
+    if (directiveElement is LibraryImportElement) {
+      element = directiveElement.importedLibrary!;
+    } else if (directiveElement is LibraryExportElement) {
+      element = directiveElement.exportedLibrary!;
+    } else if (directiveElement is PartDirective || directiveElement is PartOfDirective) {
+      display('part and part of directives are currently not supported');
+      return;
+    }
 
     final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
       occurrences.add(Occurrence(
-        range: _lineInfo.getRange(node.uri.offset, node.uri.length),
+        range: _lineInfo.getRange(node.offset, node.length),
         symbol: symbol,
       ));
 
       if (_isExternalElement(element)) {
         final meta = getSymbolMetadata(element);
         globalExternalSymbols.add(SymbolInformation(
-            symbol: symbol, documentation: meta.documentation));
+          symbol: symbol,
+          documentation: meta.documentation,
+        ));
       }
     }
   }
