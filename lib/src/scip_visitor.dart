@@ -141,13 +141,11 @@ class ScipVisitor extends GeneralizingAstVisitor {
         range: _lineInfo.getRange(node.uri.offset, node.uri.length),
         symbol: symbol,
       ));
-      
+
       if (_isExternalElement(element)) {
         final meta = getSymbolMetadata(element);
         globalExternalSymbols.add(SymbolInformation(
-          symbol: symbol,
-          documentation: meta.documentation
-        ));
+            symbol: symbol, documentation: meta.documentation));
       }
     }
   }

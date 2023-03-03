@@ -18,7 +18,7 @@ class SymbolGenerator {
   /// that should be used for the element. If no element is found,
   /// [_localElementIndex] should be used to generate one.
   ///
-  /// Use []
+  /// Use [_localSymbolFor] to retrieve and add to this registry
   Map<Element, String> _localElementRegistry = {};
 
   SymbolGenerator(
@@ -84,7 +84,8 @@ class SymbolGenerator {
       packageName = _pubspec.name;
       packageVersion = _pubspec.version.toString();
     } else {
-      final package = _packageConfig.packageOf(Uri.file(element.source!.fullName));
+      final package =
+          _packageConfig.packageOf(Uri.file(element.source!.fullName));
       if (package == null) {
         // this should only happen if the source references a package that is not defined
         // in the pubspec (as a main or transitive dep)
@@ -126,7 +127,25 @@ class SymbolGenerator {
       return null;
     }
     final sourcePath = element.source!.fullName;
-    final namespace = _escapeNamespacePath(_relativeToPackageRoot(sourcePath));
+
+    String filePath;
+    if (sourcePath.startsWith(_projectRoot)) {
+      filePath = sourcePath.substring('${_projectRoot}/'.length);
+    } else if (element.library?.isInSdk == true) {
+      // TODO: there has to be a better way to get the path to a 'dart:*' file
+      filePath = sourcePath
+          .substring(sourcePath.indexOf('dart-sdk/lib/') + 'dart-sdk/'.length);
+    } else {
+      final config = _packageConfig.packageOf(Uri.file(sourcePath));
+      if (config == null) {
+        throw Exception(
+            'Could not find package for $sourcePath. Have you run pub get?');
+      }
+
+      filePath = sourcePath.substring(config.root.toFilePath().length);
+    }
+
+    final namespace = _escapeNamespacePath(filePath);
 
     if (element is LibraryElement) {
       return '$namespace/';
@@ -203,7 +222,7 @@ class SymbolGenerator {
 
   String _localSymbolFor(Element element) {
     _localElementRegistry.putIfAbsent(
-      element, 
+      element,
       () => 'local ${_localElementIndex++}',
     );
     return _localElementRegistry[element]!;
@@ -226,30 +245,5 @@ class SymbolGenerator {
         .split('/')
         .map((segment) => segment.contains('.') ? '`$segment`' : segment)
         .join('/');
-  }
-
-  /// Returns [sourcePath] as a relative path to the root of the package
-  /// which it exists within.
-  /// 
-  /// If no package for the provided path exists in the package config. An
-  /// exception will be thrown. This is most likely due to not running pub-get
-  /// before scip indexing.
-  String _relativeToPackageRoot(String sourcePath) {
-    if (sourcePath.startsWith(_projectRoot)) {
-      return sourcePath.substring('${_projectRoot}/'.length);
-    } else if (sourcePath.contains('dart-sdk/lib')) {
-      // TODO: there has to be a better way to get the path to a 'dart:*' file
-      return sourcePath.substring(
-        sourcePath.indexOf('dart-sdk/lib/') + 'dart-sdk/'.length,
-      );
-    } else {
-      final config = _packageConfig.packageOf(Uri.file(sourcePath));
-      if (config == null) {
-        throw Exception(
-            'Could not find package for $sourcePath. Have you run pub get?');
-      }
-
-      return sourcePath.substring(config.root.toFilePath().length);
-    }
   }
 }
