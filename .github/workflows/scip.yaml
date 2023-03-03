@@ -1,4 +1,4 @@
-name: scip
+name: Scip
 
 on:
   pull_request:
@@ -11,5 +11,5 @@ permissions:
   id-token: write
 
 jobs:
-  scip-dart:
+  index:
     uses: Workiva/gha-dart/.github/workflows/scip-dart.yaml@master
