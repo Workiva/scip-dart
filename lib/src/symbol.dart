@@ -229,7 +229,7 @@ class SymbolGenerator {
   }
 
   bool _isLocalElement(Element element) {
-    if (element is LocalVariableElement) true;
+    if (element is LocalVariableElement) return true;
 
     // named parameters can be "goto'd" on the consuming symbol, and are not "local"
     if (element is ParameterElement && !element.isNamed) return true;
