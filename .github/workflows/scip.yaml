@@ -11,5 +11,5 @@ permissions:
   id-token: write
 
 jobs:
-  index:
+  scip-dart:
     uses: Workiva/gha-dart/.github/workflows/scip-dart.yaml@master
