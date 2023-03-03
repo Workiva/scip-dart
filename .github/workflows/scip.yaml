@@ -12,4 +12,4 @@ permissions:
 
 jobs:
   scip-dart:
-    uses: Workiva/gha-dart/.github/workflows/scip-dart.yaml@v1.0.0
+    uses: Workiva/gha-dart/.github/workflows/scip-dart.yaml@master
