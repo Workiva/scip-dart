@@ -4,11 +4,17 @@ Experimental spike on a [scip](https://github.com/sourcegraph/scip) indexer for 
 
 Designed to be a replacement for [lsif_indexer](https://github.com/Workiva/lsif_indexer), with better coverage and reliability
 
+## Installation
+
+```sh
+dart pub global activate --hosted-url https://pub.workiva.org scip_dart
+```
+
 ## Usage
 
 The following command will output a `index.scip` file
 ```sh
-dart scip-dart/bin/main.dart ./path/to/project/root
+dart pub global run scip_dart ./path/to/project/root
 ```
 
 This file can be analyzed / displayed using the [scip cli](https://github.com/sourcegraph/scip)
