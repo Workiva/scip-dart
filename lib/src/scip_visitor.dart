@@ -131,23 +131,51 @@ class ScipVisitor extends GeneralizingAstVisitor {
     }
   }
 
+  /// index `import`, `export`, `part` and `part of` occurrences
+  /// These symbols map to `symbolGenerator.fileSymbolFor` declarations
   void _visitDirective(Directive node) {
     final directiveElement = node.element!;
 
-    late Element element;
-    if (directiveElement is LibraryImportElement) {
-      element = directiveElement.importedLibrary!;
-    } else if (directiveElement is LibraryExportElement) {
-      element = directiveElement.exportedLibrary!;
-    } else if (directiveElement is PartDirective || directiveElement is PartOfDirective) {
-      display('part and part of directives are currently not supported');
+    late LibraryElement element;
+    late StringLiteral uri;
+    if (node is UriBasedDirective) {
+      uri = node.uri;
+
+      if (directiveElement is PartElement) {
+        // I cannot for the life of me figure out how to get the [element]
+        // for a `part` directive
+        display('Part directive are not currently indexed.');
+        return;
+      } else if (directiveElement is LibraryImportElement) {
+        element = directiveElement.importedLibrary!;
+      } else if (directiveElement is LibraryExportElement) {
+        element = directiveElement.exportedLibrary!;
+      } else {
+        display(
+          'Received unknown UriBasedDirective ${directiveElement.runtimeType}',
+        );
+        return;
+      }
+    } else if (node is PartOfDirective) {
+      if (node.uri != null) {
+        uri = node.uri!;
+        element = node.element as LibraryElement;
+      } else {
+        display(
+          'Received part-of with null uri.'
+          'This is probably due to a part of using a library name'
+        );
+        return;
+      }
+    } else {
+      display('Received unknown directive: ${node.runtimeType}');
       return;
     }
 
     final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
       occurrences.add(Occurrence(
-        range: _lineInfo.getRange(node.offset, node.length),
+        range: _lineInfo.getRange(uri.offset, uri.length),
         symbol: symbol,
       ));
 

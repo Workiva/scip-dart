@@ -29,3 +29,19 @@ extension LineInfoExtension on LineInfo {
     ];
   }
 }
+
+extension TrimQuotes on String {
+  String trimQuotes() {
+    final single = "'";
+    final double = '"';
+
+    if (
+      startsWith(single) && endsWith(single) ||
+      startsWith(double) && endsWith(double)
+    ) {
+      return substring(1, length-1);    
+    }
+
+    return this;
+  }
+}

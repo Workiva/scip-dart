@@ -44,6 +44,10 @@ class SymbolGenerator {
     ].join(' ');
   }
 
+  /// Returns a scip symbol for a provided [uri]. 
+  /// 
+  /// [filePath] refers to the path of the file the uri is 
+  /// defined within. This is used when calculating relative paths
   String fileSymbolFor(String path) {
     return [
       'scip-dart',
