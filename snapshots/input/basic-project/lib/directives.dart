@@ -4,3 +4,4 @@ import 'dart:html' show HtmlElement;
 import './main.dart';
 import 'package:dart_test/more.dart';
 export './main.dart';
+part 'part_file.dart';
