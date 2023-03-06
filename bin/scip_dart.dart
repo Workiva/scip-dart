@@ -10,8 +10,9 @@ import 'package:scip_dart/src/flags.dart';
 Future<void> main(List<String> args) async {
   final result = (ArgParser()
         ..addFlag('performance', aliases: ['perf'], defaultsTo: false)
-        ..addFlag('verbose', abbr: 'v', defaultsTo: false))
-      .parse(args);
+        ..addFlag('verbose', abbr: 'v', defaultsTo: false)
+        ..addMultiOption('path', abbr: 'p', defaultsTo: ['./lib'])
+      ).parse(args);
 
   Flags.instance.init(result);
 
