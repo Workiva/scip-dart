@@ -53,14 +53,6 @@ Future<Index> indexPackage(
 
   final resolvedUnits = await Future.wait(resolvedUnitFutures);
 
-  // final context = collection.contextFor(p.join(dirPath, 'lib'));
-  // final files = context.contextRoot
-  //     .analyzedFiles()
-  //     .where((file) => p.extension(file) == '.dart');
-
-  // final resolvedUnits =
-  //     await Future.wait(files.map(context.currentSession.getResolvedUnit));
-
   if (Flags.instance.performance) {
     print('Analyzing Source took: ${st.elapsedMilliseconds}ms');
     st.reset();
