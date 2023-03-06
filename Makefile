@@ -1,4 +1,4 @@
-regen-snaps:
+regen-snapshots:
 	dart run scip_dart ./snapshots/input/basic-project --verbose
 	scip snapshot --to ./snapshots/output/basic-project
 

@@ -10,5 +10,6 @@
 //  ^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#<constructor>().
 //  documentation ```dart
 //  ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
+//           ^^^^ reference local 0
   }
   

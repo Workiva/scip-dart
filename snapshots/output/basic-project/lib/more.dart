@@ -1,6 +1,7 @@
   import 'dart:math' as math;
 // definition scip-dart pub dart_test 1.0.0 lib/more.dart/
-//                      ^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/math.
+//                      ^^^^ definition scip-dart pub dart_test 1.0.0 lib/more.dart/math.
+//                      documentation ```dart
   
   enum AnimalType {
 //     ^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#
@@ -52,6 +53,8 @@
 //  ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#<constructor>().
 //  documentation ```dart
 //  ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#
+//              ^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#name.
+//                         ^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#type.
       switch (type) {
 //            ^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#type.
         case AnimalType.cat:
