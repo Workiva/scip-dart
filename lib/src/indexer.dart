@@ -42,17 +42,16 @@ Future<Index> indexPackage(
   if (Flags.instance.performance) print('Analyzing Source');
   final st = Stopwatch()..start();
 
-  final resolvedUnitFutures = indexedPaths.map(
-    (path) {
-      final context = collection.contextFor(path);
-      final files = context.contextRoot
+  final resolvedUnitFutures = indexedPaths.map((path) {
+    final context = collection.contextFor(path);
+    final files = context.contextRoot
         .analyzedFiles()
         .where((file) => p.extension(file) == '.dart');
 
-      return files.map(context.currentSession.getResolvedUnit);
-    }).expand((resUnits) => resUnits);
+    return files.map(context.currentSession.getResolvedUnit);
+  }).expand((resUnits) => resUnits);
 
-    final resolvedUnits = await Future.wait(resolvedUnitFutures);
+  final resolvedUnits = await Future.wait(resolvedUnitFutures);
 
   // final context = collection.contextFor(p.join(dirPath, 'lib'));
   // final files = context.contextRoot
@@ -68,28 +67,26 @@ Future<Index> indexPackage(
     print('Parsing Ast');
   }
 
-  final documents = resolvedUnits
-    .whereType<ResolvedUnitResult>()
-    .map((resUnit) {
-      final relativePath = p.relative(resUnit.path, from: dirPath);
+  final documents =
+      resolvedUnits.whereType<ResolvedUnitResult>().map((resUnit) {
+    final relativePath = p.relative(resUnit.path, from: dirPath);
 
-      final visitor = ScipVisitor(
-        relativePath,
-        dirPath,
-        resUnit.lineInfo,
-        packageConfig,
-        pubspec,
-      );
-      resUnit.unit.accept(visitor);
+    final visitor = ScipVisitor(
+      relativePath,
+      dirPath,
+      resUnit.lineInfo,
+      packageConfig,
+      pubspec,
+    );
+    resUnit.unit.accept(visitor);
 
-      return Document(
-        language: Language.Dart.name,
-        relativePath: relativePath,
-        occurrences: visitor.occurrences,
-        symbols: visitor.symbols,
-      );
-    })
-    .toList();
+    return Document(
+      language: Language.Dart.name,
+      relativePath: relativePath,
+      occurrences: visitor.occurrences,
+      symbols: visitor.symbols,
+    );
+  }).toList();
 
   if (Flags.instance.performance) {
     print('Parsing Ast took: ${st.elapsedMilliseconds}ms');
