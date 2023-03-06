@@ -1,3 +1,5 @@
 .dart_tool
 .DS_Store
 index.scip
+snapshots/input/staging-project/lib/**
+snapshots/output/staging-project/lib/**

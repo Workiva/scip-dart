@@ -1,5 +1,6 @@
-  import 'dart:math';
+  import 'dart:math' as math;
 // definition scip-dart pub dart_test 1.0.0 lib/more.dart/
+//                      ^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/math.
   
   enum AnimalType {
 //     ^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#
@@ -169,5 +170,10 @@
 //  ^^^^^ reference scip-dart pub dart:core 2.18.0 lib/core/print.dart/print().
 //                     ^^^^^^^ reference local 3
 //                                 ^^^ reference local 4
+  
+    print(math.Rectangle(1,2,3,4));
+//  ^^^^^ reference scip-dart pub dart:core 2.18.0 lib/core/print.dart/print().
+//        ^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/math.
+//             ^^^^^^^^^ reference scip-dart pub dart:math 2.18.0 lib/math/rectangle.dart/Rectangle#
   }
   

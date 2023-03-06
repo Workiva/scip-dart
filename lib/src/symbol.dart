@@ -35,9 +35,12 @@ class SymbolGenerator {
       return _localSymbolFor(element);
     }
 
-    // named parameters can be "goto'd" on the consuming symbol, and are not "local"
-    if (element is ParameterElement && !element.isNamed) {
-      return _localSymbolFor(element);
+    // most parameters are local only, treat them as such except for the edge cases
+    if (element is ParameterElement) {
+      // named parameters and fieldFormalParameters can be goto'd
+      if (!element.isNamed && element is! FieldFormalParameterElement) {
+        return _localSymbolFor(element);
+      }
     }
 
     // for some reason, LibraryImportElement is considered to be "private"
@@ -203,7 +206,7 @@ class SymbolGenerator {
     }
 
     // only generate symbols for named parameters, all others are 'local x'
-    if (element is ParameterElement && element.isNamed) {
+    if (element is ParameterElement) {
       final encEle = element.enclosingElement;
       if (encEle == null) {
         display('Parameter element has null enclosingElement "$element"');

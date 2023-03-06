@@ -44,6 +44,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
   @override
   void visitNode(AstNode node) {
+    // print(':: $node ${node.runtimeType}');
     if (node is Comment) {
       // For now, don't parse anything within comments (this was broken for
       // local references). Later update to support this
@@ -55,8 +56,8 @@ class ScipVisitor extends GeneralizingAstVisitor {
     // to correctly parse all [Declaration] ast nodes.
     if (node is Declaration) {
       _visitDeclaration(node);
-    } else if (node is SimpleFormalParameter) {
-      _visitSimpleFormalParameter(node);
+    } else if (node is NormalFormalParameter) {
+      _visitNormalFormalParameter(node);
     } else if (node is SimpleIdentifier) {
       _visitSimpleIdentifier(node);
     }
@@ -68,38 +69,26 @@ class ScipVisitor extends GeneralizingAstVisitor {
     if (node.declaredElement == null) return;
 
     final element = node.declaredElement!;
+    _registerAsDefinition(element);
+  }
 
-    final symbol = _symbolGenerator.symbolFor(element);
-    if (symbol != null) {
-      _registerSymbol(symbol, element);
+  void _visitNormalFormalParameter(NormalFormalParameter node) {
+    final element = node.declaredElement;
+    if (element == null) return;
 
-      occurrences.add(Occurrence(
-        range: _lineInfo.getRange(element.nameOffset, element.nameLength),
-        symbol: symbol,
-        symbolRoles: SymbolRole.Definition.value,
-      ));
+    // FieldFormalParameters reference a field instead of define a declaration
+    // register them as such
+    if (element is FieldFormalParameterElement) {
+      _registerAsReference(
+        element.field!,
+        offset: node.name!.offset,
+        length: node.name!.length,
+      );
+    } else {
+      _registerAsDefinition(element);
     }
   }
 
-  void _visitSimpleFormalParameter(SimpleFormalParameter node) {
-    if (node.declaredElement == null) return;
-
-    final element = node.declaredElement!;
-
-    final symbol = _symbolGenerator.symbolFor(element);
-    if (symbol != null) {
-      _registerSymbol(symbol, element);
-
-      occurrences.add(Occurrence(
-        range: _lineInfo.getRange(element.nameOffset, element.nameLength),
-        symbol: symbol,
-        symbolRoles: SymbolRole.Definition.value,
-      ));
-    }
-  }
-
-  // references to a type, String, int, SomeClass... anything that can be GoTo'ed
-  // This will be utilized for defining `Occurrences`
   void _visitSimpleIdentifier(SimpleIdentifier node) {
     final element = node.staticElement;
 
@@ -108,16 +97,40 @@ class ScipVisitor extends GeneralizingAstVisitor {
     //       EX: `color(path, front: Styles.YELLOW);` where `color` comes from the chalk-dart package
     if (element == null || element.source == null) return;
 
+    if (node.inDeclarationContext()) {
+      _registerAsDefinition(element);
+    } else {
+      _registerAsReference(
+        element,
+        offset: node.offset,
+        length: node.name.length,
+      );
+    }
+  }
+
+  /// Registers the provided [element] as a reference to an existing definition
+  ///
+  /// [node] refers to the ast node where the reference exists, [element]
+  /// is the resolved element of the downstream element.
+  ///
+  /// If [element] exists outside of the projects source, it will be added to the
+  /// [globalExternalSymbols].
+  void _registerAsReference(
+    Element element, {
+    required int offset,
+    required int length,
+  }) {
     final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
       occurrences.add(Occurrence(
-        range: _lineInfo.getRange(node.offset, node.name.length),
+        range: _lineInfo.getRange(offset, length),
         symbol: symbol,
       ));
 
       if (!element.source!.fullName.startsWith(_projectRoot)) {
-        if (globalExternalSymbols
-            .every((symbolInfo) => symbolInfo.symbol != symbol)) {
+        if (!globalExternalSymbols.any(
+          (symbolInfo) => symbolInfo.symbol == symbol,
+        )) {
           final meta = getSymbolMetadata(element);
           globalExternalSymbols.add(SymbolInformation(
             symbol: symbol,
@@ -128,11 +141,24 @@ class ScipVisitor extends GeneralizingAstVisitor {
     }
   }
 
-  void _registerSymbol(String symbol, Element ele) {
-    final meta = getSymbolMetadata(ele);
-    symbols.add(SymbolInformation(
-      symbol: symbol,
-      documentation: meta.documentation,
-    ));
+  /// Registers a provided [element] as a definition
+  ///
+  /// This adds both a symbol, and an occurrence for the element and it's
+  /// name
+  void _registerAsDefinition(Element element) {
+    final symbol = _symbolGenerator.symbolFor(element);
+    if (symbol != null) {
+      final meta = getSymbolMetadata(element);
+      symbols.add(SymbolInformation(
+        symbol: symbol,
+        documentation: meta.documentation,
+      ));
+
+      occurrences.add(Occurrence(
+        range: _lineInfo.getRange(element.nameOffset, element.nameLength),
+        symbol: symbol,
+        symbolRoles: SymbolRole.Definition.value,
+      ));
+    }
   }
 }

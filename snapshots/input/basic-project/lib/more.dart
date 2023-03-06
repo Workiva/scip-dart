@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:math' as math;
 
 enum AnimalType {
   cat,
@@ -65,4 +65,6 @@ void main() {
   print(cat);
   print(dog);
   print('The sum of $numbers is $sum');
+
+  print(math.Rectangle(1,2,3,4));
 }
