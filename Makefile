@@ -1,8 +1,12 @@
+regen-snapshots:
+	dart run scip_dart ./snapshots/input/basic-project --verbose
+	scip snapshot --to ./snapshots/output/basic-project
+
 run:
-	dart bin/main.dart ./snapshots/input/basic-project --verbose
+	dart run scip_dart ./snapshots/input/staging-project --verbose
 
 snap:
-	scip snapshot --to ./snapshots/output/basic-project
+	scip snapshot --to ./snapshots/output/staging-project
 
 lint:
 	scip lint ./index.scip
