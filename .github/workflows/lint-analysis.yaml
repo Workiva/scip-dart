@@ -21,15 +21,14 @@ jobs:
       # Clone + install deps on the matrix repo
       - uses: actions/checkout@v3
         with:
-          repo: ${{ matrix.repo }}
+          repository: ${{ matrix.repo }}
           path: ${{ matrix.repo }}
-      - uses: Workiva/gha-dart/pub-get@master
-        with:
-          package-path: ${{ matrix.repo }}
 
       - uses: Workiva/gha-dart/pub-get@master
       - name: Run scip indexing
-        run: dart run scip_dart ./${{ matrix.repo }} || exit 1
+        run: |
+          dart pub get
+          dart run scip_dart ./${{ matrix.repo }} || exit 1
         working-directory: ${{ matrix.repo }}
 
       - name: Install scip cli
