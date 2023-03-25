@@ -1,0 +1,55 @@
+name: Lint Analysis
+
+on:
+  pull_request:
+
+jobs:
+  lints:
+    runs-on: [self-hosted, small]
+    
+    strategy:
+      matrix:
+        repo: ["dart-lang/intl", "fluttercommunity/redux"]
+    
+    steps:
+      # Setup scip-dart
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 2.18.7
+
+      # Clone + install deps on the matrix repo
+      - uses: actions/checkout@v3
+        with:
+          repo: ${{ matrix.repo }}
+          path: ${{ matrix.repo }}
+      - uses: Workiva/gha-dart/pub-get@master
+        with:
+          package-path: ${{ matrix.repo }}
+
+      - uses: Workiva/gha-dart/pub-get@master
+      - name: Run scip indexing
+        run: dart run scip_dart ./${{ matrix.repo }} || exit 1
+        working-directory: ${{ matrix.repo }}
+
+      - name: Install scip cli
+        run: |
+          bash -c 'curl -L "https://github.com/sourcegraph/scip/releases/download/v0.2.3/scip-linux-amd64.tar.gz"' | tar xzf - scip
+          ./scip --version
+      
+      - name: Calculate Lints
+        run: |
+          LINTS=$(./scip lint ./${{ matrix.repo }}/index.scip)
+          ERRORS=$(echo "$LINTS" |& grep "error")
+          WARNINGS=$(echo "$LINTS" |& grep "warning")
+
+          echo "## `${{ matrix.repo }}`\n" > $GITHUB_STEP_SUMMARY
+          echo "- Errors $ERRORS\n" > $GITHUB_STEP_SUMMARY
+          echo "- Warnings $WARNINGS\n\n" > $GITHUB_STEP_SUMMARY
+
+
+
+
+
+
+      
