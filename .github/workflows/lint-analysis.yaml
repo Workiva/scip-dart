@@ -18,6 +18,11 @@ jobs:
         with:
           sdk: 2.18.7
 
+      - name: Install scip-dart
+        run: |
+          dart pub get
+          dart pub global activate -spath .
+
       # Clone + install deps on the matrix repo
       - uses: actions/checkout@v3
         with:
@@ -28,7 +33,7 @@ jobs:
       - name: Run scip indexing
         run: |
           dart pub get
-          dart run scip_dart ./${{ matrix.repo }} || exit 1
+          dart pub global run scip_dart ./${{ matrix.repo }} || exit 1
         working-directory: ${{ matrix.repo }}
 
       - name: Install scip cli
