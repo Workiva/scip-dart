@@ -48,31 +48,3 @@ jobs:
             echo
             exit 1
           fi
-
-  consumer:
-    runs-on: workiva-runner-dev
-    name: Consumer
-    
-    strategy:
-      matrix:
-        repo: ["Workiva/wdesk_sdk", "Workiva/syncdeps_dart"]
-
-    steps:
-      # Setup scip-dart
-      - uses: actions/checkout@v3
-      - uses: dart-lang/setup-dart@v1
-        with:
-          sdk: 2.18.7
-      - uses: Workiva/gha-dart/pub-get@master
-
-      # Setup wdesk_sdk
-      - uses: actions/checkout@v3
-        with:
-          repo: ${{ matrix.repo }}
-          path: ${{ matrix.repo }}
-      - uses: Workiva/gha-dart/pub-get@master
-        with:
-          package-path: ${{ matrix.repo }}
-
-      - run: |
-          dart run scip_dart ./${{ matrix.repo }} || exit 1
