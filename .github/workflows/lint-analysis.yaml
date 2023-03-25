@@ -29,11 +29,10 @@ jobs:
           repository: ${{ matrix.repo }}
           path: ${{ matrix.repo }}
 
-      - uses: Workiva/gha-dart/pub-get@master
       - name: Run scip indexing
         run: |
           dart pub get
-          dart pub global run scip_dart ./${{ matrix.repo }} || exit 1
+          dart pub global run scip_dart ./ || exit 1
         working-directory: ${{ matrix.repo }}
 
       - name: Install scip cli
