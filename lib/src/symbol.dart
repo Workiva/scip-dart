@@ -156,9 +156,12 @@ class SymbolGenerator {
     if (sourcePath.startsWith(_projectRoot)) {
       filePath = sourcePath.substring('${_projectRoot}/'.length);
     } else if (element.library?.isInSdk == true) {
-      // TODO: there has to be a better way to get the path to a 'dart:*' file
-      filePath = sourcePath
-          .substring(sourcePath.indexOf('dart-sdk/lib/') + 'dart-sdk/'.length);
+
+      if (element.enclosingElement?.source?.uri != null) {
+        filePath = element.enclosingElement!.source!.uri.toString();
+      } else {
+        throw Exception('Unable to find path to dart sdk element: $sourcePath');
+      }
     } else {
       final config = _packageConfig.packageOf(Uri.file(sourcePath));
       if (config == null) {
