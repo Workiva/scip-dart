@@ -42,13 +42,13 @@ jobs:
       
       - name: Calculate Lints
         run: |
-          ./scip lint ./${{ matrix.repo }}/lints.txt &> lints.txt
-          ERRORS=$(cat ./${{ matrix.repo }}/lints.txt |& grep "error" | wc)
-          WARNINGS=$(cat ./${{ matrix.repo }}/lints.txt |& grep "warning" | wc)
+          ./scip lint ./${{ matrix.repo }}/index.scip &> ./${{ matrix.repo }}/lints.txt
+          # ERRORS=$(cat ./${{ matrix.repo }}/lints.txt |& grep "error" | wc)
+          # WARNINGS=$(cat ./${{ matrix.repo }}/lints.txt |& grep "warning" | wc)
 
-          echo "## `${{ matrix.repo }}`\n" > $GITHUB_STEP_SUMMARY
-          echo "- Errors $ERRORS\n" > $GITHUB_STEP_SUMMARY
-          echo "- Warnings $WARNINGS\n\n" > $GITHUB_STEP_SUMMARY
+          # echo "## `${{ matrix.repo }}`\n" > $GITHUB_STEP_SUMMARY
+          # echo "- Errors $ERRORS\n" > $GITHUB_STEP_SUMMARY
+          # echo "- Warnings $WARNINGS\n\n" > $GITHUB_STEP_SUMMARY
 
 
 
