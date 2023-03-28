@@ -248,7 +248,8 @@ class SymbolGenerator {
     if (element.enclosingElement?.source?.uri != null) {
       return element.enclosingElement!.source!.uri.toString();
     } else {
-      throw Exception('Unable to find path to dart sdk element: ${element.source!.fullName}');
+      throw Exception(
+          'Unable to find path to dart sdk element: ${element.source!.fullName}');
     }
   }
 
