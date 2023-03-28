@@ -9,7 +9,7 @@ on:
 
 jobs:
   snapshots:
-    runs-on: workiva-runner-dev
+    runs-on: [self-hosted, small]
     name: Snapshots
     
     steps:

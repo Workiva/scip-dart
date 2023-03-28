@@ -26,7 +26,7 @@ jobs:
       # Clone + install deps on the matrix repo
       - uses: actions/checkout@v3
         with:
-          repository: ${{ matrix.repo }}
+          repo: ${{ matrix.repo }}
           path: ${{ matrix.repo }}
 
       - name: Run scip indexing
