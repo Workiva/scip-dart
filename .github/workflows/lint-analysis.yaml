@@ -3,6 +3,10 @@ name: Lint Analysis
 on:
   pull_request:
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   lints:
     runs-on: [self-hosted, small]
@@ -18,6 +22,9 @@ jobs:
         with:
           sdk: 2.18.7
 
+      - name: Setup Credentials
+        uses: Workiva/gha-setup-credentials@refs/tags/v1.0.0
+
       - name: Install scip-dart
         run: |
           dart pub get
@@ -26,6 +33,7 @@ jobs:
       # Clone + install deps on the matrix repo
       - uses: actions/checkout@v3
         with:
+          token: ${{ env.FEF_GH_TOKEN }}
           repository: ${{ matrix.repo }}
           path: ${{ matrix.repo }}
 
