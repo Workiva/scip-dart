@@ -97,6 +97,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
     //       EX: `color(path, front: Styles.YELLOW);` where `color` comes from the chalk-dart package
     if (element == null || element.source == null) return;
 
+
     if (node.inDeclarationContext()) {
       _registerAsDefinition(element);
     } else {
