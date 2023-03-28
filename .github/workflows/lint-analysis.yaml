@@ -46,8 +46,7 @@ jobs:
           ERRORS=$(cat ./${{ matrix.repo }}/lints.txt | grep "error" | wc -l)
           WARNINGS=$(cat ./${{ matrix.repo }}/lints.txt | grep "warning" | wc -l)
 
-          echo "- Errors $ERRORS" > $GITHUB_STEP_SUMMARY
-          echo "- Warnings $WARNINGS" > $GITHUB_STEP_SUMMARY
+          echo "- Errors $ERRORS\n- Warnings $WARNINGS" >> $GITHUB_STEP_SUMMARY
 
 
 
