@@ -12,43 +12,43 @@ jobs:
         repo: ["dart-lang/intl", "fluttercommunity/redux"]
     
     steps:
-      # Setup scip-dart
-      - uses: actions/checkout@v3
-      - uses: dart-lang/setup-dart@v1
-        with:
-          sdk: 2.18.7
+      # # Setup scip-dart
+      # - uses: actions/checkout@v3
+      # - uses: dart-lang/setup-dart@v1
+      #   with:
+      #     sdk: 2.18.7
 
-      - name: Install scip-dart
-        run: |
-          dart pub get
-          dart pub global activate -spath .
+      # - name: Install scip-dart
+      #   run: |
+      #     dart pub get
+      #     dart pub global activate -spath .
 
-      # Clone + install deps on the matrix repo
-      - uses: actions/checkout@v3
-        with:
-          repository: ${{ matrix.repo }}
-          path: ${{ matrix.repo }}
+      # # Clone + install deps on the matrix repo
+      # - uses: actions/checkout@v3
+      #   with:
+      #     repository: ${{ matrix.repo }}
+      #     path: ${{ matrix.repo }}
 
-      - name: Run scip indexing
-        run: |
-          dart pub get
-          dart pub global run scip_dart ./ || exit 1
-        working-directory: ${{ matrix.repo }}
+      # - name: Run scip indexing
+      #   run: |
+      #     dart pub get
+      #     dart pub global run scip_dart ./ || exit 1
+      #   working-directory: ${{ matrix.repo }}
 
-      - name: Install scip cli
-        run: |
-          bash -c 'curl -L "https://github.com/sourcegraph/scip/releases/download/v0.2.3/scip-linux-amd64.tar.gz"' | tar xzf - scip
-          ./scip --version
+      # - name: Install scip cli
+      #   run: |
+      #     bash -c 'curl -L "https://github.com/sourcegraph/scip/releases/download/v0.2.3/scip-linux-amd64.tar.gz"' | tar xzf - scip
+      #     ./scip --version
       
       - name: Calculate Lints
         run: |
-          ./scip lint ./${{ matrix.repo }}/index.scip &> ${{ matrix.repo }}/lints.txt || exit 0
-          ERRORS=$(cat ./${{ matrix.repo }}/lints.txt |& grep "error" | wc)
-          WARNINGS=$(cat ./${{ matrix.repo }}/lints.txt |& grep "warning" | wc)
+          # ./scip lint ./${{ matrix.repo }}/index.scip &> ${{ matrix.repo }}/lints.txt || exit 0
+          # ERRORS=$(cat ./${{ matrix.repo }}/lints.txt |& grep "error" | wc)
+          # WARNINGS=$(cat ./${{ matrix.repo }}/lints.txt |& grep "warning" | wc)
 
-          echo "## `${{ matrix.repo }}`\n" > $GITHUB_STEP_SUMMARY
-          echo "- Errors $ERRORS\n" > $GITHUB_STEP_SUMMARY
-          echo "- Warnings $WARNINGS\n\n" > $GITHUB_STEP_SUMMARY
+          echo "## `${{ matrix.repo }}`\n" >> $GITHUB_STEP_SUMMARY
+          # echo "- Errors $ERRORS\n" > $GITHUB_STEP_SUMMARY
+          # echo "- Warnings $WARNINGS\n\n" > $GITHUB_STEP_SUMMARY
 
 
 
