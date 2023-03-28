@@ -9,7 +9,7 @@ jobs:
     
     strategy:
       matrix:
-        repo: ["dart-lang/intl", "fluttercommunity/redux.dart"]
+        repo: ["dart-lang/intl", "fluttercommunity/redux.dart", "Workiva/wdesk_sdk", "Workiva/graph_app", "Workiva/doc_plat_client"]
     
     steps:
       # Setup scip-dart
