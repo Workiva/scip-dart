@@ -9,7 +9,7 @@ jobs:
     
     strategy:
       matrix:
-        repo: ["dart-lang/intl", "fluttercommunity/redux"]
+        repo: ["dart-lang/intl", "fluttercommunity/redux.dart"]
     
     steps:
       # Setup scip-dart
