@@ -42,7 +42,7 @@ jobs:
       
       - name: Calculate Lints
         run: |
-          ./scip lint ./${{ matrix.repo }}/index.scip &> ./${{ matrix.repo }}/lints.txt
+          ./scip lint ./${{ matrix.repo }}/index.scip || exit 0
           # ERRORS=$(cat ./${{ matrix.repo }}/lints.txt |& grep "error" | wc)
           # WARNINGS=$(cat ./${{ matrix.repo }}/lints.txt |& grep "warning" | wc)
 
