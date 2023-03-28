@@ -86,20 +86,9 @@ class SymbolGenerator {
   }
 
   String _sdkPackageSymbolFor(Element element) {
-    final path = element.source!.fullName;
-
-    final searchPrefix = 'dart-sdk/lib/';
-    if (!path.contains(searchPrefix)) {
-      throw Exception('Dart sdk path was not incorrect format: ${path}');
-    }
-    final partialPath =
-        path.substring(path.indexOf(searchPrefix) + searchPrefix.length);
-    final dependencyName = partialPath.substring(0, partialPath.indexOf('/'));
-
-    final packageName = 'dart:$dependencyName';
+    final packageName = _pathForSdkElement(element).split('/').first;
     final packageVersion = element.library!.languageVersion.package.toString();
-
-    return 'pub $packageName $packageVersion';
+    return 'pub ${packageName} $packageVersion';
   }
 
   String _currentPackageSymbolFor(Element element) {
@@ -155,10 +144,8 @@ class SymbolGenerator {
     String filePath;
     if (sourcePath.startsWith(_projectRoot)) {
       filePath = sourcePath.substring('${_projectRoot}/'.length);
-    } else if (element.library?.isInSdk == true) {
-      // TODO: there has to be a better way to get the path to a 'dart:*' file
-      filePath = sourcePath
-          .substring(sourcePath.indexOf('dart-sdk/lib/') + 'dart-sdk/'.length);
+    } else if (_isInSdk(element)) {
+      filePath = _pathForSdkElement(element);
     } else {
       final config = _packageConfig.packageOf(Uri.file(sourcePath));
       if (config == null) {
@@ -255,6 +242,15 @@ class SymbolGenerator {
 
   bool _isInSdk(Element element) {
     return element.library?.isInSdk == true;
+  }
+
+  String _pathForSdkElement(Element element) {
+    if (element.enclosingElement?.source?.uri != null) {
+      return element.enclosingElement!.source!.uri.toString();
+    } else {
+      throw Exception(
+          'Unable to find path to dart sdk element: ${element.source!.fullName}');
+    }
   }
 
   bool _isInCurrentPackage(Element element) {
