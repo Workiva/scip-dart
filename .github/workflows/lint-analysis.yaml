@@ -26,13 +26,13 @@ jobs:
       # Clone + install deps on the matrix repo
       - uses: actions/checkout@v3
         with:
-          repo: ${{ matrix.repo }}
+          repository: ${{ matrix.repo }}
           path: ${{ matrix.repo }}
 
       - name: Run scip indexing
         run: |
           dart pub get
-          dart pub global run scip_dart ./ || exit 1
+          dart pub global run scip_dart ./
         working-directory: ${{ matrix.repo }}
 
       - name: Install scip cli
