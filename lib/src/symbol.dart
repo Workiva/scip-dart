@@ -205,11 +205,6 @@ class SymbolGenerator {
       return '${_getDescriptor(encEle)}(${element.name})';
     }
 
-    if (element is FieldElement) {
-      final encEle = element.enclosingElement;
-      return '${_getDescriptor(encEle)}${element.name}.';
-    }
-
     if (element is PropertyAccessorElement) {
       final parentName = element.enclosingElement.name;
       return [
@@ -217,6 +212,11 @@ class SymbolGenerator {
         if (parentName != null) '$parentName#',
         '${element.name}.'
       ].join();
+    }
+
+    if (element is FieldElement) {
+      final encEle = element.enclosingElement;
+      return '${_getDescriptor(encEle)}${element.name}.';
     }
 
     display('\n'
