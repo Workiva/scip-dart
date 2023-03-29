@@ -19,7 +19,7 @@ class Animal with SleepMixin {
   AnimalType type;
   SoundMaker? soundMaker;
 
-  Animal(this.name, this.type) {
+  Animal(this.name, {required this.type}) {
     switch (type) {
       case AnimalType.cat:
         soundMaker = () => print('Meow!');
@@ -53,8 +53,8 @@ void main() {
   List<int> numbers = [1, 2, 3, 4, 5];
   int sum = calculateSum(numbers);
 
-  Animal cat = Animal('Kitty', AnimalType.cat);
-  Animal dog = Animal('Buddy', AnimalType.dog);
+  Animal cat = Animal('Kitty', type: AnimalType.cat);
+  Animal dog = Animal('Buddy', type: AnimalType.dog);
 
   cat.makeSound();
   cat.sleep();

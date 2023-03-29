@@ -189,11 +189,6 @@ class SymbolGenerator {
       return '${_getDescriptor(encEle)}[${element.name}]';
     }
 
-    if (element is FieldElement || element is FieldFormalParameterElement) {
-      final encEle = element.enclosingElement;
-      return '${_getDescriptor(encEle!)}${element.name}.';
-    }
-
     // only generate symbols for named parameters, all others are 'local x'
     if (element is ParameterElement && element.isNamed) {
       final encEle = element.enclosingElement;
@@ -208,6 +203,11 @@ class SymbolGenerator {
       if (element is GenericFunctionTypeElement) return null;
 
       return '${_getDescriptor(encEle)}(${element.name})';
+    }
+
+    if (element is FieldElement) {
+      final encEle = element.enclosingElement;
+      return '${_getDescriptor(encEle)}${element.name}.';
     }
 
     if (element is PropertyAccessorElement) {
