@@ -79,16 +79,14 @@ class ScipVisitor extends GeneralizingAstVisitor {
     if (node is FieldFormalParameter) {
       final fieldElement = (element as FieldFormalParameterElement).field;
       _registerAsReference(
-        fieldElement!, 
-        offset: node.thisKeyword.offset, 
+        fieldElement!,
+        offset: node.thisKeyword.offset,
         length: node.thisKeyword.length,
       );
     }
 
     _registerAsDefinition(element);
   }
-
-
 
   void _visitSimpleIdentifier(SimpleIdentifier node) {
     final element = node.staticElement;
