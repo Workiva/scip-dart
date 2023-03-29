@@ -76,18 +76,19 @@ class ScipVisitor extends GeneralizingAstVisitor {
     final element = node.declaredElement;
     if (element == null) return;
 
-    // FieldFormalParameters reference a field instead of define a declaration
-    // register them as such
-    if (element is FieldFormalParameterElement) {
+    if (node is FieldFormalParameter) {
+      final fieldElement = (element as FieldFormalParameterElement).field;
       _registerAsReference(
-        element.field!,
-        offset: node.name!.offset,
-        length: node.name!.length,
+        fieldElement!, 
+        offset: node.thisKeyword.offset, 
+        length: node.thisKeyword.length,
       );
-    } else {
-      _registerAsDefinition(element);
     }
+
+    _registerAsDefinition(element);
   }
+
+
 
   void _visitSimpleIdentifier(SimpleIdentifier node) {
     final element = node.staticElement;
