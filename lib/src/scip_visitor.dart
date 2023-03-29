@@ -92,13 +92,11 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
   void _visitSimpleIdentifier(SimpleIdentifier node) {
     final element = node.staticElement;
-    // print(':: $node ${node.runtimeType} ${element.runtimeType}');
 
     // element is null if there's nothing really to do for this node. Example: `void`
     // TODO: One weird issue found: named parameters of external symbols were element.source
     //       EX: `color(path, front: Styles.YELLOW);` where `color` comes from the chalk-dart package
     if (element == null || element.source == null) return;
-
 
     if (node.inDeclarationContext()) {
       _registerAsDefinition(element);
