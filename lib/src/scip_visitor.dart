@@ -32,7 +32,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
           _projectRoot,
           pubspec,
         ) {
-    final fileSymbol = _symbolGenerator.fileSymbolFor(_relativePath);
+    final fileSymbol = _symbolGenerator.fileSymbolForPath(_relativePath);
     occurrences.add(Occurrence(
       symbol: fileSymbol,
       range: [0, 0, 0],
@@ -60,6 +60,8 @@ class ScipVisitor extends GeneralizingAstVisitor {
       _visitNormalFormalParameter(node);
     } else if (node is SimpleIdentifier) {
       _visitSimpleIdentifier(node);
+    } else if (node is Directive) {
+      _visitDirective(node);
     }
 
     super.visitNode(node);
@@ -105,6 +107,39 @@ class ScipVisitor extends GeneralizingAstVisitor {
         length: node.name.length,
       );
     }
+  }
+
+  void _visitDirective(Directive node) {
+    final element = node.element;
+
+    StringLiteral uriLiteral;
+    if (node is UriBasedDirective) {
+      uriLiteral = node.uri;
+    } else if (node is PartOfDirective && node.uri != null) {
+      uriLiteral = node.uri!;
+    } else {
+      return;
+    }
+
+    // uri is a non-relative, package (or dart sdk) uri: 
+    // Eg: `package:<name>/<path>.dart`, `dart:<name>`
+
+    // Uri uri;
+    // if (element is LibraryImportElement) {
+    //   uri = (element.uri as DirectiveUriWithSource).source.uri;
+    // } else if (element is LibraryExportElement) {
+    //   uri = (element.uri as DirectiveUriWithSource).source.uri;
+    // } else if (element is PartElement) {
+    //   uri = (element.uri as DirectiveUriWithSource).source.uri;
+    // } else if (node is PartOfDirective && element is LibraryElement) {
+    //   uri = element.source.uri;
+    // } else {
+    //   return;
+    // }
+
+    _symbolGenerator.symbolFor(element!);
+
+    // _symbolGenerator.fileSymbolForUri(uri);
   }
 
   /// Registers the provided [element] as a reference to an existing definition

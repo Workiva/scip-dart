@@ -56,7 +56,7 @@ class SymbolGenerator {
     ].join(' ');
   }
 
-  String fileSymbolFor(String path) {
+  String fileSymbolForPath(String path) {
     return [
       'scip-dart',
       'pub ${_pubspec.name} ${_pubspec.version}',
@@ -218,6 +218,33 @@ class SymbolGenerator {
       final encEle = element.enclosingElement;
       return '${_getDescriptor(encEle)}${element.name}.';
     }
+
+    if (
+      element is LibraryImportElement || 
+      element is LibraryExportElement || 
+      element is PartElement
+    ) {
+      DirectiveUriWithSource directiveUri;
+      if (element is LibraryImportElement) {
+        directiveUri = element.uri as DirectiveUriWithSource;
+      } else if (element is LibraryExportElement) {
+        directiveUri = element.uri as DirectiveUriWithSource;
+      } else if (element is PartElement) {
+        directiveUri = element.uri as DirectiveUriWithSource;
+      } else {
+        return null;
+      }
+
+      final config = _packageConfig.packageOf(Uri.file(sourcePath));
+      if (config == null) {
+        throw Exception('Could not find package for $sourcePath. Have you run pub get?');
+      }
+
+      return _escapeNamespacePath(
+        sourcePath.substring(config.root.toFilePath().length),
+      );
+    }
+
 
     display('\n'
         'Received unknown type (${element.runtimeType})\n'
