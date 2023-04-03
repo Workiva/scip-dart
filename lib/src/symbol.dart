@@ -55,8 +55,8 @@ class SymbolGenerator {
       _getDescriptor(element),
     ].join(' ');
   }
-
-  String fileSymbolForPath(String path) {
+  
+  String symbolForFile(String path) {
     return [
       'scip-dart',
       'pub ${_pubspec.name} ${_pubspec.version}',
@@ -78,9 +78,10 @@ class SymbolGenerator {
 
     if (_isInSdk(element)) {
       return _sdkPackageSymbolFor(element);
-    } else if (_isInCurrentPackage(element)) {
-      return _currentPackageSymbolFor(element);
     }
+    // } else if (_isInCurrentPackage(element)) {
+    //   return _currentPackageSymbolFor(element);
+    // }
 
     return _externalPackageSymbolFor(element);
   }
@@ -105,6 +106,12 @@ class SymbolGenerator {
       // in the pubspec (as a main or transitive dep)
       throw Exception('Unable to find package within packageConfig');
     }
+
+    // print(element.library?.);
+    // final pk = element.metadata.firstWhere(
+    //   (e) => e.computeConstantValue()?.type?.n == 'Package',
+    //   orElse: () => null,
+    // ).computeConstantValue()?.toMap();
 
     final packageName = package.name;
 

@@ -32,7 +32,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
           _projectRoot,
           pubspec,
         ) {
-    final fileSymbol = _symbolGenerator.fileSymbolForPath(_relativePath);
+    final fileSymbol = _symbolGenerator.symbolForFile(_relativePath);
     occurrences.add(Occurrence(
       symbol: fileSymbol,
       range: [0, 0, 0],
