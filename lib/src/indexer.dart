@@ -34,11 +34,11 @@ Future<Index> indexPackage(
 
   final collection = AnalysisContextCollection(
     includedPaths: [
-      ...allPackageRoots,
+      // ...allPackageRoots,
       ...indexedPaths,
     ],
   );
-
+  print(indexedPaths.toList());
   if (Flags.instance.performance) print('Analyzing Source');
   final st = Stopwatch()..start();
 
@@ -47,6 +47,8 @@ Future<Index> indexPackage(
     final files = context.contextRoot
         .analyzedFiles()
         .where((file) => p.extension(file) == '.dart');
+    
+    files.forEach((file) => print(file));
 
     return files.map(context.currentSession.getResolvedUnit);
   }).expand((resUnits) => resUnits);
