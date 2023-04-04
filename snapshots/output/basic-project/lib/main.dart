@@ -94,6 +94,7 @@
 //                      ^^^^^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/SomeLocalClass#
   /// Reference external class: [Foo]
 //                               ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
+  /// Missing Reference: [IDontExist]
   void someFunction(int value) {
 //     ^^^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/someFunction().
 //     documentation ```dart

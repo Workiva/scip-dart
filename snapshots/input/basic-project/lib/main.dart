@@ -41,6 +41,7 @@ class SomeLocalClass {}
 /// Reference parameter: [value]
 /// Reference class: [SomeLocalClass]
 /// Reference external class: [Foo]
+/// Missing Reference: [IDontExist]
 void someFunction(int value) {
   Foo(1);
 }
