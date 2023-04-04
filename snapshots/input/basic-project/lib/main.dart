@@ -1,3 +1,5 @@
+import 'package:dart_test/more.dart';
+
 /// This is a fib function
 ///
 /// Takes a number
@@ -32,4 +34,13 @@ void main() {
 
 void forever() {
   return forever();
+}
+
+class Foo {}
+
+/// Reference parameter: [value]
+/// Reference class: [Foo]
+/// Reference external class: [Animal]
+void someFunction(int value) {
+  Animal('', type: AnimalType.bird);
 }

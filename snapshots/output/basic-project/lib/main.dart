@@ -1,5 +1,7 @@
-  /// This is a fib function
+  import 'package:dart_test/more.dart';
 // definition scip-dart pub dart_test 1.0.0 lib/main.dart/
+  
+  /// This is a fib function
   ///
   /// Takes a number
   /// Returns a number
@@ -82,3 +84,26 @@
 //         ^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/forever().
   }
   
+  class Foo {}
+//      ^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/Foo#
+//      documentation ```dart
+  
+  /// Reference parameter: [value]
+//                          ^^^^^ reference local 5
+  /// Reference class: [Foo]
+//                      ^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/Foo#
+  /// Reference external class: [Animal]
+//                               ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#
+  void someFunction(int value) {
+//     ^^^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/someFunction().
+//     documentation ```dart
+//     documentation Reference parameter: [value]
+//                  ^^^ reference scip-dart pub dart:core 2.18.0 dart:core/int.dart/int#
+//                      ^^^^^ definition local 5
+//                      documentation ```dart
+    Animal('', type: AnimalType.bird);
+//  ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#
+//             ^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#<constructor>().(type)
+//                   ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#
+//                              ^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#bird.
+  }
