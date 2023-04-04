@@ -47,7 +47,7 @@ Future<Index> indexPackage(
     final files = context.contextRoot
         .analyzedFiles()
         .where((file) => p.extension(file) == '.dart');
-    
+
     files.forEach((file) => print(file));
 
     return files.map(context.currentSession.getResolvedUnit);
