@@ -44,13 +44,6 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
   @override
   void visitNode(AstNode node) {
-    // print(':: $node ${node.runtimeType}');
-    if (node is Comment) {
-      // For now, don't parse anything within comments (this was broken for
-      // local references). Later update to support this
-      return;
-    }
-
     // [visitDeclaration] on the [GeneralizingAstVisitor] does not match parameters
     // even though the parameter node extends [Declaration]. This is a workaround
     // to correctly parse all [Declaration] ast nodes.

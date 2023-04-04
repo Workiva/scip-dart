@@ -1,3 +1,5 @@
+import 'package:dart_test/other.dart';
+
 /// This is a fib function
 ///
 /// Takes a number
@@ -32,4 +34,14 @@ void main() {
 
 void forever() {
   return forever();
+}
+
+class SomeLocalClass {}
+
+/// Reference parameter: [value]
+/// Reference class: [SomeLocalClass]
+/// Reference external class: [Foo]
+/// Missing Reference: [IDontExist]
+void someFunction(int value) {
+  Foo(1);
 }
