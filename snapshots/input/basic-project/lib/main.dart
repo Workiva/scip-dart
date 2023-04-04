@@ -1,4 +1,4 @@
-import 'package:dart_test/more.dart';
+import 'package:dart_test/other.dart';
 
 /// This is a fib function
 ///
@@ -36,11 +36,11 @@ void forever() {
   return forever();
 }
 
-class Foo {}
+class SomeLocalClass {}
 
 /// Reference parameter: [value]
-/// Reference class: [Foo]
-/// Reference external class: [Animal]
+/// Reference class: [SomeLocalClass]
+/// Reference external class: [Foo]
 void someFunction(int value) {
-  Animal('', type: AnimalType.bird);
+  Foo(1);
 }
