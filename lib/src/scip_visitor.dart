@@ -11,6 +11,8 @@ import 'package:scip_dart/src/utils.dart';
 
 List<SymbolInformation> globalExternalSymbols = [];
 
+String newField = 'asdf';
+
 class ScipVisitor extends GeneralizingAstVisitor {
   final String _relativePath;
   final String _projectRoot;
@@ -32,6 +34,9 @@ class ScipVisitor extends GeneralizingAstVisitor {
           _projectRoot,
           pubspec,
         ) {
+
+    print(newField);
+      
     final fileSymbol = _symbolGenerator.fileSymbolFor(_relativePath);
     occurrences.add(Occurrence(
       symbol: fileSymbol,
