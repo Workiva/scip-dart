@@ -7,12 +7,17 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:path/path.dart' as p;
 import 'package:scip_dart/src/flags.dart';
 
+/// This is a doc comment on a new field!
+String newField = 'newField!';
+
 Future<void> main(List<String> args) async {
   final result = (ArgParser()
         ..addFlag('performance', aliases: ['perf'], defaultsTo: false)
         ..addFlag('verbose', abbr: 'v', defaultsTo: false)
         ..addMultiOption('path', abbr: 'p', defaultsTo: ['./lib']))
       .parse(args);
+
+  print(newField);
 
   Flags.instance.init(result);
 
