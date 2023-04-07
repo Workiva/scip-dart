@@ -116,7 +116,7 @@ class SymbolGenerator {
   /// ```
   String? _getDescriptor(Element element) {
     if (element.source == null) {
-      print(
+      display(
         'WARN: Element has null source: '
         '${element.runtimeType} (${element}) '
         '${element.location?.components}',
@@ -126,9 +126,7 @@ class SymbolGenerator {
     final sourcePath = element.source!.fullName;
 
     String filePath;
-    if (sourcePath.startsWith(_projectRoot)) {
-      filePath = sourcePath.substring('${_projectRoot}/'.length);
-    } else if (_isInSdk(element)) {
+    if (_isInSdk(element)) {
       filePath = _pathForSdkElement(element);
     } else {
       final config = _packageConfig.packageOf(Uri.file(sourcePath));
@@ -204,16 +202,19 @@ class SymbolGenerator {
     }
 
     display('\n'
-        'Received unknown type (${element.runtimeType})\n'
-        '\tname: ${element.name}\n'
-        '\tpath: (${element.library!.source.fullName})'
-        '\n');
+      'Received unknown type (${element.runtimeType})\n'
+      '\tname: ${element.name}\n'
+      '\tpath: (${element.library!.source.fullName})'
+      '\n',
+    );
     return null;
   }
 
   String _localSymbolFor(Element ele) {
     _localElementRegistry.putIfAbsent(
-        ele, () => 'local ${_localElementIndex++}');
+      ele, 
+      () => 'local ${_localElementIndex++}',
+    );
     return _localElementRegistry[ele]!;
   }
 
