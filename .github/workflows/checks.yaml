@@ -12,7 +12,7 @@ jobs:
         with:
           sdk: stable
       - run: dart pub get
-      - run: dart format --output=none --set-exit-if-changed .
+      - run: dart run dart_dev format
 
   dependency-validator:
     runs-on: workiva-runner-dev
