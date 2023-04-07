@@ -9,9 +9,7 @@ on:
 
 jobs:
   snapshots:
-    runs-on: workiva-runner-dev
-    name: Snapshots
-    
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install scip cli
@@ -20,18 +18,12 @@ jobs:
           ./scip --version
 
       - uses: dart-lang/setup-dart@v1
-        with:
-          sdk: 2.18.7
-      
-      # run `pub get` for the scip-dart package
-      - name: Pub get cli
-        uses: Workiva/gha-dart/pub-get@master
+      - name: pub get scip-dart package
+        run: dart pub get
 
-      # run `pub get` for `snapshots`
-      - name: Pub get snapshots dir
-        uses: Workiva/gha-dart/pub-get@master
-        with:
-          package-path: ./snapshots/input/basic-project
+      - name: pub get snapshots directory
+        run: dart pub get
+        working-directory: ./snapshots/input/basic-project
       
       - name: Snapshots Diff Check
         run: |
@@ -50,29 +42,25 @@ jobs:
           fi
 
   consumer:
-    runs-on: workiva-runner-dev
-    name: Consumer
+    runs-on: ubuntu-latest
     
     strategy:
       matrix:
-        repo: ["Workiva/wdesk_sdk", "Workiva/syncdeps_dart"]
+        repo: ["Workiva/over_react", "rrousselGit/provider", "dart-lang/args"]
 
     steps:
       # Setup scip-dart
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
-        with:
-          sdk: 2.18.7
       - uses: Workiva/gha-dart/pub-get@master
 
-      # Setup wdesk_sdk
+      # Setup repo to run on
       - uses: actions/checkout@v3
         with:
           repo: ${{ matrix.repo }}
           path: ${{ matrix.repo }}
-      - uses: Workiva/gha-dart/pub-get@master
-        with:
-          package-path: ${{ matrix.repo }}
+      - run: dart pub get
+        working-directory: ${{ matrix.repo }}
 
       - run: |
           dart run scip_dart ./${{ matrix.repo }} || exit 1
