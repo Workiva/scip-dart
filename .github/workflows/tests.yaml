@@ -18,6 +18,9 @@ jobs:
           ./scip --version
 
       - uses: dart-lang/setup-dart@v1
+        with:
+          # use a fixed version number so changes to 'stable', dont break snapshot diffs (language version is used in the scip symbol)
+          sdk: 2.18.7
       - name: pub get scip-dart package
         run: dart pub get
 
