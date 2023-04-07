@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:package_config/package_config.dart';
-import 'package:path/path.dart' as p;
+import 'package:scip_dart/src/package_version_cache.dart';
 import 'package:scip_dart/src/utils.dart';
 
 /// Generates symbols for a specific file.
@@ -76,42 +76,23 @@ class SymbolGenerator {
       throw Exception('Not really sure what to do here');
     }
 
+    // sdk packages are not defined within the [_packageConfig], version
+    // and name must be handled custom
     if (_isInSdk(element)) {
-      return _sdkPackageSymbolFor(element);
-    } else if (_isInCurrentPackage(element)) {
-      return _currentPackageSymbolFor(element);
+      final packageName = _pathForSdkElement(element).split('/').first;
+      final packageVersion = element.library!.languageVersion.package.toString();
+      return 'pub $packageName $packageVersion';
     }
 
-    return _externalPackageSymbolFor(element);
-  }
-
-  String _sdkPackageSymbolFor(Element element) {
-    final packageName = _pathForSdkElement(element).split('/').first;
-    final packageVersion = element.library!.languageVersion.package.toString();
-    return 'pub ${packageName} $packageVersion';
-  }
-
-  String _currentPackageSymbolFor(Element element) {
-    final packageName = _pubspec.name;
-    final packageVersion = _pubspec.version.toString();
-    return 'pub $packageName $packageVersion';
-  }
-
-  String _externalPackageSymbolFor(Element element) {
-    final package =
-        _packageConfig.packageOf(Uri.file(element.source!.fullName));
+    final package = _packageConfig.packageOf(Uri.file(element.source!.fullName));
     if (package == null) {
       // this should only happen if the source references a package that is not defined
       // in the pubspec (as a main or transitive dep)
       throw Exception('Unable to find package within packageConfig');
     }
 
-    final packageName = package.name;
-
-    final rootPath = p.basename(package.root.toString());
-    final packageVersion = rootPath.substring(rootPath.lastIndexOf('-') + 1);
-
-    return 'pub $packageName $packageVersion';
+    final packageVersion = PackageVersionCache.versionFor(package.root.toFilePath());
+    return 'pub ${package.name} $packageVersion';
   }
 
   /// Returns a scip symbol descriptor for a provided [Element].
@@ -136,7 +117,10 @@ class SymbolGenerator {
   String? _getDescriptor(Element element) {
     if (element.source == null) {
       print(
-          'WARN: Element has null source: ${element.runtimeType} (${element}) ${element.location?.components}');
+        'WARN: Element has null source: '
+        '${element.runtimeType} (${element}) '
+        '${element.location?.components}',
+      );
       return null;
     }
     final sourcePath = element.source!.fullName;
@@ -251,9 +235,5 @@ class SymbolGenerator {
       throw Exception(
           'Unable to find path to dart sdk element: ${element.source!.fullName}');
     }
-  }
-
-  bool _isInCurrentPackage(Element element) {
-    return element.source!.fullName.startsWith(_projectRoot);
   }
 }
