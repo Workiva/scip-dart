@@ -80,18 +80,21 @@ class SymbolGenerator {
     // and name must be handled custom
     if (_isInSdk(element)) {
       final packageName = _pathForSdkElement(element).split('/').first;
-      final packageVersion = element.library!.languageVersion.package.toString();
+      final packageVersion =
+          element.library!.languageVersion.package.toString();
       return 'pub $packageName $packageVersion';
     }
 
-    final package = _packageConfig.packageOf(Uri.file(element.source!.fullName));
+    final package =
+        _packageConfig.packageOf(Uri.file(element.source!.fullName));
     if (package == null) {
       // this should only happen if the source references a package that is not defined
       // in the pubspec (as a main or transitive dep)
       throw Exception('Unable to find package within packageConfig');
     }
 
-    final packageVersion = PackageVersionCache.versionFor(package.root.toFilePath());
+    final packageVersion =
+        PackageVersionCache.versionFor(package.root.toFilePath());
     return 'pub ${package.name} $packageVersion';
   }
 
@@ -201,7 +204,8 @@ class SymbolGenerator {
       return '${_getDescriptor(encEle)}${element.name}.';
     }
 
-    display('\n'
+    display(
+      '\n'
       'Received unknown type (${element.runtimeType})\n'
       '\tname: ${element.name}\n'
       '\tpath: (${element.library!.source.fullName})'
@@ -212,7 +216,7 @@ class SymbolGenerator {
 
   String _localSymbolFor(Element ele) {
     _localElementRegistry.putIfAbsent(
-      ele, 
+      ele,
       () => 'local ${_localElementIndex++}',
     );
     return _localElementRegistry[ele]!;
