@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:package_config/package_config.dart';
@@ -64,6 +65,52 @@ class SymbolGenerator {
     ].join(' ');
   }
 
+  String? symbolForDirective(Directive node, Element element) {
+    Uri uri;
+    if (element is LibraryImportElement) {
+      uri = (element.uri as DirectiveUriWithSource).source.uri;
+    } else if (element is LibraryExportElement) {
+      uri = (element.uri as DirectiveUriWithSource).source.uri;
+    } else if (element is PartElement) {
+      uri = (element.uri as DirectiveUriWithSource).source.uri;
+    } else if (node is PartOfDirective && element is LibraryElement) {
+      uri = element.source.uri;
+    } else {
+      return null;
+    }
+
+    if (uri.toString().startsWith('dart')) {
+      return [
+        _getPackage(element),
+        _escapeNamespacePath(_pathForSdkElement(element)) + '/'
+      ].join(' ');
+    } else {
+
+    }
+
+    if (uri.toString().startsWith('package')) {
+      final resolvedUri = _packageConfig.resolve(uri);
+      if (resolvedUri == null) return null;
+      uri = resolvedUri;
+    }
+
+    final config = _packageConfig.packageOf(uri);
+    if (config == null) return null;
+
+    final relativePath = _escapeNamespacePath(
+      uri.toFilePath().substring(config.root.toFilePath().length),
+    );
+
+    final packageName = config.name;
+    final version = PackageVersionCache.versionFor(config.root.toFilePath());
+
+    return [
+      'scip-dart',
+      'pub $packageName $version',
+      '$relativePath/',
+    ].join(' ');
+  }
+
   /// Returns a scip package symbol for a provided [Element].
   ///
   /// <package>      ::= <manager> ' ' <package-name> ' ' <version>
@@ -84,9 +131,6 @@ class SymbolGenerator {
           element.library!.languageVersion.package.toString();
       return 'pub $packageName $packageVersion';
     }
-    // } else if (_isInCurrentPackage(element)) {
-    //   return _currentPackageSymbolFor(element);
-    // }
 
     final package =
         _packageConfig.packageOf(Uri.file(element.source!.fullName));
@@ -232,7 +276,6 @@ class SymbolGenerator {
         sourcePath.substring(config.root.toFilePath().length),
       );
     }
-
 
     display(
       '\n'

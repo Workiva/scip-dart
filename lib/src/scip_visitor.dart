@@ -8,6 +8,7 @@ import 'package:scip_dart/src/metadata.dart';
 import 'package:scip_dart/src/gen/scip.pb.dart';
 import 'package:scip_dart/src/symbol.dart';
 import 'package:scip_dart/src/utils.dart';
+import 'package:path/path.dart' as p;
 
 List<SymbolInformation> globalExternalSymbols = [];
 
@@ -15,6 +16,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
   final String _relativePath;
   final String _projectRoot;
   final LineInfo _lineInfo;
+  final PackageConfig _packageConfig;
 
   final SymbolGenerator _symbolGenerator;
 
@@ -25,10 +27,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
     this._relativePath,
     this._projectRoot,
     this._lineInfo,
-    PackageConfig packageConfig,
+    this._packageConfig,
     Pubspec pubspec,
   ) : _symbolGenerator = SymbolGenerator(
-          packageConfig,
+          _packageConfig,
           _projectRoot,
           pubspec,
         ) {
@@ -103,7 +105,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
   }
 
   void _visitDirective(Directive node) {
-    final element = node.element;
+    final element = node.element!;
 
     StringLiteral uriLiteral;
     if (node is UriBasedDirective) {
@@ -114,25 +116,13 @@ class ScipVisitor extends GeneralizingAstVisitor {
       return;
     }
 
-    // uri is a non-relative, package (or dart sdk) uri: 
-    // Eg: `package:<name>/<path>.dart`, `dart:<name>`
-
-    // Uri uri;
-    // if (element is LibraryImportElement) {
-    //   uri = (element.uri as DirectiveUriWithSource).source.uri;
-    // } else if (element is LibraryExportElement) {
-    //   uri = (element.uri as DirectiveUriWithSource).source.uri;
-    // } else if (element is PartElement) {
-    //   uri = (element.uri as DirectiveUriWithSource).source.uri;
-    // } else if (node is PartOfDirective && element is LibraryElement) {
-    //   uri = element.source.uri;
-    // } else {
-    //   return;
-    // }
-
-    _symbolGenerator.symbolFor(element!);
-
-    // _symbolGenerator.fileSymbolForUri(uri);
+    final symbol = _symbolGenerator.symbolForDirective(node, element);
+    if (symbol != null) {
+       occurrences.add(Occurrence(
+        range: _lineInfo.getRange(uriLiteral.offset, uriLiteral.length),
+        symbol: symbol,
+      ));
+    }
   }
 
   /// Registers the provided [element] as a reference to an existing definition
