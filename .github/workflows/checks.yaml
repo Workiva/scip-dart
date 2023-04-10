@@ -8,28 +8,18 @@ jobs:
     runs-on: workiva-runner-dev
     steps:
       - uses: actions/checkout@v3
-
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: stable
-
       - run: dart pub get
-      - uses: Workiva/gha-dart/dart-format@master
+      - run: dart run dart_dev format
 
   dependency-validator:
     runs-on: workiva-runner-dev
     steps:
       - uses: actions/checkout@v3
-
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: stable
-
       - run: dart pub get
-      
-      # TODO: convert to Workiva/gha-dart/dart-dependency-validator@master once
-      # https://github.com/Workiva/gha-dart/pull/4 merges
       - run: dart run dependency_validator
-        shell: bash
-
-  

@@ -1,5 +1,7 @@
-  /// This is a fib function
+  import 'package:dart_test/other.dart';
 // definition scip-dart pub dart_test 1.0.0 lib/main.dart/
+  
+  /// This is a fib function
   ///
   /// Takes a number
   /// Returns a number
@@ -82,3 +84,24 @@
 //         ^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/forever().
   }
   
+  class SomeLocalClass {}
+//      ^^^^^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/SomeLocalClass#
+//      documentation ```dart
+  
+  /// Reference parameter: [value]
+//                          ^^^^^ reference local 5
+  /// Reference class: [SomeLocalClass]
+//                      ^^^^^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/SomeLocalClass#
+  /// Reference external class: [Foo]
+//                               ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
+  /// Missing Reference: [IDontExist]
+  void someFunction(int value) {
+//     ^^^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/someFunction().
+//     documentation ```dart
+//     documentation Reference parameter: [value]
+//                  ^^^ reference scip-dart pub dart:core 2.18.0 dart:core/int.dart/int#
+//                      ^^^^^ definition local 5
+//                      documentation ```dart
+    Foo(1);
+//  ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
+  }
