@@ -44,8 +44,6 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
   @override
   void visitNode(AstNode node) {
-    // print('$node :: ${node.runtimeType}');
-
     // [visitDeclaration] on the [GeneralizingAstVisitor] does not match parameters
     // even though the parameter node extends [Declaration]. This is a workaround
     // to correctly parse all [Declaration] ast nodes.
@@ -88,10 +86,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
     if (node.parent is CompoundAssignmentExpression) {
       final assignmentNode = node.parent as CompoundAssignmentExpression;
-      element = assignmentNode.readElement ?? assignmentNode.writeElement!;
+      element = assignmentNode.readElement ?? assignmentNode.writeElement;
     } else if (node.parent?.parent is AssignmentExpression) {
       final assignment = node.parent!.parent as AssignmentExpression;
-      element = assignment.readElement ?? assignment.writeElement!;
+      element = assignment.readElement ?? assignment.writeElement;
     }
 
     // When the identifier is a field, the analyzer creates synthetic getters/
