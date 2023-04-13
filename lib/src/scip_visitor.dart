@@ -44,6 +44,8 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
   @override
   void visitNode(AstNode node) {
+    // print('$node :: ${node.runtimeType}');
+
     // [visitDeclaration] on the [GeneralizingAstVisitor] does not match parameters
     // even though the parameter node extends [Declaration]. This is a workaround
     // to correctly parse all [Declaration] ast nodes.
@@ -82,7 +84,21 @@ class ScipVisitor extends GeneralizingAstVisitor {
   }
 
   void _visitSimpleIdentifier(SimpleIdentifier node) {
-    final element = node.staticElement;
+    var element = node.staticElement;
+
+    if (node.parent is CompoundAssignmentExpression) {
+      final assignmentNode = node.parent as CompoundAssignmentExpression;
+      element = assignmentNode.readElement ?? assignmentNode.writeElement!;
+    } else if (node.parent?.parent is AssignmentExpression) {
+      final assignment = node.parent!.parent as AssignmentExpression;
+      element = assignment.readElement ?? assignment.writeElement!;
+    }
+
+    // When the identifier is a field, the analyzer creates synthetic getters/
+    // setters for it. We need to get the backing field.
+    if (element?.isSynthetic == true && element is PropertyAccessorElement) {
+      element = element.variable;
+    }
 
     // element is null if there's nothing really to do for this node. Example: `void`
     // TODO: One weird issue found: named parameters of external symbols were element.source

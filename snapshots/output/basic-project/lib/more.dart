@@ -65,22 +65,26 @@
 //           ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#
 //                      ^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#cat.
           soundMaker = () => print('Meow!');
+//        ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#soundMaker.
 //                           ^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/print.dart/print().
           break;
         case AnimalType.dog:
 //           ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#
 //                      ^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#dog.
           soundMaker = () => print('Woof!');
+//        ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#soundMaker.
 //                           ^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/print.dart/print().
           break;
         case AnimalType.bird:
 //           ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#
 //                      ^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#bird.
           soundMaker = () => print('Chirp!');
+//        ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#soundMaker.
 //                           ^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/print.dart/print().
           break;
         default:
           soundMaker = () => print('Unknown animal type');
+//        ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#soundMaker.
 //                           ^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/print.dart/print().
       }
     }
