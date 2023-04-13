@@ -84,12 +84,13 @@ class ScipVisitor extends GeneralizingAstVisitor {
   void _visitSimpleIdentifier(SimpleIdentifier node) {
     var element = node.staticElement;
 
+    // [element] for assignment fields is null. If the parent node
+    // is a `CompoundAssignmentExpression`, we know this node is referring
+    // to an assignment line. In that case, use the read/write element attached
+    // to this node instead of the [node]'s element
     if (node.parent is CompoundAssignmentExpression) {
       final assignmentNode = node.parent as CompoundAssignmentExpression;
       element = assignmentNode.readElement ?? assignmentNode.writeElement;
-    } else if (node.parent?.parent is AssignmentExpression) {
-      final assignment = node.parent!.parent as AssignmentExpression;
-      element = assignment.readElement ?? assignment.writeElement;
     }
 
     // When the identifier is a field, the analyzer creates synthetic getters/
