@@ -82,7 +82,22 @@ class ScipVisitor extends GeneralizingAstVisitor {
   }
 
   void _visitSimpleIdentifier(SimpleIdentifier node) {
-    final element = node.staticElement;
+    var element = node.staticElement;
+
+    // [element] for assignment fields is null. If the parent node
+    // is a `CompoundAssignmentExpression`, we know this node is referring
+    // to an assignment line. In that case, use the read/write element attached
+    // to this node instead of the [node]'s element
+    if (node.parent is CompoundAssignmentExpression) {
+      final assignmentNode = node.parent as CompoundAssignmentExpression;
+      element = assignmentNode.readElement ?? assignmentNode.writeElement;
+    }
+
+    // When the identifier is a field, the analyzer creates synthetic getters/
+    // setters for it. We need to get the backing field.
+    if (element?.isSynthetic == true && element is PropertyAccessorElement) {
+      element = element.variable;
+    }
 
     // element is null if there's nothing really to do for this node. Example: `void`
     // TODO: One weird issue found: named parameters of external symbols were element.source
