@@ -1,5 +1,1 @@
-FROM google/dart:2
-WORKDIR /build/
-ADD pubspec.yaml /build
-RUN dart pub get
-FROM scratch
+FROM drydock-prod.workiva.net/workiva/dart_build_image:3 as build
