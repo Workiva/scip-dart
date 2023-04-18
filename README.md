@@ -7,7 +7,7 @@ Designed to be a replacement for [lsif_indexer](https://github.com/Workiva/lsif_
 ## Installation
 
 ```sh
-dart pub global activate --hosted-url https://pub.workiva.org scip_dart
+dart pub global activate scip_dart
 ```
 
 ## Usage
@@ -41,11 +41,3 @@ Analysis can be uploaded to sourcegraph using the [src cli](https://docs.sourceg
 ```sh
 src code-intl upload -file=index.scip -github-token="<your gh token>"
 ```
-
-## Design Philosophy
-
-Scip is a fairly simple file format. Much of it boils down to finding every declaration in a source file, and creating a unique, but consistent string for it. This is called a `symbol`. Then the idea is to search the source code for every reference, and generate that same `symbol` we created before, for the references declaration. After this is done, we should have a large mapping of every reference, and declaration which allows external tools to preform code navigation on the entities within the codebase.
-
-While this is simple in concept, in practice, parsing ast, and generating these symbols is edge case hell. Instead of expecting full coverage on everything, in its spike state, `scip-dart` will fail silently on unknown cases (this silent failing can be turned off with the `--verbose/-v` flag). The reason for this is that an incomplete scip index is still helpful, but a completely failed indexing is not.
-
-Failures in running `scip-dart` will be treated with higher priority than full coverage of symbols.
