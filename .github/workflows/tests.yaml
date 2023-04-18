@@ -55,7 +55,7 @@ jobs:
       # Setup scip-dart
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
-      - uses: Workiva/gha-dart/pub-get@master
+      - uses: dart pub get
 
       # Setup repo to run on
       - uses: actions/checkout@v3
