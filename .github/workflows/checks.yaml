@@ -5,7 +5,7 @@ on:
 
 jobs:
   format:
-    runs-on: workiva-runner-dev
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
@@ -15,7 +15,7 @@ jobs:
       - run: dart run dart_dev format
 
   dependency-validator:
-    runs-on: workiva-runner-dev
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
