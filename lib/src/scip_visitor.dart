@@ -84,6 +84,15 @@ class ScipVisitor extends GeneralizingAstVisitor {
   void _visitSimpleIdentifier(SimpleIdentifier node) {
     var element = node.staticElement;
 
+    // Both `.loadLibrary()`, and `.call()` are synthetic functions that
+    // have no definition. These should therefore should not be indexed.
+    if (element is FunctionElement && element.isSynthetic) {
+      if ([
+        FunctionElement.LOAD_LIBRARY_NAME,
+        FunctionElement.CALL_METHOD_NAME,
+      ].contains(element.name)) return;
+    }
+
     // [element] for assignment fields is null. If the parent node
     // is a `CompoundAssignmentExpression`, we know this node is referring
     // to an assignment line. In that case, use the read/write element attached
