@@ -9,7 +9,6 @@ import 'package:scip_dart/src/utils.dart';
 /// Each sourcefile should use its own instance of `SymbolGenerator`
 class SymbolGenerator {
   final PackageConfig _packageConfig;
-  final String _projectRoot;
   final Pubspec _pubspec;
 
   int _localElementIndex = 0;
@@ -21,11 +20,7 @@ class SymbolGenerator {
   /// Use []
   Map<Element, String> _localElementRegistry = {};
 
-  SymbolGenerator(
-    this._packageConfig,
-    this._projectRoot,
-    this._pubspec,
-  );
+  SymbolGenerator(this._packageConfig, this._pubspec);
 
   /// For a given `Element` returns the scip symbol form.
   ///
@@ -41,9 +36,10 @@ class SymbolGenerator {
     }
 
     // for some reason, LibraryImportElement is considered to be "private"
-    if (element.isPrivate && element is! LibraryImportElement) {
-      return _localSymbolFor(element);
-    }
+    // if (element.isPrivate && element is! LibraryImportElement) {
+    //   // print(element.is);
+    //   return _localSymbolFor(element);
+    // }
 
     final descriptor = _getDescriptor(element);
     if (descriptor == null) return null;

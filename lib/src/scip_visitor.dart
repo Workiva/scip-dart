@@ -29,7 +29,6 @@ class ScipVisitor extends GeneralizingAstVisitor {
     Pubspec pubspec,
   ) : _symbolGenerator = SymbolGenerator(
           packageConfig,
-          _projectRoot,
           pubspec,
         ) {
     final fileSymbol = _symbolGenerator.fileSymbolFor(_relativePath);
@@ -62,7 +61,29 @@ class ScipVisitor extends GeneralizingAstVisitor {
     if (node.declaredElement == null) return;
 
     final element = node.declaredElement!;
-    _registerAsDefinition(element);
+
+    List<Relationship>? relationships;
+    if (node is ClassDeclaration) {
+      final ele = element as ClassElement;
+      if (ele.allSupertypes.length > 1) {
+        relationships = ele.allSupertypes
+          .where((type) => !type.isDartCoreObject)
+          .map((type) {
+            return Relationship(
+              symbol: _symbolGenerator.symbolFor(type.element),
+              isReference: false,
+              isImplementation: true,
+              isTypeDefinition: false,
+              isDefinition: false,
+            );
+          }).toList();
+      }
+    }
+
+    _registerAsDefinition(
+      element,
+      relationships: relationships,
+    );
   }
 
   void _visitNormalFormalParameter(NormalFormalParameter node) {
@@ -161,13 +182,17 @@ class ScipVisitor extends GeneralizingAstVisitor {
   ///
   /// This adds both a symbol, and an occurrence for the element and it's
   /// name
-  void _registerAsDefinition(Element element) {
+  void _registerAsDefinition(
+    Element element, {
+    List<Relationship>? relationships,
+  }) {
     final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
       final meta = getSymbolMetadata(element);
       symbols.add(SymbolInformation(
         symbol: symbol,
         documentation: meta.documentation,
+        relationships: relationships,
       ));
 
       occurrences.add(Occurrence(
