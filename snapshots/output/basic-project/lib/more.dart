@@ -6,7 +6,6 @@
   enum AnimalType {
 //     ^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#
 //     documentation ```dart
-//     relationship scip-dart pub dart:core 2.18.0 dart:core/enum.dart/Enum# implementation
     cat,
 //  ^^^ definition scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#cat.
 //  documentation ```dart

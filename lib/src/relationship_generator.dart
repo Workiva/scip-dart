@@ -9,7 +9,7 @@ List<Relationship>? relationshipsFor(
   Element element,
   SymbolGenerator symbolGenerator,
 ) {
-  if (element is InterfaceElement) {
+  if (element is ClassElement) {
     // All things inherit from Object, if they have one supertype
     // there are no relationships
     if (element.allSupertypes.length <= 1) return null;
