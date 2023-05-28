@@ -9,7 +9,6 @@ import 'package:scip_dart/src/gen/scip.pb.dart';
 import 'package:scip_dart/src/relationship_generator.dart';
 import 'package:scip_dart/src/symbol_generator.dart';
 import 'package:scip_dart/src/utils.dart';
-import 'package:collection/src/iterable_extensions.dart';
 
 List<SymbolInformation> globalExternalSymbols = [];
 
