@@ -6,7 +6,8 @@ import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:scip_dart/src/metadata.dart';
 import 'package:scip_dart/src/gen/scip.pb.dart';
-import 'package:scip_dart/src/symbol.dart';
+import 'package:scip_dart/src/relationship_generator.dart';
+import 'package:scip_dart/src/symbol_generator.dart';
 import 'package:scip_dart/src/utils.dart';
 import 'package:collection/src/iterable_extensions.dart';
 
@@ -62,47 +63,9 @@ class ScipVisitor extends GeneralizingAstVisitor {
     if (node.declaredElement == null) return;
 
     final element = node.declaredElement!;
-
-    List<Relationship>? relationships;
-    if (node is ClassDeclaration) {
-      final ele = element as ClassElement;
-      if (ele.allSupertypes.length > 1) {
-        relationships = ele.allSupertypes
-            .where((type) => !type.isDartCoreObject)
-            .map((type) {
-          return Relationship(
-            symbol: _symbolGenerator.symbolFor(type.element),
-            isImplementation: true,
-          );
-        }).toList();
-      }
-    }
-
-    if (node is MethodDeclaration) {
-      final classNode = node.parent as ClassDeclaration;
-      final classElement = classNode.declaredElement as ClassElement;
-
-      final referencingTypes = classElement.allSupertypes
-        .where((type) => !type.isDartCoreObject)
-        .where((type) {
-          final ts = type.methods.map((m) {
-            return m.name;
-          }).toList();
-          return ts.contains(node.name.toString());
-        });
-
-      if (referencingTypes.isNotEmpty) {
-        relationships = referencingTypes.map((type) => Relationship(
-          symbol: _symbolGenerator.symbolFor(type.element),
-          isImplementation: true,
-          isReference: true
-        )).toList();
-      }
-    }
-
     _registerAsDefinition(
       element,
-      relationships: relationships,
+      relationships: relationshipsFor(node, element, _symbolGenerator),
     );
   }
 
