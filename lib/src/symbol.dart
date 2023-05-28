@@ -36,10 +36,9 @@ class SymbolGenerator {
     }
 
     // for some reason, LibraryImportElement is considered to be "private"
-    // if (element.isPrivate && element is! LibraryImportElement) {
-    //   // print(element.is);
-    //   return _localSymbolFor(element);
-    // }
+    if (element.isPrivate && element is! LibraryImportElement) {
+      return _localSymbolFor(element);
+    }
 
     final descriptor = _getDescriptor(element);
     if (descriptor == null) return null;

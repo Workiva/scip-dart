@@ -67,16 +67,16 @@ class ScipVisitor extends GeneralizingAstVisitor {
       final ele = element as ClassElement;
       if (ele.allSupertypes.length > 1) {
         relationships = ele.allSupertypes
-          .where((type) => !type.isDartCoreObject)
-          .map((type) {
-            return Relationship(
-              symbol: _symbolGenerator.symbolFor(type.element),
-              isReference: false,
-              isImplementation: true,
-              isTypeDefinition: false,
-              isDefinition: false,
-            );
-          }).toList();
+            .where((type) => !type.isDartCoreObject)
+            .map((type) {
+          return Relationship(
+            symbol: _symbolGenerator.symbolFor(type.element),
+            isReference: false,
+            isImplementation: true,
+            isTypeDefinition: false,
+            isDefinition: false,
+          );
+        }).toList();
       }
     }
 
