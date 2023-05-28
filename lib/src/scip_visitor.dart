@@ -8,6 +8,7 @@ import 'package:scip_dart/src/metadata.dart';
 import 'package:scip_dart/src/gen/scip.pb.dart';
 import 'package:scip_dart/src/symbol.dart';
 import 'package:scip_dart/src/utils.dart';
+import 'package:collection/src/iterable_extensions.dart';
 
 List<SymbolInformation> globalExternalSymbols = [];
 
@@ -71,12 +72,31 @@ class ScipVisitor extends GeneralizingAstVisitor {
             .map((type) {
           return Relationship(
             symbol: _symbolGenerator.symbolFor(type.element),
-            isReference: false,
             isImplementation: true,
-            isTypeDefinition: false,
-            isDefinition: false,
           );
         }).toList();
+      }
+    }
+
+    if (node is MethodDeclaration) {
+      final classNode = node.parent as ClassDeclaration;
+      final classElement = classNode.declaredElement as ClassElement;
+
+      final referencingTypes = classElement.allSupertypes
+        .where((type) => !type.isDartCoreObject)
+        .where((type) {
+          final ts = type.methods.map((m) {
+            return m.name;
+          }).toList();
+          return ts.contains(node.name.toString());
+        });
+
+      if (referencingTypes.isNotEmpty) {
+        relationships = referencingTypes.map((type) => Relationship(
+          symbol: _symbolGenerator.symbolFor(type.element),
+          isImplementation: true,
+          isReference: true
+        )).toList();
       }
     }
 
