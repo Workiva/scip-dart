@@ -1,6 +1,5 @@
 import 'package:build/build.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
-import 'package:scip_dart/src/utils.dart';
 
 // The directory that is written to
 const _outputPath = 'lib/src/package_version/version.g.dart';
