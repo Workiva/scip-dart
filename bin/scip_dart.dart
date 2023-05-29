@@ -11,8 +11,8 @@ import 'package:scip_dart/src/package_version/version.g.dart';
 Future<void> main(List<String> args) async {
   final result = (ArgParser()
         ..addFlag('performance', aliases: ['perf'], defaultsTo: false)
-        ..addFlag('verbose', defaultsTo: false)
-        ..addFlag('version', abbr: 'v', defaultsTo: false)
+        ..addFlag('verbose', abbr: 'v', defaultsTo: false)
+        ..addFlag('version', defaultsTo: false)
         ..addMultiOption('path', abbr: 'p', defaultsTo: ['./lib']))
       .parse(args);
 
