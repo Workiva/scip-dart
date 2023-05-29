@@ -1,7 +1,7 @@
 builders:
   versionBuilder:
-    import: "package:scip_dart/src/version/version_builder.dart"
-    builder_factories: ["versionBuilderFactory"]
-    build_extensions: {'pubspec.yaml': ['lib/src/version/version.g.dart']}
+    import: "package:scip_dart/src/package_version/builder.dart"
+    builder_factories: ["packageVersionBuilderFactory"]
+    build_extensions: {'pubspec.yaml': ['lib/src/package_version/version.g.dart']}
     build_to: source
     auto_apply: root_package

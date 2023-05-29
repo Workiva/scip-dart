@@ -6,7 +6,7 @@ import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:path/path.dart' as p;
 import 'package:scip_dart/src/flags.dart';
-import 'package:scip_dart/src/version/version.g.dart';
+import 'package:scip_dart/src/package_version/version.g.dart';
 
 Future<void> main(List<String> args) async {
   final result = (ArgParser()
@@ -17,7 +17,7 @@ Future<void> main(List<String> args) async {
       .parse(args);
 
   if (result['version'] as bool) {
-    print(scipDartVersion);
+    print(packageVersion);
     return;
   }
 
