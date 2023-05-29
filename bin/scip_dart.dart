@@ -6,13 +6,20 @@ import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:path/path.dart' as p;
 import 'package:scip_dart/src/flags.dart';
+import 'package:scip_dart/src/version/version.g.dart';
 
 Future<void> main(List<String> args) async {
   final result = (ArgParser()
         ..addFlag('performance', aliases: ['perf'], defaultsTo: false)
-        ..addFlag('verbose', abbr: 'v', defaultsTo: false)
+        ..addFlag('verbose', defaultsTo: false)
+        ..addFlag('version', abbr: 'v', defaultsTo: false)
         ..addMultiOption('path', abbr: 'p', defaultsTo: ['./lib']))
       .parse(args);
+
+  if (result['version'] as bool) {
+    print(scipDartVersion);
+    return;
+  }
 
   Flags.instance.init(result);
 

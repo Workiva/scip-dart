@@ -7,6 +7,7 @@ import 'package:scip_dart/src/flags.dart';
 
 import 'package:scip_dart/src/gen/scip.pb.dart';
 import 'package:scip_dart/src/scip_visitor.dart';
+import 'package:scip_dart/src/version/version.g.dart';
 
 Future<Index> indexPackage(
   String root,
@@ -19,8 +20,8 @@ Future<Index> indexPackage(
       projectRoot: 'file:/' + dirPath,
       textDocumentEncoding: TextEncoding.UTF8,
       toolInfo: ToolInfo(
-        name: 'scip-dart',
-        version: '0.0.1',
+        name: 'scip_dart',
+        version: scipDartVersion,
         arguments: [],
       ));
 
