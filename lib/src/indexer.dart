@@ -28,28 +28,22 @@ Future<Index> indexPackage(
       .map((package) => p.normalize(package.packageUriRoot.toFilePath()))
       .toList();
 
-  final indexedPaths = Flags.instance.paths.map(
-    (relPath) => p.normalize(p.join(dirPath, relPath)),
-  );
 
   final collection = AnalysisContextCollection(
     includedPaths: [
       ...allPackageRoots,
-      ...indexedPaths,
+      dirPath,
     ],
   );
 
   if (Flags.instance.performance) print('Analyzing Source');
   final st = Stopwatch()..start();
 
-  final resolvedUnitFutures = indexedPaths.map((path) {
-    final context = collection.contextFor(path);
-    final files = context.contextRoot
-        .analyzedFiles()
-        .where((file) => p.extension(file) == '.dart');
-
-    return files.map(context.currentSession.getResolvedUnit);
-  }).expand((resUnits) => resUnits);
+  final context = collection.contextFor(dirPath);
+  final resolvedUnitFutures = context.contextRoot
+    .analyzedFiles()
+    .where((file) => p.extension(file) == '.dart')
+    .map(context.currentSession.getResolvedUnit);
 
   final resolvedUnits = await Future.wait(resolvedUnitFutures);
 
