@@ -30,7 +30,7 @@ packages:
     source: hosted
     version: "2.10.0"
   build:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: build
       url: "https://pub.dartlang.org"
