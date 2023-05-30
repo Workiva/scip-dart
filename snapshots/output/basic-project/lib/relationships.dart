@@ -42,7 +42,7 @@
 //  ^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/string.dart/String#
 //         ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/relationships.dart/Dog#sound().
 //         documentation ```dart
-//         relationship scip-dart pub dart_test 1.0.0 lib/relationships.dart/Animal# implementation reference
+//         relationship scip-dart pub dart_test 1.0.0 lib/relationships.dart/Animal#sound(). implementation reference
   
     @override
 //   ^^^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/annotations.dart/override.
@@ -50,5 +50,5 @@
 //  ^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/string.dart/String#
 //             ^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/relationships.dart/Dog#hierarchy.
 //             documentation ```dart
-//             relationship scip-dart pub dart_test 1.0.0 lib/relationships.dart/Mammal# implementation reference
+//             relationship scip-dart pub dart_test 1.0.0 lib/relationships.dart/Mammal#hierarchy. implementation reference
   }

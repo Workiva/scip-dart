@@ -32,13 +32,18 @@ List<Relationship>? relationshipsFor(
     final parentNode = node.parent as ClassDeclaration;
     final parentElement = parentNode.declaredElement as ClassElement;
 
-    final referencingTypes = parentElement.allSupertypes
-        .where(_interfaceContainsName(node.name.toString()));
+    // retrieve all of the methods and accessors of every parent type that
+    // has the same name of [node]. These are the elements that this [node]
+    // are overriding
+    final referencingElements = parentElement.allSupertypes
+      .map((type) => [...type.methods, ...type.accessors])
+      .expand((type) => type)
+      .where((type) => type.name == node.name.toString());
 
-    if (referencingTypes.isNotEmpty) {
-      return referencingTypes
+    if (referencingElements.isNotEmpty) {
+      return referencingElements
           .map((type) => Relationship(
-              symbol: symbolGenerator.symbolFor(type.element),
+              symbol: symbolGenerator.symbolFor(type),
               isImplementation: true,
               isReference: true))
           .toList();
@@ -46,12 +51,4 @@ List<Relationship>? relationshipsFor(
   }
 
   return null;
-}
-
-bool Function(InterfaceType) _interfaceContainsName(String name) {
-  return (InterfaceType interfaceType) {
-    return [...interfaceType.methods, ...interfaceType.accessors]
-        .map((ref) => ref.name)
-        .contains(name);
-  };
 }
