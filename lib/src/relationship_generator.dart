@@ -36,9 +36,9 @@ List<Relationship>? relationshipsFor(
     // has the same name of [node]. These are the elements that this [node]
     // are overriding
     final referencingElements = parentElement.allSupertypes
-      .map((type) => [...type.methods, ...type.accessors])
-      .expand((type) => type)
-      .where((type) => type.name == node.name.toString());
+        .map((type) => [...type.methods, ...type.accessors])
+        .expand((type) => type)
+        .where((type) => type.name == node.name.toString());
 
     if (referencingElements.isNotEmpty) {
       return referencingElements
