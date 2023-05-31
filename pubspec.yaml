@@ -20,5 +20,5 @@ dependencies:
 
 dev_dependencies:
   dependency_validator: ^3.2.2
-  dart_dev: '>=3.9.2 <5.0.0'
+  dart_dev: ">=3.9.2 <5.0.0"
   glob: ^2.1.1
