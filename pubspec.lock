@@ -126,7 +126,7 @@ packages:
       name: dart_dev
       url: "https://pub.dev"
     source: hosted
-    version: "3.9.2"
+    version: "4.0.0"
   dart_style:
     dependency: transitive
     description:
@@ -253,13 +253,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
-  pedantic:
-    dependency: transitive
-    description:
-      name: pedantic
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.11.1"
   pool:
     dependency: transitive
     description:
