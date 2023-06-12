@@ -3,5 +3,3 @@
 index.scip
 snapshots/input/staging-project/lib/**
 snapshots/output/staging-project/lib/**
-
-snapshots/input/basic-project/pubspec.lock
