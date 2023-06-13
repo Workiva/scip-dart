@@ -14,20 +14,10 @@ dart pub global activate scip_dart
 
 The following command will output a `index.scip` file
 ```sh
-dart pub global run scip_dart ./path/to/project/root
+cd ./path/to/project/root
+dart pub get
+dart pub global run scip_dart ./
 ```
-
-> Note: by default, only `./lib` is indexed. This can be extended to include other paths using `--path/-p`
->
-> ```bash
-> dart pub global run scip_dart \
->   -p ./lib \ # path relative to project root
->   -p ./test \
->   ./path/to/project/root
->```
->
-> Indexing test directories will impact performance of the indexer
-
 
 This file can be analyzed / displayed using the [scip cli](https://github.com/sourcegraph/scip)
 
