@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:path/path.dart' as p;
@@ -16,14 +18,26 @@ Future<Index> indexPackage(
 ) async {
   final dirPath = p.normalize(p.absolute(root));
 
+  final rootHasPubspecFile = await File(
+    p.join(dirPath, 'pubspec.yaml'),
+  ).exists();
+  if (!rootHasPubspecFile) {
+    stderr.writeln(
+      'Provided path does not contain a pubspec.yaml file. '
+      'Unable to index',
+    );
+    exit(1);
+  }
+
   final metadata = Metadata(
-      projectRoot: 'file:/' + dirPath,
-      textDocumentEncoding: TextEncoding.UTF8,
-      toolInfo: ToolInfo(
-        name: 'scip-dart',
-        version: '0.0.1',
-        arguments: [],
-      ));
+    projectRoot: 'file:/' + dirPath,
+    textDocumentEncoding: TextEncoding.UTF8,
+    toolInfo: ToolInfo(
+      name: 'scip-dart',
+      version: '0.0.1',
+      arguments: [],
+    ),
+  );
 
   final allPackageRoots = packageConfig.packages
       .map((package) => p.normalize(package.packageUriRoot.toFilePath()))
