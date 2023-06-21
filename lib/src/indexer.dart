@@ -7,6 +7,7 @@ import 'package:scip_dart/src/flags.dart';
 
 import 'package:scip_dart/src/gen/scip.pb.dart';
 import 'package:scip_dart/src/scip_visitor.dart';
+import 'package:scip_dart/src/utils.dart';
 
 Future<Index> indexPackage(
   String root,
@@ -28,12 +29,19 @@ Future<Index> indexPackage(
       .map((package) => p.normalize(package.packageUriRoot.toFilePath()))
       .toList();
 
+  final nestedPackages = (await pubspecPathsFor(root))
+    .map((path) => p.dirname(path))
+    .where((path) => path != root)
+    .toList();
+
+  if (Flags.instance.verbose) print('Ignoring subdirectories: $nestedPackages');
 
   final collection = AnalysisContextCollection(
     includedPaths: [
       ...allPackageRoots,
       dirPath,
     ],
+    excludedPaths: nestedPackages
   );
 
   if (Flags.instance.performance) print('Analyzing Source');
