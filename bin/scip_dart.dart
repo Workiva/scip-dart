@@ -28,7 +28,6 @@ Future<void> main(List<String> args) async {
         ))
       .parse(args);
 
-
   Flags.instance.init(result);
 
   if ((result['path'] as List<String>?)?.isNotEmpty == true) {
