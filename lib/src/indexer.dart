@@ -41,6 +41,8 @@ Future<Index> indexPackage(
       ...allPackageRoots,
       dirPath,
     ],
+    // only index dart files of the current dart package, to index nested
+    // packages, scip indexing can simply be re-run for that nested package
     excludedPaths: nestedPackages
   );
 
