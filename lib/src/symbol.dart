@@ -9,7 +9,6 @@ import 'package:scip_dart/src/utils.dart';
 /// Each sourcefile should use its own instance of `SymbolGenerator`
 class SymbolGenerator {
   final PackageConfig _packageConfig;
-  final String _projectRoot;
   final Pubspec _pubspec;
 
   int _localElementIndex = 0;
@@ -23,7 +22,6 @@ class SymbolGenerator {
 
   SymbolGenerator(
     this._packageConfig,
-    this._projectRoot,
     this._pubspec,
   );
 

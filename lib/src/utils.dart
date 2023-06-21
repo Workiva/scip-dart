@@ -1,7 +1,19 @@
 import 'dart:io';
 
 import 'package:analyzer/source/line_info.dart';
+import 'package:path/path.dart' as p;
+
 import 'package:scip_dart/src/flags.dart';
+
+/// Returns a list of all the pubspec.yaml paths under a directory.
+/// Will recurse into child folders, will not follow links.
+Future<List<String>> pubspecPathsFor(String rootDirectory) async {
+  return Directory(rootDirectory)
+      .list(recursive: true, followLinks: false)
+      .where((file) => p.basename(file.path) == 'pubspec.yaml')
+      .map((file) => file.path)
+      .toList();
+}
 
 enum DisplayLevel {
   info,
