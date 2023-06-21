@@ -29,7 +29,6 @@ class ScipVisitor extends GeneralizingAstVisitor {
     Pubspec pubspec,
   ) : _symbolGenerator = SymbolGenerator(
           packageConfig,
-          _projectRoot,
           pubspec,
         ) {
     final fileSymbol = _symbolGenerator.fileSymbolFor(_relativePath);

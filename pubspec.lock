@@ -379,6 +379,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  workiva_analysis_options:
+    dependency: "direct dev"
+    description:
+      name: workiva_analysis_options
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.3.0"
   yaml:
     dependency: transitive
     description:

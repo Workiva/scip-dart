@@ -39,7 +39,7 @@ Future<void> main(List<String> args) async {
   }
 
   final packageRoot =
-      result.rest.length > 0 ? result.rest.first : Directory.current.path;
+      result.rest.isNotEmpty ? result.rest.first : Directory.current.path;
 
   final packageConfig = await findPackageConfig(Directory(packageRoot));
   if (packageConfig == null) {
