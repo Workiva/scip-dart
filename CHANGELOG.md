@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.2
+
+- added `--version` flag to retrieve the version of scip-dart
+- populated `ToolInfo.version` in resulting scip files
+
 ## 1.1.1
 
 - Fixed bug where running indexing on a dart package with a nested subpackage would throw an exception
