@@ -10,6 +10,7 @@ import 'package:scip_dart/src/flags.dart';
 import 'package:scip_dart/src/gen/scip.pb.dart';
 import 'package:scip_dart/src/scip_visitor.dart';
 import 'package:scip_dart/src/utils.dart';
+import 'package:scip_dart/src/version.dart';
 
 Future<Index> indexPackage(
   String root,
@@ -34,7 +35,7 @@ Future<Index> indexPackage(
     textDocumentEncoding: TextEncoding.UTF8,
     toolInfo: ToolInfo(
       name: 'scip-dart',
-      version: '0.0.1',
+      version: scipDartVersion,
       arguments: [],
     ),
   );
