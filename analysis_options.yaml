@@ -1,0 +1,7 @@
+include: package:workiva_analysis_options/v2.yaml
+
+analyzer:
+  strong-mode:
+    implicit-casts: false
+  exclude:
+    - snapshots/**

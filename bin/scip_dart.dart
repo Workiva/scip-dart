@@ -6,6 +6,7 @@ import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:path/path.dart' as p;
 import 'package:scip_dart/src/flags.dart';
+import 'package:scip_dart/src/version.dart';
 
 Future<void> main(List<String> args) async {
   final result = (ArgParser()
@@ -21,6 +22,8 @@ Future<void> main(List<String> args) async {
           defaultsTo: false,
           help: 'Whether or not to display debugging text during indexing',
         )
+        ..addFlag('version',
+            defaultsTo: false, help: 'Display the current version of scip-dart')
         ..addMultiOption(
           'path',
           abbr: 'p',
@@ -28,6 +31,10 @@ Future<void> main(List<String> args) async {
         ))
       .parse(args);
 
+  if (result['version'] as bool) {
+    print(scipDartVersion);
+    exit(0);
+  }
 
   Flags.instance.init(result);
 
@@ -40,7 +47,7 @@ Future<void> main(List<String> args) async {
   }
 
   final packageRoot =
-      result.rest.length > 0 ? result.rest.first : Directory.current.path;
+      result.rest.isNotEmpty ? result.rest.first : Directory.current.path;
 
   final packageConfig = await findPackageConfig(Directory(packageRoot));
   if (packageConfig == null) {

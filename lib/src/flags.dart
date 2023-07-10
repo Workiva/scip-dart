@@ -8,8 +8,8 @@ class Flags {
   bool _performance = false;
 
   void init(ArgResults results) {
-    _verbose = results['verbose'] ?? false;
-    _performance = results['performance'] ?? false;
+    _verbose = results['verbose'] as bool? ?? false;
+    _performance = results['performance'] as bool? ?? false;
   }
 
   static Flags get instance => _instance;
