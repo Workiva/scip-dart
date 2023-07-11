@@ -12,7 +12,7 @@ jobs:
         with:
           sdk: 2.18.7
       - run: dart pub get
-      - run: dart run dart_dev analyze
+      - run: dart analyze
 
   format:
     runs-on: ubuntu-latest
@@ -22,7 +22,7 @@ jobs:
         with:
           sdk: 2.18.7
       - run: dart pub get
-      - run: dart run dart_dev format --check
+      - run: dart format --set-exit-if-changed .
 
   dependency-validator:
     runs-on: ubuntu-latest
