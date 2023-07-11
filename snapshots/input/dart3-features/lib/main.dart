@@ -38,13 +38,16 @@ String describeDate(DateTime dt) {
   const one = 1;
   return switch (dt.weekday) {
       one => 'Feeling the Monday blues?',
-      six || 7 => 'Enjoy the weekend!',
+      7 || six => 'Enjoy the weekend!',
       _ => 'Hang in there.'
   };
 }
 
 void main() {
-  var (String name, int height) = userInfo({'name': 'Michael', 'height': 180});
+  var (
+    String name,
+    int height,
+  ) = userInfo({'name': 'Michael', 'height': 180});
   print('User $name is $height cm tall.');
 
 

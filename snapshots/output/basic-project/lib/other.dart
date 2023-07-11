@@ -7,7 +7,6 @@
 //      ^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
 //      documentation ```dart
     int _far;
-//  ^^^ reference scip-dart pub dart:core 3.0.0 dart:core/int.dart/int#
 //      ^^^^ definition local 0
 //      documentation ```dart
     Foo(this._far);
@@ -23,7 +22,6 @@
 //      ^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#
 //      documentation ```dart
     String _someValue;
-//  ^^^^^^ reference scip-dart pub dart:core 3.0.0 dart:core/string.dart/String#
 //         ^^^^^^^^^^ definition local 2
 //         documentation ```dart
     Bar(this._someValue);
@@ -54,7 +52,6 @@
 //                           ^ definition local 4
 //                           documentation ```dart
       Bar('a').someMethod.call()
-//    ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#
 //             ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#someMethod().
     });
   }
