@@ -6,7 +6,8 @@ import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:scip_dart/src/metadata.dart';
 import 'package:scip_dart/src/gen/scip.pb.dart';
-import 'package:scip_dart/src/symbol.dart';
+import 'package:scip_dart/src/relationship_generator.dart';
+import 'package:scip_dart/src/symbol_generator.dart';
 import 'package:scip_dart/src/utils.dart';
 
 List<SymbolInformation> globalExternalSymbols = [];
@@ -61,7 +62,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
     if (node.declaredElement == null) return;
 
     final element = node.declaredElement!;
-    _registerAsDefinition(element);
+    _registerAsDefinition(
+      element,
+      relationships: relationshipsFor(node, element, _symbolGenerator),
+    );
   }
 
   void _visitNormalFormalParameter(NormalFormalParameter node) {
@@ -160,13 +164,17 @@ class ScipVisitor extends GeneralizingAstVisitor {
   ///
   /// This adds both a symbol, and an occurrence for the element and it's
   /// name
-  void _registerAsDefinition(Element element) {
+  void _registerAsDefinition(
+    Element element, {
+    List<Relationship>? relationships,
+  }) {
     final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
       final meta = getSymbolMetadata(element);
       symbols.add(SymbolInformation(
         symbol: symbol,
         documentation: meta.documentation,
+        relationships: relationships,
       ));
 
       occurrences.add(Occurrence(

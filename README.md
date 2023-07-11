@@ -1,6 +1,6 @@
 # scip-dart
 
-Experimental spike on a [scip](https://github.com/sourcegraph/scip) indexer for [dart](https://github.com/dart-lang)
+Implementation of a [scip](https://github.com/sourcegraph/scip) indexer for [dart](https://github.com/dart-lang)
 
 Designed to be a replacement for [lsif_indexer](https://github.com/Workiva/lsif_indexer), with better coverage and reliability
 
