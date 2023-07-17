@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.3
+
+- generated scip bindings updated to provide relationship fields. This allows for "Go to Implementations" and other class/method inheritance navigation.
+
 ## 1.1.2
 
 - added `--version` flag to retrieve the version of scip-dart
