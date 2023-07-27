@@ -6,18 +6,48 @@ import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:path/path.dart' as p;
 import 'package:scip_dart/src/flags.dart';
+import 'package:scip_dart/src/version.dart';
 
 Future<void> main(List<String> args) async {
   final result = (ArgParser()
-        ..addFlag('performance', aliases: ['perf'], defaultsTo: false)
-        ..addFlag('verbose', abbr: 'v', defaultsTo: false)
-        ..addMultiOption('path', abbr: 'p', defaultsTo: ['./lib']))
+        ..addFlag(
+          'performance',
+          aliases: ['perf'],
+          defaultsTo: false,
+          help: 'Whether or not to output performance metrics during indexing',
+        )
+        ..addFlag(
+          'verbose',
+          abbr: 'v',
+          defaultsTo: false,
+          help: 'Whether or not to display debugging text during indexing',
+        )
+        ..addFlag('version',
+            defaultsTo: false, help: 'Display the current version of scip-dart')
+        ..addMultiOption(
+          'path',
+          abbr: 'p',
+          help: 'DEPRECATED, has no effect on executed code',
+        ))
       .parse(args);
+
+  if (result['version'] as bool) {
+    print(scipDartVersion);
+    exit(0);
+  }
 
   Flags.instance.init(result);
 
+  if ((result['path'] as List<String>?)?.isNotEmpty == true) {
+    print(
+      'The --path/-p flag is deprecated and no longer used. '
+      'All dart files in the provided directory are indexed by '
+      'default.',
+    );
+  }
+
   final packageRoot =
-      result.rest.length > 0 ? result.rest.first : Directory.current.path;
+      result.rest.isNotEmpty ? result.rest.first : Directory.current.path;
 
   final packageConfig = await findPackageConfig(Directory(packageRoot));
   if (packageConfig == null) {

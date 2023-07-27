@@ -35,6 +35,7 @@
   class Animal with SleepMixin {
 //      ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#
 //      documentation ```dart
+//      relationship scip-dart pub dart_test 1.0.0 lib/more.dart/SleepMixin# implementation
 //                  ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/SleepMixin#
     String name;
 //  ^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/string.dart/String#
@@ -65,22 +66,26 @@
 //           ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#
 //                      ^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#cat.
           soundMaker = () => print('Meow!');
+//        ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#soundMaker.
 //                           ^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/print.dart/print().
           break;
         case AnimalType.dog:
 //           ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#
 //                      ^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#dog.
           soundMaker = () => print('Woof!');
+//        ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#soundMaker.
 //                           ^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/print.dart/print().
           break;
         case AnimalType.bird:
 //           ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#
 //                      ^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/AnimalType#bird.
           soundMaker = () => print('Chirp!');
+//        ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#soundMaker.
 //                           ^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/print.dart/print().
           break;
         default:
           soundMaker = () => print('Unknown animal type');
+//        ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#soundMaker.
 //                           ^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/print.dart/print().
       }
     }
@@ -98,6 +103,7 @@
 //  ^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/string.dart/String#
 //         ^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#toString().
 //         documentation ```dart
+//         relationship scip-dart pub dart:core 2.18.0 dart:core/object.dart/Object#toString(). implementation reference
       return '$name the $type';
 //             ^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#name.
 //                       ^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#type.

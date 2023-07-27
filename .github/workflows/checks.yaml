@@ -4,22 +4,32 @@ on:
   pull_request:
 
 jobs:
-  format:
-    runs-on: workiva-runner-dev
+  analyze:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: stable
+          sdk: 2.18.7
       - run: dart pub get
-      - run: dart run dart_dev format
+      - run: dart run dart_dev analyze
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 2.18.7
+      - run: dart pub get
+      - run: dart run dart_dev format --check
 
   dependency-validator:
-    runs-on: workiva-runner-dev
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: stable
+          sdk: 2.18.7
       - run: dart pub get
       - run: dart run dependency_validator

@@ -6,9 +6,9 @@ import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:scip_dart/src/metadata.dart';
 import 'package:scip_dart/src/gen/scip.pb.dart';
-import 'package:scip_dart/src/symbol.dart';
+import 'package:scip_dart/src/relationship_generator.dart';
+import 'package:scip_dart/src/symbol_generator.dart';
 import 'package:scip_dart/src/utils.dart';
-import 'package:path/path.dart' as p;
 
 List<SymbolInformation> globalExternalSymbols = [];
 
@@ -31,7 +31,6 @@ class ScipVisitor extends GeneralizingAstVisitor {
     Pubspec pubspec,
   ) : _symbolGenerator = SymbolGenerator(
           _packageConfig,
-          _projectRoot,
           pubspec,
         ) {
     final fileSymbol = _symbolGenerator.symbolForFile(_relativePath);
@@ -66,7 +65,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
     if (node.declaredElement == null) return;
 
     final element = node.declaredElement!;
-    _registerAsDefinition(element);
+    _registerAsDefinition(
+      element,
+      relationships: relationshipsFor(node, element, _symbolGenerator),
+    );
   }
 
   void _visitNormalFormalParameter(NormalFormalParameter node) {
@@ -86,7 +88,31 @@ class ScipVisitor extends GeneralizingAstVisitor {
   }
 
   void _visitSimpleIdentifier(SimpleIdentifier node) {
-    final element = node.staticElement;
+    var element = node.staticElement;
+
+    // Both `.loadLibrary()`, and `.call()` are synthetic functions that
+    // have no definition. These should therefore should not be indexed.
+    if (element is FunctionElement && element.isSynthetic) {
+      if ([
+        FunctionElement.LOAD_LIBRARY_NAME,
+        FunctionElement.CALL_METHOD_NAME,
+      ].contains(element.name)) return;
+    }
+
+    // [element] for assignment fields is null. If the parent node
+    // is a `CompoundAssignmentExpression`, we know this node is referring
+    // to an assignment line. In that case, use the read/write element attached
+    // to this node instead of the [node]'s element
+    if (node.parent is CompoundAssignmentExpression) {
+      final assignmentNode = node.parent as CompoundAssignmentExpression;
+      element = assignmentNode.readElement ?? assignmentNode.writeElement;
+    }
+
+    // When the identifier is a field, the analyzer creates synthetic getters/
+    // setters for it. We need to get the backing field.
+    if (element?.isSynthetic == true && element is PropertyAccessorElement) {
+      element = element.variable;
+    }
 
     // element is null if there's nothing really to do for this node. Example: `void`
     // TODO: One weird issue found: named parameters of external symbols were element.source
@@ -162,13 +188,17 @@ class ScipVisitor extends GeneralizingAstVisitor {
   ///
   /// This adds both a symbol, and an occurrence for the element and it's
   /// name
-  void _registerAsDefinition(Element element) {
+  void _registerAsDefinition(
+    Element element, {
+    List<Relationship>? relationships,
+  }) {
     final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
       final meta = getSymbolMetadata(element);
       symbols.add(SymbolInformation(
         symbol: symbol,
         documentation: meta.documentation,
+        relationships: relationships,
       ));
 
       occurrences.add(Occurrence(

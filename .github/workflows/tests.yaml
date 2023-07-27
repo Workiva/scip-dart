@@ -27,7 +27,7 @@ jobs:
       - name: pub get snapshots directory
         run: dart pub get
         working-directory: ./snapshots/input/basic-project
-      
+
       - name: Snapshots Diff Check
         run: |
           dart run scip_dart ./snapshots/input/basic-project
@@ -46,16 +46,23 @@ jobs:
 
   consumer:
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
-        repo: ["Workiva/over_react", "rrousselGit/provider", "dart-lang/args"]
+        repo: [
+          "Workiva/over_react",
+          "Workiva/w_module",
+          "rrousselGit/provider",
+          "dart-lang/args",
+        ]
 
     steps:
       # Setup scip-dart
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
-      - uses: Workiva/gha-dart/pub-get@master
+        with:
+          sdk: 2.18.7
+      - run: dart pub get
 
       # Setup repo to run on
       - uses: actions/checkout@v3
