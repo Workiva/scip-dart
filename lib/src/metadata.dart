@@ -21,15 +21,30 @@ SymbolMetadata getSymbolMetadata(Element element) {
     multiline: true,
   );
 
+
   final docComment = element.documentationComment?.replaceAll(
     RegExp(r'^\s*///\s*', multiLine: true),
     '',
   );
 
+  final packagePath = _getFilePackageUri(element);
+
   return SymbolMetadata(
     documentation: [
-      '```dart\n$displayString\n```',
+      [
+        '```dart\n$displayString\n```',
+        if (packagePath != null) '_${packagePath}_'
+      ].join('\n'),
       if (docComment != null) docComment
     ],
   );
+}
+
+String? _getFilePackageUri(Element element) {
+  if (element.library != null) {
+    final path = element.library!.definingCompilationUnit.source.fullName;
+    return element.context.sourceFactory.pathToUri(path)?.toString();
+  }
+
+  return null;
 }
