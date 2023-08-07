@@ -21,7 +21,6 @@ SymbolMetadata getSymbolMetadata(Element element) {
     multiline: true,
   );
 
-
   final docComment = element.documentationComment?.replaceAll(
     RegExp(r'^\s*///\s*', multiLine: true),
     '',
@@ -41,10 +40,8 @@ SymbolMetadata getSymbolMetadata(Element element) {
 }
 
 String? _getFilePackageUri(Element element) {
-  if (element.library != null) {
-    final path = element.library!.definingCompilationUnit.source.fullName;
-    return element.context.sourceFactory.pathToUri(path)?.toString();
-  }
+  final path = element.library?.definingCompilationUnit.source.fullName;
+  if (path == null) return null;
 
-  return null;
+  return element.context.sourceFactory.pathToUri(path)?.toString();
 }
