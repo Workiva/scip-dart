@@ -14,8 +14,8 @@ Future<void> main(List<String> args) async {
           'index-relationships',
           defaultsTo: false,
           help: 'Whether or not to index symbol relationships. '
-                 'This functionality is currently in alpha, and should not be '
-                 'considered stable and accurate.',
+              'This functionality is currently in alpha, and should not be '
+              'considered stable and accurate.',
         )
         ..addFlag(
           'performance',
@@ -29,8 +29,11 @@ Future<void> main(List<String> args) async {
           defaultsTo: false,
           help: 'Whether or not to display debugging text during indexing',
         )
-        ..addFlag('version',
-            defaultsTo: false, help: 'Display the current version of scip-dart',)
+        ..addFlag(
+          'version',
+          defaultsTo: false,
+          help: 'Display the current version of scip-dart',
+        )
         ..addMultiOption(
           'path',
           abbr: 'p',
