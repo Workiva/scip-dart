@@ -1,6 +1,9 @@
 regen-snapshots:
-	dart run scip_dart ./snapshots/input/basic-project --verbose
+	dart run scip_dart ./snapshots/input/basic-project
+	dart run scip_dart --index-relationships ./snapshots/input/relationships-project
+
 	scip snapshot --to ./snapshots/output/basic-project
+	scip snapshot --to ./snapshots/output/relationships-project
 
 run:
 	dart run scip_dart ./snapshots/input/staging-project --verbose
