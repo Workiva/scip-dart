@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.4
+
+- Put the generation of relationships field behind a `--index-relationships` flag which needs to be opted in. This was to continue to work on coverage of relationships support without effecting consumers.
+- Fixed issue where the `projectRoot` uri was being calculated incorrectly
+
 ## 1.1.3
 
 - generated scip bindings updated to provide relationship fields. This allows for "Go to Implementations" and other class/method inheritance navigation.
