@@ -1,54 +1,107 @@
-  abstract class Mammal {
+  import 'package:dart_test/other.dart';
 // definition scip-dart pub dart_test 1.0.0 lib/main.dart/
-//               ^^^^^^ definition scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/Mammal#
-//               documentation ```dart
-    String get hierarchy;
-//  ^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/string.dart/String#
-//             ^^^^^^^^^ definition scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/Mammal#hierarchy.
-//             documentation ```dart
+  
+  /// This is a fib function
+  ///
+  /// Takes a number
+  /// Returns a number
+  int fib(int n) {
+//^^^ reference scip-dart pub dart:core 2.18.0 dart:core/int.dart/int#
+//    ^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/fib().
+//    documentation ```dart
+//    documentation This is a fib function
+//        ^^^ reference scip-dart pub dart:core 2.18.0 dart:core/int.dart/int#
+//            ^ definition local 0
+//            documentation ```dart
+    if (n <= 1) return 0;
+//      ^ reference local 0
+    return fib(n - 1) + fib(n - 2);
+//         ^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/fib().
+//             ^ reference local 0
+//                      ^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/fib().
+//                          ^ reference local 0
   }
   
-  abstract class Animal extends Mammal {
-//               ^^^^^^ definition scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/Animal#
-//               documentation ```dart
-//               relationship scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/Mammal# implementation
-//                              ^^^^^^ reference scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/Mammal#
-    String sound() => 'NOISE!';
-//  ^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/string.dart/String#
-//         ^^^^^ definition scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/Animal#sound().
-//         documentation ```dart
+  void print_fib(int a) {
+//     ^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/print_fib().
+//     documentation ```dart
+//               ^^^ reference scip-dart pub dart:core 2.18.0 dart:core/int.dart/int#
+//                   ^ definition local 1
+//                   documentation ```dart
+    print(fib(a));
+//  ^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/print.dart/print().
+//        ^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/fib().
+//            ^ reference local 1
   }
   
-  mixin SwimAction {
-//      ^^^^^^^^^^ definition scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/SwimAction#
+  final y = 'Hello';
+//      ^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/y.
 //      documentation ```dart
-    void execute() => print('swimming...');
-//       ^^^^^^^ definition scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/SwimAction#execute().
+  String capture() {
+//^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/string.dart/String#
+//       ^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/capture().
 //       documentation ```dart
-//                    ^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/print.dart/print().
+    return y;
+//         ^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/y.
   }
   
-  class Dog extends Animal with SwimAction {
-//      ^^^ definition scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/Dog#
+  final capture_lambda = () => y;
+//      ^^^^^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/capture_lambda.
 //      documentation ```dart
-//      relationship scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/Animal# implementation
-//      relationship scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/Mammal# implementation
-//      relationship scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/SwimAction# implementation
-//                  ^^^^^^ reference scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/Animal#
-//                              ^^^^^^^^^^ reference scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/SwimAction#
-    @override
-//   ^^^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/annotations.dart/override.
-    String sound() => 'woof';
-//  ^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/string.dart/String#
-//         ^^^^^ definition scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/Dog#sound().
-//         documentation ```dart
-//         relationship scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/Animal#sound(). implementation reference
+//                             ^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/y.
   
-    @override
-//   ^^^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/annotations.dart/override.
-    String get hierarchy => 'dog.animal.mammal';
-//  ^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/string.dart/String#
-//             ^^^^^^^^^ definition scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/Dog#hierarchy.
-//             documentation ```dart
-//             relationship scip-dart pub scip_dart 1.1.3 snapshots/input/relationships-project/lib/main.dart/Mammal#hierarchy. implementation reference
+  void main() {
+//     ^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/main().
+//     documentation ```dart
+    for (var i = 0; i <= 10; i++) {}
+//           ^ definition local 2
+//           documentation ```dart
+//                  ^ reference local 2
+//                           ^ reference local 2
+  
+    for (var i in [1, 2, 3]) {
+//           ^ definition local 3
+//           documentation ```dart
+      print(i);
+//    ^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/print.dart/print().
+//          ^ reference local 3
+    }
+  
+    var a = 0;
+//      ^ definition local 4
+//      documentation ```dart
+    a = 1;
+//  ^ reference local 4
+    print_fib(a);
+//  ^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/print_fib().
+//            ^ reference local 4
+  }
+  
+  void forever() {
+//     ^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/forever().
+//     documentation ```dart
+    return forever();
+//         ^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/forever().
+  }
+  
+  class SomeLocalClass {}
+//      ^^^^^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/SomeLocalClass#
+//      documentation ```dart
+  
+  /// Reference parameter: [value]
+//                          ^^^^^ reference local 5
+  /// Reference class: [SomeLocalClass]
+//                      ^^^^^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/SomeLocalClass#
+  /// Reference external class: [Foo]
+//                               ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
+  /// Missing Reference: [IDontExist]
+  void someFunction(int value) {
+//     ^^^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/someFunction().
+//     documentation ```dart
+//     documentation Reference parameter: [value]
+//                  ^^^ reference scip-dart pub dart:core 2.18.0 dart:core/int.dart/int#
+//                      ^^^^^ definition local 5
+//                      documentation ```dart
+    Foo(1);
+//  ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
   }
