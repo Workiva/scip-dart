@@ -108,7 +108,8 @@ class ScipVisitor extends GeneralizingAstVisitor {
     // to an assignment line. In that case, use the read/write element attached
     // to this node instead of the [node]'s element
     if (element == null) {
-      final assignmentExpr = node.thisOrAncestorOfType<CompoundAssignmentExpression>();
+      final assignmentExpr =
+          node.thisOrAncestorOfType<CompoundAssignmentExpression>();
       if (assignmentExpr == null) return;
 
       element = assignmentExpr.readElement ?? assignmentExpr.writeElement;
