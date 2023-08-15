@@ -10,6 +10,7 @@ import 'package:scip_dart/src/gen/scip.pb.dart';
 import 'package:scip_dart/src/relationship_generator.dart';
 import 'package:scip_dart/src/symbol_generator.dart';
 import 'package:scip_dart/src/utils.dart';
+import 'package:path/path.dart' as p;
 
 List<SymbolInformation> globalExternalSymbols = [];
 
@@ -156,16 +157,12 @@ class ScipVisitor extends GeneralizingAstVisitor {
         symbol: symbol,
       ));
 
-      if (!element.source!.fullName.startsWith(_projectRoot)) {
-        if (!globalExternalSymbols.any(
-          (symbolInfo) => symbolInfo.symbol == symbol,
-        )) {
-          final meta = getSymbolMetadata(element);
-          globalExternalSymbols.add(SymbolInformation(
-            symbol: symbol,
-            documentation: meta.documentation,
-          ));
-        }
+      if (_shouldRegisterAsExternalSymbol(element, symbol)) {
+        final meta = getSymbolMetadata(element);
+        globalExternalSymbols.add(SymbolInformation(
+          symbol: symbol,
+          documentation: meta.documentation,
+        ));
       }
     }
   }
@@ -193,5 +190,28 @@ class ScipVisitor extends GeneralizingAstVisitor {
         symbolRoles: SymbolRole.Definition.value,
       ));
     }
+  }
+
+  /// Whether or not the provided [element] and it's correlating [symbol]
+  /// should be considered an "external" symbol.
+  bool _shouldRegisterAsExternalSymbol(Element element, String symbol) {
+    // local symbols cannot be considered "external", since they are local.
+    final isLocalSymbol = symbol.startsWith('local');
+    if (isLocalSymbol) return false;
+
+    // anything within .dart_tool is rarely committed, but can be referenced
+    // within the codebase. Consider these "external" entities.
+    //
+    // if the element is within the project, it also, cannot be external
+    // and should have a correlating definition
+    final source = element.source!.fullName;
+    final isInDartTool = source.startsWith(p.join(_projectRoot, '.dart_tool'));
+    final isInProject = source.startsWith(_projectRoot);
+    if (isInDartTool || !isInProject) return false;
+
+    // check if the symbol already has been added to the global symbols
+    if (globalExternalSymbols.any((s) => s.symbol == symbol)) return false;
+
+    return true;
   }
 }
