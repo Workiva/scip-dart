@@ -2,6 +2,7 @@ import 'more.dart' deferred as more;
 
 class Foo {
   int _far;
+  bool value;
   Foo(this._far);
 }
 
@@ -19,4 +20,6 @@ void main() {
   more.loadLibrary().then((_) => {
     Bar('a').someMethod.call()
   });
+
+  Foo()..value = false
 }

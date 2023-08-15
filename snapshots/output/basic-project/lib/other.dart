@@ -10,6 +10,10 @@
 //  ^^^ reference scip-dart pub dart:core 2.18.0 dart:core/int.dart/int#
 //      ^^^^ definition local 0
 //      documentation ```dart
+    bool value;
+//  ^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/bool.dart/bool#
+//       ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#value.
+//       documentation ```dart
     Foo(this._far);
 //  ^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#<constructor>().
 //  documentation ```dart
@@ -57,4 +61,8 @@
 //    ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#
 //             ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#someMethod().
     });
+  
+    Foo()..value = false
+//  ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
+//         ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#value.
   }
