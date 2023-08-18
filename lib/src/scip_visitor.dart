@@ -207,7 +207,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
     final source = element.source!.fullName;
     final isInDartTool = source.startsWith(p.join(_projectRoot, '.dart_tool'));
     final isInProject = source.startsWith(_projectRoot);
-    if (isInDartTool || isInProject) return false;
+    if (!isInDartTool || isInProject) return false;
 
     // check if the symbol already has been added to the global symbols
     if (globalExternalSymbols.any((s) => s.symbol == symbol)) return false;
