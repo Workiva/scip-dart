@@ -10,8 +10,8 @@ executables:
   scip_dart:
 
 dependencies:
-  analyzer: ^5.4.0
-  args: ^2.4.0
+  analyzer: ^5.13.0
+  args: ^2.4.2
   package_config: ^2.1.0
   path: ^1.8.3
   protobuf: ^2.1.0
