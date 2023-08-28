@@ -6,9 +6,13 @@ import 'package:analyzer/dart/element/element.dart';
 /// Use [getSymbolMetadata] to retrieve [SymbolMetadata] for a provided
 /// [Element] type.
 class SymbolMetadata {
-  List<String> documentation;
+  List<String>? documentation;
+  String signatureDocumentation;
 
-  SymbolMetadata({required this.documentation});
+  SymbolMetadata({
+    this.documentation,
+    required this.signatureDocumentation,
+  });
 }
 
 /// Returns a [SymbolMetadata] object for a provided [Element] type.
@@ -16,20 +20,18 @@ class SymbolMetadata {
 /// This information is used to embellish `SymbolInformation` struct's
 /// within the protobuf schema for scip
 SymbolMetadata getSymbolMetadata(Element element) {
-  final displayString = element.getDisplayString(
-    withNullability: false,
-    multiline: true,
-  );
-
   final docComment = element.documentationComment?.replaceAll(
     RegExp(r'^\s*///\s*', multiLine: true),
     '',
   );
 
+  final displayString = element.getDisplayString(
+    withNullability: false,
+    multiline: true,
+  );
+
   return SymbolMetadata(
-    documentation: [
-      '```dart\n$displayString\n```',
-      if (docComment != null) docComment
-    ],
+    documentation: docComment != null ? [docComment] : null,
+    signatureDocumentation: displayString,
   );
 }

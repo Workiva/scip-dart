@@ -244,6 +244,7 @@ class Document extends $pb.GeneratedMessage {
     ..pc<Occurrence>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'occurrences', $pb.PbFieldType.PM, subBuilder: Occurrence.create)
     ..pc<SymbolInformation>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'symbols', $pb.PbFieldType.PM, subBuilder: SymbolInformation.create)
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'language')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'text')
     ..hasRequiredFields = false
   ;
 
@@ -253,6 +254,7 @@ class Document extends $pb.GeneratedMessage {
     $core.Iterable<Occurrence>? occurrences,
     $core.Iterable<SymbolInformation>? symbols,
     $core.String? language,
+    $core.String? text,
   }) {
     final _result = create();
     if (relativePath != null) {
@@ -266,6 +268,9 @@ class Document extends $pb.GeneratedMessage {
     }
     if (language != null) {
       _result.language = language;
+    }
+    if (text != null) {
+      _result.text = text;
     }
     return _result;
   }
@@ -313,6 +318,15 @@ class Document extends $pb.GeneratedMessage {
   $core.bool hasLanguage() => $_has(3);
   @$pb.TagNumber(4)
   void clearLanguage() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get text => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set text($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasText() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearText() => clearField(5);
 }
 
 class Symbol extends $pb.GeneratedMessage {
@@ -541,6 +555,10 @@ class SymbolInformation extends $pb.GeneratedMessage {
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'symbol')
     ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'documentation')
     ..pc<Relationship>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'relationships', $pb.PbFieldType.PM, subBuilder: Relationship.create)
+    ..e<SymbolInformation_Kind>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'kind', $pb.PbFieldType.OE, defaultOrMaker: SymbolInformation_Kind.UnspecifiedKind, valueOf: SymbolInformation_Kind.valueOf, enumValues: SymbolInformation_Kind.values)
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'displayName')
+    ..aOM<Document>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'signatureDocumentation', subBuilder: Document.create)
+    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'enclosingSymbol')
     ..hasRequiredFields = false
   ;
 
@@ -549,6 +567,10 @@ class SymbolInformation extends $pb.GeneratedMessage {
     $core.String? symbol,
     $core.Iterable<$core.String>? documentation,
     $core.Iterable<Relationship>? relationships,
+    SymbolInformation_Kind? kind,
+    $core.String? displayName,
+    Document? signatureDocumentation,
+    $core.String? enclosingSymbol,
   }) {
     final _result = create();
     if (symbol != null) {
@@ -559,6 +581,18 @@ class SymbolInformation extends $pb.GeneratedMessage {
     }
     if (relationships != null) {
       _result.relationships.addAll(relationships);
+    }
+    if (kind != null) {
+      _result.kind = kind;
+    }
+    if (displayName != null) {
+      _result.displayName = displayName;
+    }
+    if (signatureDocumentation != null) {
+      _result.signatureDocumentation = signatureDocumentation;
+    }
+    if (enclosingSymbol != null) {
+      _result.enclosingSymbol = enclosingSymbol;
     }
     return _result;
   }
@@ -597,6 +631,44 @@ class SymbolInformation extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(4)
   $core.List<Relationship> get relationships => $_getList(2);
+
+  @$pb.TagNumber(5)
+  SymbolInformation_Kind get kind => $_getN(3);
+  @$pb.TagNumber(5)
+  set kind(SymbolInformation_Kind v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasKind() => $_has(3);
+  @$pb.TagNumber(5)
+  void clearKind() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get displayName => $_getSZ(4);
+  @$pb.TagNumber(6)
+  set displayName($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasDisplayName() => $_has(4);
+  @$pb.TagNumber(6)
+  void clearDisplayName() => clearField(6);
+
+  @$pb.TagNumber(7)
+  Document get signatureDocumentation => $_getN(5);
+  @$pb.TagNumber(7)
+  set signatureDocumentation(Document v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasSignatureDocumentation() => $_has(5);
+  @$pb.TagNumber(7)
+  void clearSignatureDocumentation() => clearField(7);
+  @$pb.TagNumber(7)
+  Document ensureSignatureDocumentation() => $_ensure(5);
+
+  @$pb.TagNumber(8)
+  $core.String get enclosingSymbol => $_getSZ(6);
+  @$pb.TagNumber(8)
+  set enclosingSymbol($core.String v) { $_setString(6, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasEnclosingSymbol() => $_has(6);
+  @$pb.TagNumber(8)
+  void clearEnclosingSymbol() => clearField(8);
 }
 
 class Relationship extends $pb.GeneratedMessage {
@@ -710,6 +782,7 @@ class Occurrence extends $pb.GeneratedMessage {
     ..pPS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'overrideDocumentation')
     ..e<SyntaxKind>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'syntaxKind', $pb.PbFieldType.OE, defaultOrMaker: SyntaxKind.UnspecifiedSyntaxKind, valueOf: SyntaxKind.valueOf, enumValues: SyntaxKind.values)
     ..pc<Diagnostic>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'diagnostics', $pb.PbFieldType.PM, subBuilder: Diagnostic.create)
+    ..p<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'enclosingRange', $pb.PbFieldType.K3)
     ..hasRequiredFields = false
   ;
 
@@ -721,6 +794,7 @@ class Occurrence extends $pb.GeneratedMessage {
     $core.Iterable<$core.String>? overrideDocumentation,
     SyntaxKind? syntaxKind,
     $core.Iterable<Diagnostic>? diagnostics,
+    $core.Iterable<$core.int>? enclosingRange,
   }) {
     final _result = create();
     if (range != null) {
@@ -740,6 +814,9 @@ class Occurrence extends $pb.GeneratedMessage {
     }
     if (diagnostics != null) {
       _result.diagnostics.addAll(diagnostics);
+    }
+    if (enclosingRange != null) {
+      _result.enclosingRange.addAll(enclosingRange);
     }
     return _result;
   }
@@ -799,6 +876,9 @@ class Occurrence extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(6)
   $core.List<Diagnostic> get diagnostics => $_getList(5);
+
+  @$pb.TagNumber(7)
+  $core.List<$core.int> get enclosingRange => $_getList(6);
 }
 
 class Diagnostic extends $pb.GeneratedMessage {

@@ -161,6 +161,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
           globalExternalSymbols.add(SymbolInformation(
             symbol: symbol,
             documentation: meta.documentation,
+            signatureDocumentation: Document(
+              language: Language.Dart.name,
+              text: meta.signatureDocumentation,
+            ),
           ));
         }
       }
@@ -181,6 +185,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
       symbols.add(SymbolInformation(
         symbol: symbol,
         documentation: meta.documentation,
+        signatureDocumentation: Document(
+          language: Language.Dart.name,
+          text: meta.signatureDocumentation,
+        ),
         relationships: relationships,
       ));
 

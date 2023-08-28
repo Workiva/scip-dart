@@ -273,6 +273,7 @@ class Language extends $pb.ProtobufEnum {
   static const Language Scheme = Language._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Scheme');
   static const Language ShellScript = Language._(64, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ShellScript');
   static const Language Skylark = Language._(78, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Skylark');
+  static const Language Solidity = Language._(95, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Solidity');
   static const Language Swift = Language._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Swift');
   static const Language TOML = Language._(73, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TOML');
   static const Language TeX = Language._(82, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TeX');
@@ -369,6 +370,7 @@ class Language extends $pb.ProtobufEnum {
     Scheme,
     ShellScript,
     Skylark,
+    Solidity,
     Swift,
     TOML,
     TeX,
@@ -397,9 +399,9 @@ class Descriptor_Suffix extends $pb.ProtobufEnum {
   static const Descriptor_Suffix Method = Descriptor_Suffix._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Method');
   static const Descriptor_Suffix TypeParameter = Descriptor_Suffix._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TypeParameter');
   static const Descriptor_Suffix Parameter = Descriptor_Suffix._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Parameter');
-  static const Descriptor_Suffix Macro = Descriptor_Suffix._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Macro');
   static const Descriptor_Suffix Meta = Descriptor_Suffix._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Meta');
   static const Descriptor_Suffix Local = Descriptor_Suffix._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Local');
+  static const Descriptor_Suffix Macro = Descriptor_Suffix._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Macro');
 
   static const Descriptor_Suffix Package = Namespace;
 
@@ -411,14 +413,157 @@ class Descriptor_Suffix extends $pb.ProtobufEnum {
     Method,
     TypeParameter,
     Parameter,
-    Macro,
     Meta,
     Local,
+    Macro,
   ];
 
   static final $core.Map<$core.int, Descriptor_Suffix> _byValue = $pb.ProtobufEnum.initByValue(values);
   static Descriptor_Suffix? valueOf($core.int value) => _byValue[value];
 
   const Descriptor_Suffix._($core.int v, $core.String n) : super(v, n);
+}
+
+class SymbolInformation_Kind extends $pb.ProtobufEnum {
+  static const SymbolInformation_Kind UnspecifiedKind = SymbolInformation_Kind._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UnspecifiedKind');
+  static const SymbolInformation_Kind Array = SymbolInformation_Kind._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Array');
+  static const SymbolInformation_Kind Assertion = SymbolInformation_Kind._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Assertion');
+  static const SymbolInformation_Kind AssociatedType = SymbolInformation_Kind._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AssociatedType');
+  static const SymbolInformation_Kind Attribute = SymbolInformation_Kind._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Attribute');
+  static const SymbolInformation_Kind Axiom = SymbolInformation_Kind._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Axiom');
+  static const SymbolInformation_Kind Boolean = SymbolInformation_Kind._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Boolean');
+  static const SymbolInformation_Kind Class = SymbolInformation_Kind._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Class');
+  static const SymbolInformation_Kind Constant = SymbolInformation_Kind._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Constant');
+  static const SymbolInformation_Kind Constructor = SymbolInformation_Kind._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Constructor');
+  static const SymbolInformation_Kind Contract = SymbolInformation_Kind._(62, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Contract');
+  static const SymbolInformation_Kind DataFamily = SymbolInformation_Kind._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DataFamily');
+  static const SymbolInformation_Kind Enum = SymbolInformation_Kind._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Enum');
+  static const SymbolInformation_Kind EnumMember = SymbolInformation_Kind._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'EnumMember');
+  static const SymbolInformation_Kind Error = SymbolInformation_Kind._(63, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Error');
+  static const SymbolInformation_Kind Event = SymbolInformation_Kind._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Event');
+  static const SymbolInformation_Kind Fact = SymbolInformation_Kind._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Fact');
+  static const SymbolInformation_Kind Field = SymbolInformation_Kind._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Field');
+  static const SymbolInformation_Kind File = SymbolInformation_Kind._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'File');
+  static const SymbolInformation_Kind Function = SymbolInformation_Kind._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Function');
+  static const SymbolInformation_Kind Getter = SymbolInformation_Kind._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Getter');
+  static const SymbolInformation_Kind Grammar = SymbolInformation_Kind._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Grammar');
+  static const SymbolInformation_Kind Instance = SymbolInformation_Kind._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Instance');
+  static const SymbolInformation_Kind Interface = SymbolInformation_Kind._(21, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Interface');
+  static const SymbolInformation_Kind Key = SymbolInformation_Kind._(22, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Key');
+  static const SymbolInformation_Kind Lang = SymbolInformation_Kind._(23, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Lang');
+  static const SymbolInformation_Kind Lemma = SymbolInformation_Kind._(24, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Lemma');
+  static const SymbolInformation_Kind Library = SymbolInformation_Kind._(64, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Library');
+  static const SymbolInformation_Kind Macro = SymbolInformation_Kind._(25, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Macro');
+  static const SymbolInformation_Kind Method = SymbolInformation_Kind._(26, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Method');
+  static const SymbolInformation_Kind MethodReceiver = SymbolInformation_Kind._(27, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MethodReceiver');
+  static const SymbolInformation_Kind Message = SymbolInformation_Kind._(28, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Message');
+  static const SymbolInformation_Kind Modifier = SymbolInformation_Kind._(65, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Modifier');
+  static const SymbolInformation_Kind Module = SymbolInformation_Kind._(29, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Module');
+  static const SymbolInformation_Kind Namespace = SymbolInformation_Kind._(30, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Namespace');
+  static const SymbolInformation_Kind Null = SymbolInformation_Kind._(31, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Null');
+  static const SymbolInformation_Kind Number = SymbolInformation_Kind._(32, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Number');
+  static const SymbolInformation_Kind Object_ = SymbolInformation_Kind._(33, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Object');
+  static const SymbolInformation_Kind Operator = SymbolInformation_Kind._(34, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Operator');
+  static const SymbolInformation_Kind Package = SymbolInformation_Kind._(35, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Package');
+  static const SymbolInformation_Kind PackageObject = SymbolInformation_Kind._(36, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PackageObject');
+  static const SymbolInformation_Kind Parameter = SymbolInformation_Kind._(37, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Parameter');
+  static const SymbolInformation_Kind ParameterLabel = SymbolInformation_Kind._(38, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ParameterLabel');
+  static const SymbolInformation_Kind Pattern = SymbolInformation_Kind._(39, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Pattern');
+  static const SymbolInformation_Kind Predicate = SymbolInformation_Kind._(40, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Predicate');
+  static const SymbolInformation_Kind Property = SymbolInformation_Kind._(41, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Property');
+  static const SymbolInformation_Kind Protocol = SymbolInformation_Kind._(42, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Protocol');
+  static const SymbolInformation_Kind Quasiquoter = SymbolInformation_Kind._(43, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Quasiquoter');
+  static const SymbolInformation_Kind SelfParameter = SymbolInformation_Kind._(44, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SelfParameter');
+  static const SymbolInformation_Kind Setter = SymbolInformation_Kind._(45, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Setter');
+  static const SymbolInformation_Kind Signature = SymbolInformation_Kind._(46, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Signature');
+  static const SymbolInformation_Kind Subscript = SymbolInformation_Kind._(47, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Subscript');
+  static const SymbolInformation_Kind String = SymbolInformation_Kind._(48, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'String');
+  static const SymbolInformation_Kind Struct = SymbolInformation_Kind._(49, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Struct');
+  static const SymbolInformation_Kind Tactic = SymbolInformation_Kind._(50, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Tactic');
+  static const SymbolInformation_Kind Theorem = SymbolInformation_Kind._(51, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Theorem');
+  static const SymbolInformation_Kind ThisParameter = SymbolInformation_Kind._(52, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ThisParameter');
+  static const SymbolInformation_Kind Trait = SymbolInformation_Kind._(53, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Trait');
+  static const SymbolInformation_Kind Type = SymbolInformation_Kind._(54, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Type');
+  static const SymbolInformation_Kind TypeAlias = SymbolInformation_Kind._(55, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TypeAlias');
+  static const SymbolInformation_Kind TypeClass = SymbolInformation_Kind._(56, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TypeClass');
+  static const SymbolInformation_Kind TypeFamily = SymbolInformation_Kind._(57, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TypeFamily');
+  static const SymbolInformation_Kind TypeParameter = SymbolInformation_Kind._(58, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TypeParameter');
+  static const SymbolInformation_Kind Union = SymbolInformation_Kind._(59, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Union');
+  static const SymbolInformation_Kind Value = SymbolInformation_Kind._(60, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Value');
+  static const SymbolInformation_Kind Variable = SymbolInformation_Kind._(61, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Variable');
+
+  static const $core.List<SymbolInformation_Kind> values = <SymbolInformation_Kind> [
+    UnspecifiedKind,
+    Array,
+    Assertion,
+    AssociatedType,
+    Attribute,
+    Axiom,
+    Boolean,
+    Class,
+    Constant,
+    Constructor,
+    Contract,
+    DataFamily,
+    Enum,
+    EnumMember,
+    Error,
+    Event,
+    Fact,
+    Field,
+    File,
+    Function,
+    Getter,
+    Grammar,
+    Instance,
+    Interface,
+    Key,
+    Lang,
+    Lemma,
+    Library,
+    Macro,
+    Method,
+    MethodReceiver,
+    Message,
+    Modifier,
+    Module,
+    Namespace,
+    Null,
+    Number,
+    Object_,
+    Operator,
+    Package,
+    PackageObject,
+    Parameter,
+    ParameterLabel,
+    Pattern,
+    Predicate,
+    Property,
+    Protocol,
+    Quasiquoter,
+    SelfParameter,
+    Setter,
+    Signature,
+    Subscript,
+    String,
+    Struct,
+    Tactic,
+    Theorem,
+    ThisParameter,
+    Trait,
+    Type,
+    TypeAlias,
+    TypeClass,
+    TypeFamily,
+    TypeParameter,
+    Union,
+    Value,
+    Variable,
+  ];
+
+  static final $core.Map<$core.int, SymbolInformation_Kind> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static SymbolInformation_Kind? valueOf($core.int value) => _byValue[value];
+
+  const SymbolInformation_Kind._($core.int v, $core.String n) : super(v, n);
 }
 
