@@ -3,7 +3,6 @@
   
   void main() {
 //     ^^^^ definition scip-dart pub dart_test 1.0.0 test/basic_test.dart/main().
-//     documentation ```dart
     group('some test', () {
 //  ^^^^^ reference scip-dart pub test_core 0.5.3 lib/scaffolding.dart/group().
       test('equality', () {
