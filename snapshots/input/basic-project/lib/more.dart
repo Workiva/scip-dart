@@ -71,5 +71,5 @@ void main() {
   [1,2].reduce((a, b) => a + b);
 }
 
-void test(String Function(int)) {}
-void deepTest(String Function(void Function(String test))) {}
+void test(String Function(int) p) {}
+void deepTest(String Function(void Function(String test)) p) {}

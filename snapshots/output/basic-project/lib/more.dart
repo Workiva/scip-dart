@@ -199,22 +199,17 @@
 //                             ^ reference local 9
   }
   
-  void test(String Function(int)) {}
+  void test(String Function(int) p) {}
 //     ^^^^ definition scip-dart pub dart_test 1.0.0 lib/more.dart/test().
 //     documentation ```dart
 //          ^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/string.dart/String#
-//                 ^^^^^^^^ definition local 10
-//                 documentation ```dart
-//                          ^^^ definition local 11
-//                          documentation ```dart
-  void deepTest(String Function(void Function(String test))) {}
+//                          ^^^ reference scip-dart pub dart:core 2.18.0 dart:core/int.dart/int#
+//                               ^ definition local 10
+//                               documentation ```dart
+  void deepTest(String Function(void Function(String test)) p) {}
 //     ^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/more.dart/deepTest().
 //     documentation ```dart
 //              ^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/string.dart/String#
-//                     ^^^^^^^^ definition local 12
-//                     documentation ```dart
-//                                   ^^^^^^^^ definition local 13
-//                                   documentation ```dart
 //                                            ^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/string.dart/String#
-//                                                   ^^^^ definition local 14
-//                                                   documentation ```dart
+//                                                          ^ definition local 11
+//                                                          documentation ```dart
