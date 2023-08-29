@@ -67,4 +67,9 @@ void main() {
   print('The sum of $numbers is $sum');
 
   print(math.Rectangle(1,2,3,4));
+
+  [1,2].reduce((a, b) => a + b);
 }
+
+void test(String Function(int)) {}
+void deepTest(String Function(void Function(String test))) {}
