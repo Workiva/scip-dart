@@ -82,7 +82,8 @@ class ScipVisitor extends GeneralizingAstVisitor {
     // if this parameter is a child of another parameter (usually a function
     // parameter), don't register it as a declaration, it's references will be
     // registered in [_visitSimpleIdentifier]
-    final parentParameter = node.parent?.thisOrAncestorOfType<NormalFormalParameter>();
+    final parentParameter =
+        node.parent?.thisOrAncestorOfType<NormalFormalParameter>();
     if (parentParameter != null) return;
 
     if (node is FieldFormalParameter) {
@@ -152,7 +153,6 @@ class ScipVisitor extends GeneralizingAstVisitor {
     required int offset,
     required int length,
   }) {
-
     final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
       occurrences.add(Occurrence(
