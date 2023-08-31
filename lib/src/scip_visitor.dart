@@ -79,6 +79,14 @@ class ScipVisitor extends GeneralizingAstVisitor {
     final element = node.declaredElement;
     if (element == null) return;
 
+    // if this parameter is a child of a GenericFunctionType (can be a
+    // typedef, or a function as a parameter), we don't want to index it
+    // as a definition (nothing is defined, just referenced). Return false
+    // and let the [_visitSimpleIdentifier] declare the reference
+    final parentParameter =
+        node.parent?.thisOrAncestorOfType<GenericFunctionType>();
+    if (parentParameter != null) return;
+
     if (node is FieldFormalParameter) {
       final fieldElement = (element as FieldFormalParameterElement).field;
       _registerAsReference(
