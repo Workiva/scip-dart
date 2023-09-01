@@ -19,5 +19,4 @@ dependencies:
 
 dev_dependencies:
   dependency_validator: ^3.2.2
-  glob: ^2.1.1
   workiva_analysis_options: ^1.0.0
