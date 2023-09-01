@@ -26,7 +26,7 @@
 //                   ^ definition local 1
 //                   documentation ```dart
     print(fib(a));
-//  ^^^^^ reference scip-dart pub dart:core 3.0.0 dart:core/print.dart/print().
+//  ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/print.dart/print().
 //        ^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/fib().
 //            ^ reference local 1
   }
@@ -59,7 +59,7 @@
 //           ^ definition local 3
 //           documentation ```dart
       print(i);
-//    ^^^^^ reference scip-dart pub dart:core 3.0.0 dart:core/print.dart/print().
+//    ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/print.dart/print().
 //          ^ reference local 3
     }
   

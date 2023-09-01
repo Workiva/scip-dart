@@ -38,7 +38,7 @@
       _someValue = 'asdf';
 //    ^^^^^^^^^^ reference local 2
       print(_someValue);
-//    ^^^^^ reference scip-dart pub dart:core 3.0.0 dart:core/print.dart/print().
+//    ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/print.dart/print().
 //          ^^^^^^^^^^ reference local 2
     }
   }
@@ -48,7 +48,7 @@
 //     documentation ```dart
     more.loadLibrary().then((_) => {
 //  ^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/more.
-//                     ^^^^ reference scip-dart pub dart:async 3.0.0 dart:async/future.dart/Future#then().
+//                     ^^^^ reference scip-dart pub dart:async 3.1.0 dart:async/future.dart/Future#then().
 //                           ^ definition local 4
 //                           documentation ```dart
       Bar('a').someMethod.call()

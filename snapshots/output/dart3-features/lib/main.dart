@@ -98,7 +98,7 @@
 //        documentation ```dart
     return switch (dt.weekday) {
 //                 ^^ reference local 10
-//                    ^^^^^^^ reference scip-dart pub dart:core 3.0.0 dart:core/date_time.dart/DateTime#weekday.
+//                    ^^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/date_time.dart/DateTime#weekday.
         one => 'Feeling the Monday blues?',
 //      ^^^ reference local 11
         7 || six => 'Enjoy the weekend!',
@@ -116,7 +116,7 @@
     ) = userInfo({'name': 'Michael', 'height': 180});
 //      ^^^^^^^^ reference scip-dart pub dart3_features 1.0.0 lib/main.dart/userInfo().
     print('User $name is $height cm tall.');
-//  ^^^^^ reference scip-dart pub dart:core 3.0.0 dart:core/print.dart/print().
+//  ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/print.dart/print().
 //               ^^^^ reference local 12
 //                        ^^^^^^ reference local 13
   
@@ -127,7 +127,7 @@
     if (json case {'name': 'Michael', 'height': int h}) {
 //      ^^^^ reference local 14
       print('Michael is $h cm tall.');
-//    ^^^^^ reference scip-dart pub dart:core 3.0.0 dart:core/print.dart/print().
+//    ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/print.dart/print().
 //                       ^ reference local 15
     }
   }
