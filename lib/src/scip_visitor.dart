@@ -54,6 +54,8 @@ class ScipVisitor extends GeneralizingAstVisitor {
       _visitNormalFormalParameter(node);
     } else if (node is SimpleIdentifier) {
       _visitSimpleIdentifier(node);
+    } else if (node is TypeAnnotation) {
+      _visitTypeAnnotation(node);
     }
 
     super.visitNode(node);
@@ -140,6 +142,18 @@ class ScipVisitor extends GeneralizingAstVisitor {
         length: node.name.length,
       );
     }
+  }
+
+  void _visitTypeAnnotation(TypeAnnotation node) {
+    final element = node.type?.element;
+
+    if (element == null) return;
+
+    _registerAsReference(
+      element,
+      offset: node.offset,
+      length: node.type!.getDisplayString(withNullability: false).length,
+    );
   }
 
   /// Registers the provided [element] as a reference to an existing definition
