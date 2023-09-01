@@ -111,7 +111,7 @@
 //^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
 //    ^^^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/more.dart/calculateSum().
 //    documentation ```dart
-//                 ^^^^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/list.dart/List#
+//                 ^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/list.dart/List#
 //                      ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
 //                           ^^^^^^^ definition local 1
 //                           documentation ```dart
@@ -130,7 +130,7 @@
 //     ^^^^ definition scip-dart pub dart_test 1.0.0 lib/more.dart/main().
 //     documentation ```dart
     List<int> numbers = [1, 2, 3, 4, 5];
-//  ^^^^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/list.dart/List#
+//  ^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/list.dart/List#
 //       ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
 //            ^^^^^^^ definition local 4
 //            documentation ```dart
@@ -185,7 +185,7 @@
   
     print(math.Rectangle(1,2,3,4));
 //  ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/print.dart/print().
-//        ^^^^^^^^^^^^^^ reference scip-dart pub dart:math 3.1.0 dart:math/rectangle.dart/Rectangle#
+//        ^^^^^^^^^ reference scip-dart pub dart:math 3.1.0 dart:math/rectangle.dart/Rectangle#
   
     [1,2].reduce((a, b) => a + b);
 //        ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/iterable.dart/Iterable#reduce().

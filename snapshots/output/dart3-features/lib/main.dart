@@ -4,7 +4,7 @@
 //         ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
 //              ^^^^^^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/userInfo().
 //              documentation ```dart
-//                       ^^^^^^^^^^^^^^^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/map.dart/Map#
+//                       ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/map.dart/Map#
 //                           ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/string.dart/String#
 //                                            ^^^^ definition local 0
 //                                            documentation ```dart
