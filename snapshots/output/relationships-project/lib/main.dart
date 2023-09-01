@@ -1,34 +1,34 @@
-abstract class Mammal {
+  abstract class Mammal {
 // definition scip-dart pub dart_test 1.0.0 lib/main.dart/
 //               ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/Mammal#
 //               documentation ```dart
-  String get hierarchy;
+    String get hierarchy;
 //  ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/string.dart/String#
 //             ^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/Mammal#hierarchy.
 //             documentation ```dart
-}
-
-abstract class Animal extends Mammal {
+  }
+  
+  abstract class Animal extends Mammal {
 //               ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/Animal#
 //               documentation ```dart
 //               relationship scip-dart pub dart_test 1.0.0 lib/main.dart/Mammal# implementation
 //                              ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/Mammal#
-  String sound() => 'NOISE!';
+    String sound() => 'NOISE!';
 //  ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/string.dart/String#
 //         ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/Animal#sound().
 //         documentation ```dart
-}
-
-mixin SwimAction {
+  }
+  
+  mixin SwimAction {
 //      ^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/SwimAction#
 //      documentation ```dart
-  void execute() => print('swimming...');
+    void execute() => print('swimming...');
 //       ^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/SwimAction#execute().
 //       documentation ```dart
 //                    ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/print.dart/print().
-}
-
-class Dog extends Animal with SwimAction {
+  }
+  
+  class Dog extends Animal with SwimAction {
 //      ^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/Dog#
 //      documentation ```dart
 //      relationship scip-dart pub dart_test 1.0.0 lib/main.dart/Animal# implementation
@@ -36,19 +36,20 @@ class Dog extends Animal with SwimAction {
 //      relationship scip-dart pub dart_test 1.0.0 lib/main.dart/SwimAction# implementation
 //                  ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/Animal#
 //                              ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/main.dart/SwimAction#
-  @override
+    @override
 //   ^^^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/annotations.dart/override.
-  String sound() => 'woof';
+    String sound() => 'woof';
 //  ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/string.dart/String#
 //         ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/Dog#sound().
 //         documentation ```dart
 //         relationship scip-dart pub dart_test 1.0.0 lib/main.dart/Animal#sound(). implementation reference
-
-  @override
+  
+    @override
 //   ^^^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/annotations.dart/override.
-  String get hierarchy => 'dog.animal.mammal';
+    String get hierarchy => 'dog.animal.mammal';
 //  ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/string.dart/String#
 //             ^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/Dog#hierarchy.
 //             documentation ```dart
 //             relationship scip-dart pub dart_test 1.0.0 lib/main.dart/Mammal#hierarchy. implementation reference
-}
+  }
+  
