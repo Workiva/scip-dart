@@ -4,9 +4,11 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/source/line_info.dart';
 import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
+import 'package:scip_dart/src/flags.dart';
 import 'package:scip_dart/src/metadata.dart';
 import 'package:scip_dart/src/gen/scip.pb.dart';
-import 'package:scip_dart/src/symbol.dart';
+import 'package:scip_dart/src/relationship_generator.dart';
+import 'package:scip_dart/src/symbol_generator.dart';
 import 'package:scip_dart/src/utils.dart';
 
 List<SymbolInformation> globalExternalSymbols = [];
@@ -61,12 +63,29 @@ class ScipVisitor extends GeneralizingAstVisitor {
     if (node.declaredElement == null) return;
 
     final element = node.declaredElement!;
-    _registerAsDefinition(element);
+
+    List<Relationship>? relationships;
+    if (Flags.instance.indexRelationships) {
+      relationships = relationshipsFor(node, element, _symbolGenerator);
+    }
+
+    _registerAsDefinition(
+      element,
+      relationships: relationships,
+    );
   }
 
   void _visitNormalFormalParameter(NormalFormalParameter node) {
     final element = node.declaredElement;
     if (element == null) return;
+
+    // if this parameter is a child of a GenericFunctionType (can be a
+    // typedef, or a function as a parameter), we don't want to index it
+    // as a definition (nothing is defined, just referenced). Return false
+    // and let the [_visitSimpleIdentifier] declare the reference
+    final parentParameter =
+        node.parent?.thisOrAncestorOfType<GenericFunctionType>();
+    if (parentParameter != null) return;
 
     if (node is FieldFormalParameter) {
       final fieldElement = (element as FieldFormalParameterElement).field;
@@ -160,13 +179,17 @@ class ScipVisitor extends GeneralizingAstVisitor {
   ///
   /// This adds both a symbol, and an occurrence for the element and it's
   /// name
-  void _registerAsDefinition(Element element) {
+  void _registerAsDefinition(
+    Element element, {
+    List<Relationship>? relationships,
+  }) {
     final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
       final meta = getSymbolMetadata(element);
       symbols.add(SymbolInformation(
         symbol: symbol,
         documentation: meta.documentation,
+        relationships: relationships,
       ));
 
       occurrences.add(Occurrence(

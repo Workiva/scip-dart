@@ -20,10 +20,7 @@ class SymbolGenerator {
   /// Use []
   Map<Element, String> _localElementRegistry = {};
 
-  SymbolGenerator(
-    this._packageConfig,
-    this._pubspec,
-  );
+  SymbolGenerator(this._packageConfig, this._pubspec);
 
   /// For a given `Element` returns the scip symbol form.
   ///

@@ -31,7 +31,7 @@ Future<Index> indexPackage(
   }
 
   final metadata = Metadata(
-    projectRoot: 'file:/' + dirPath,
+    projectRoot: Uri.file(dirPath).toString(),
     textDocumentEncoding: TextEncoding.UTF8,
     toolInfo: ToolInfo(
       name: 'scip-dart',
