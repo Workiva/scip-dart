@@ -152,8 +152,8 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
     _registerAsReference(
       element,
-      offset: element.nameOffset,
-      length: element.nameLength,
+      offset: node.offset,
+      length: node.type!.getDisplayString(withNullability: false).length,
     );
   }
 

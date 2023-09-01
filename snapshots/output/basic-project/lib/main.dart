@@ -2,14 +2,15 @@
 // definition scip-dart pub dart_test 1.0.0 lib/main.dart/
   
   /// This is a fib function
-//    ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
   ///
   /// Takes a number
   /// Returns a number
   int fib(int n) {
+//^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
 //    ^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/fib().
 //    documentation ```dart
 //    documentation This is a fib function
+//        ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
 //            ^ definition local 0
 //            documentation ```dart
     if (n <= 1) return 0;
@@ -24,6 +25,7 @@
   void print_fib(int a) {
 //     ^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/print_fib().
 //     documentation ```dart
+//               ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
 //                   ^ definition local 1
 //                   documentation ```dart
     print(fib(a));
@@ -36,6 +38,7 @@
 //      ^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/y.
 //      documentation ```dart
   String capture() {
+//^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/string.dart/String#
 //       ^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/capture().
 //       documentation ```dart
     return y;
@@ -96,12 +99,9 @@
 //     ^^^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/main.dart/someFunction().
 //     documentation ```dart
 //     documentation Reference parameter: [value]
+//                  ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
 //                      ^^^^^ definition local 5
 //                      documentation ```dart
     Foo(1);
+//  ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
   }
-//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
-//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
-//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
-//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
-//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/string.dart/String#
