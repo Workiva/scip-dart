@@ -47,12 +47,12 @@
     void skipComment() {}
 //       ^^^^^^^^^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/skipComment().
 //       documentation ```dart
-    void operator(int charCode) {}
-//       ^^^^^^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/operator().
+    void operatorFn(int charCode) {}
+//       ^^^^^^^^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/operatorFn().
 //       documentation ```dart
-//                ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
-//                    ^^^^^^^^ definition local 9
-//                    documentation ```dart
+//                  ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
+//                      ^^^^^^^^ definition local 9
+//                      documentation ```dart
     void number() {}
 //       ^^^^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/number().
 //       documentation ```dart
@@ -74,9 +74,9 @@
 //                  ^^^^ reference local 3
 //                          ^^^^ reference local 4
 //                                  ^^^^^ reference local 5
-        operator(charCode);
-//      ^^^^^^^^ reference scip-dart pub dart3_features 1.0.0 lib/main.dart/operator().
-//               ^^^^^^^^ reference local 1
+        operatorFn(charCode);
+//      ^^^^^^^^^^ reference scip-dart pub dart3_features 1.0.0 lib/main.dart/operatorFn().
+//                 ^^^^^^^^ reference local 1
   
       case >= digit0 && <= digit9:
 //            ^^^^^^ reference local 7

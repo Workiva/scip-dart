@@ -13,7 +13,7 @@ void parser(int charCode) {
   const digit9 = 9;
 
   void skipComment() {}
-  void operator(int charCode) {}
+  void operatorFn(int charCode) {}
   void number() {}
   void invalid() {}
 
@@ -22,7 +22,7 @@ void parser(int charCode) {
       skipComment();
 
     case slash || star || plus || minus:
-      operator(charCode);
+      operatorFn(charCode);
 
     case >= digit0 && <= digit9:
       number();
