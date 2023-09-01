@@ -20,7 +20,7 @@ jobs:
       - uses: dart-lang/setup-dart@v1
         with:
           # use a fixed version number so changes to 'stable', dont break snapshot diffs (language version is used in the scip symbol)
-          sdk: 2.18.7
+          sdk: 3.1.0
       - name: pub get scip-dart package
         run: dart pub get
 
@@ -68,7 +68,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: 2.18.7
+          sdk: 3.1.0
       - run: dart pub get
 
       # Setup repo to run on
