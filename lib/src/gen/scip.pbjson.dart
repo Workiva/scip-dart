@@ -295,9 +295,30 @@ final $typed_data.Uint8List languageDescriptor = $convert.base64Decode(
 const Index$json = {
   '1': 'Index',
   '2': [
-    {'1': 'metadata', '3': 1, '4': 1, '5': 11, '6': '.scip.Metadata', '10': 'metadata'},
-    {'1': 'documents', '3': 2, '4': 3, '5': 11, '6': '.scip.Document', '10': 'documents'},
-    {'1': 'external_symbols', '3': 3, '4': 3, '5': 11, '6': '.scip.SymbolInformation', '10': 'externalSymbols'},
+    {
+      '1': 'metadata',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.scip.Metadata',
+      '10': 'metadata'
+    },
+    {
+      '1': 'documents',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.scip.Document',
+      '10': 'documents'
+    },
+    {
+      '1': 'external_symbols',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.scip.SymbolInformation',
+      '10': 'externalSymbols'
+    },
   ],
 };
 
@@ -311,10 +332,31 @@ final $typed_data.Uint8List indexDescriptor = $convert.base64Decode(
 const Metadata$json = {
   '1': 'Metadata',
   '2': [
-    {'1': 'version', '3': 1, '4': 1, '5': 14, '6': '.scip.ProtocolVersion', '10': 'version'},
-    {'1': 'tool_info', '3': 2, '4': 1, '5': 11, '6': '.scip.ToolInfo', '10': 'toolInfo'},
+    {
+      '1': 'version',
+      '3': 1,
+      '4': 1,
+      '5': 14,
+      '6': '.scip.ProtocolVersion',
+      '10': 'version'
+    },
+    {
+      '1': 'tool_info',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.scip.ToolInfo',
+      '10': 'toolInfo'
+    },
     {'1': 'project_root', '3': 3, '4': 1, '5': 9, '10': 'projectRoot'},
-    {'1': 'text_document_encoding', '3': 4, '4': 1, '5': 14, '6': '.scip.TextEncoding', '10': 'textDocumentEncoding'},
+    {
+      '1': 'text_document_encoding',
+      '3': 4,
+      '4': 1,
+      '5': 14,
+      '6': '.scip.TextEncoding',
+      '10': 'textDocumentEncoding'
+    },
   ],
 };
 
@@ -346,8 +388,22 @@ const Document$json = {
   '2': [
     {'1': 'language', '3': 4, '4': 1, '5': 9, '10': 'language'},
     {'1': 'relative_path', '3': 1, '4': 1, '5': 9, '10': 'relativePath'},
-    {'1': 'occurrences', '3': 2, '4': 3, '5': 11, '6': '.scip.Occurrence', '10': 'occurrences'},
-    {'1': 'symbols', '3': 3, '4': 3, '5': 11, '6': '.scip.SymbolInformation', '10': 'symbols'},
+    {
+      '1': 'occurrences',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.scip.Occurrence',
+      '10': 'occurrences'
+    },
+    {
+      '1': 'symbols',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.scip.SymbolInformation',
+      '10': 'symbols'
+    },
   ],
 };
 
@@ -363,8 +419,22 @@ const Symbol$json = {
   '1': 'Symbol',
   '2': [
     {'1': 'scheme', '3': 1, '4': 1, '5': 9, '10': 'scheme'},
-    {'1': 'package', '3': 2, '4': 1, '5': 11, '6': '.scip.Package', '10': 'package'},
-    {'1': 'descriptors', '3': 3, '4': 3, '5': 11, '6': '.scip.Descriptor', '10': 'descriptors'},
+    {
+      '1': 'package',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.scip.Package',
+      '10': 'package'
+    },
+    {
+      '1': 'descriptors',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.scip.Descriptor',
+      '10': 'descriptors'
+    },
   ],
 };
 
@@ -395,7 +465,14 @@ const Descriptor$json = {
   '2': [
     {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     {'1': 'disambiguator', '3': 2, '4': 1, '5': 9, '10': 'disambiguator'},
-    {'1': 'suffix', '3': 3, '4': 1, '5': 14, '6': '.scip.Descriptor.Suffix', '10': 'suffix'},
+    {
+      '1': 'suffix',
+      '3': 3,
+      '4': 1,
+      '5': 14,
+      '6': '.scip.Descriptor.Suffix',
+      '10': 'suffix'
+    },
   ],
   '4': [Descriptor_Suffix$json],
 };
@@ -438,7 +515,14 @@ const SymbolInformation$json = {
   '2': [
     {'1': 'symbol', '3': 1, '4': 1, '5': 9, '10': 'symbol'},
     {'1': 'documentation', '3': 3, '4': 3, '5': 9, '10': 'documentation'},
-    {'1': 'relationships', '3': 4, '4': 3, '5': 11, '6': '.scip.Relationship', '10': 'relationships'},
+    {
+      '1': 'relationships',
+      '3': 4,
+      '4': 3,
+      '5': 11,
+      '6': '.scip.Relationship',
+      '10': 'relationships'
+    },
   ],
 };
 
@@ -454,8 +538,20 @@ const Relationship$json = {
   '2': [
     {'1': 'symbol', '3': 1, '4': 1, '5': 9, '10': 'symbol'},
     {'1': 'is_reference', '3': 2, '4': 1, '5': 8, '10': 'isReference'},
-    {'1': 'is_implementation', '3': 3, '4': 1, '5': 8, '10': 'isImplementation'},
-    {'1': 'is_type_definition', '3': 4, '4': 1, '5': 8, '10': 'isTypeDefinition'},
+    {
+      '1': 'is_implementation',
+      '3': 3,
+      '4': 1,
+      '5': 8,
+      '10': 'isImplementation'
+    },
+    {
+      '1': 'is_type_definition',
+      '3': 4,
+      '4': 1,
+      '5': 8,
+      '10': 'isTypeDefinition'
+    },
     {'1': 'is_definition', '3': 5, '4': 1, '5': 8, '10': 'isDefinition'},
   ],
 };
@@ -474,9 +570,29 @@ const Occurrence$json = {
     {'1': 'range', '3': 1, '4': 3, '5': 5, '10': 'range'},
     {'1': 'symbol', '3': 2, '4': 1, '5': 9, '10': 'symbol'},
     {'1': 'symbol_roles', '3': 3, '4': 1, '5': 5, '10': 'symbolRoles'},
-    {'1': 'override_documentation', '3': 4, '4': 3, '5': 9, '10': 'overrideDocumentation'},
-    {'1': 'syntax_kind', '3': 5, '4': 1, '5': 14, '6': '.scip.SyntaxKind', '10': 'syntaxKind'},
-    {'1': 'diagnostics', '3': 6, '4': 3, '5': 11, '6': '.scip.Diagnostic', '10': 'diagnostics'},
+    {
+      '1': 'override_documentation',
+      '3': 4,
+      '4': 3,
+      '5': 9,
+      '10': 'overrideDocumentation'
+    },
+    {
+      '1': 'syntax_kind',
+      '3': 5,
+      '4': 1,
+      '5': 14,
+      '6': '.scip.SyntaxKind',
+      '10': 'syntaxKind'
+    },
+    {
+      '1': 'diagnostics',
+      '3': 6,
+      '4': 3,
+      '5': 11,
+      '6': '.scip.Diagnostic',
+      '10': 'diagnostics'
+    },
   ],
 };
 
@@ -492,11 +608,25 @@ final $typed_data.Uint8List occurrenceDescriptor = $convert.base64Decode(
 const Diagnostic$json = {
   '1': 'Diagnostic',
   '2': [
-    {'1': 'severity', '3': 1, '4': 1, '5': 14, '6': '.scip.Severity', '10': 'severity'},
+    {
+      '1': 'severity',
+      '3': 1,
+      '4': 1,
+      '5': 14,
+      '6': '.scip.Severity',
+      '10': 'severity'
+    },
     {'1': 'code', '3': 2, '4': 1, '5': 9, '10': 'code'},
     {'1': 'message', '3': 3, '4': 1, '5': 9, '10': 'message'},
     {'1': 'source', '3': 4, '4': 1, '5': 9, '10': 'source'},
-    {'1': 'tags', '3': 5, '4': 3, '5': 14, '6': '.scip.DiagnosticTag', '10': 'tags'},
+    {
+      '1': 'tags',
+      '3': 5,
+      '4': 3,
+      '5': 14,
+      '6': '.scip.DiagnosticTag',
+      '10': 'tags'
+    },
   ],
 };
 
@@ -506,4 +636,3 @@ final $typed_data.Uint8List diagnosticDescriptor = $convert.base64Decode(
     'kSEgoEY29kZRgCIAEoCVIEY29kZRIYCgdtZXNzYWdlGAMgASgJUgdtZXNzYWdlEhYKBnNvdXJj'
     'ZRgEIAEoCVIGc291cmNlEicKBHRhZ3MYBSADKA4yEy5zY2lwLkRpYWdub3N0aWNUYWdSBHRhZ3'
     'M=');
-

@@ -1,60 +1,60 @@
-  import 'more.dart' deferred as more;
+import 'more.dart' deferred as more;
 // definition scip-dart pub dart_test 1.0.0 lib/other.dart/
 //                               ^^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/more.
 //                               documentation ```dart
-  
-  class Foo {
+
+class Foo {
 //      ^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
 //      documentation ```dart
-    int _far;
+  int _far;
 //  ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
 //      ^^^^ definition local 0
 //      documentation ```dart
-    Foo(this._far);
+  Foo(this._far);
 //  ^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#<constructor>().
 //  documentation ```dart
 //  ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
 //      ^^^^ reference local 0
 //           ^^^^ definition local 1
 //           documentation ```dart
-  }
-  
-  class Bar {
+}
+
+class Bar {
 //      ^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#
 //      documentation ```dart
-    String _someValue;
+  String _someValue;
 //  ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/string.dart/String#
 //         ^^^^^^^^^^ definition local 2
 //         documentation ```dart
-    Bar(this._someValue);
+  Bar(this._someValue);
 //  ^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#<constructor>().
 //  documentation ```dart
 //  ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#
 //      ^^^^ reference local 2
 //           ^^^^^^^^^^ definition local 3
 //           documentation ```dart
-  
-    void someMethod() {
+
+  void someMethod() {
 //       ^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#someMethod().
 //       documentation ```dart
-      _someValue = 'asdf';
+    _someValue = 'asdf';
 //    ^^^^^^^^^^ reference local 2
-      print(_someValue);
+    print(_someValue);
 //    ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/print.dart/print().
 //          ^^^^^^^^^^ reference local 2
-    }
   }
-  
-  void main() {
+}
+
+void main() {
 //     ^^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/main().
 //     documentation ```dart
-    more.loadLibrary().then((_) => {
+  more.loadLibrary().then((_) => {
 //  ^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/more.
 //                     ^^^^ reference scip-dart pub dart:async 3.1.0 dart:async/future.dart/Future#then().
 //                           ^ definition local 4
 //                           documentation ```dart
-      Bar('a').someMethod.call()
+        Bar('a').someMethod.call()
 //    ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#
 //             ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#someMethod().
-    });
-  }
+      });
+}

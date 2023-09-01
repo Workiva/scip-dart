@@ -16,7 +16,5 @@ class Bar {
 }
 
 void main() {
-  more.loadLibrary().then((_) => {
-    Bar('a').someMethod.call()
-  });
+  more.loadLibrary().then((_) => {Bar('a').someMethod.call()});
 }

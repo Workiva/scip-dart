@@ -37,9 +37,9 @@ const msg = 'Feeling the Monday blues?';
 String describeDate(DateTime dt) {
   const one = 1;
   return switch (dt.weekday) {
-      one => 'Feeling the Monday blues?',
-      7 || six => 'Enjoy the weekend!',
-      _ => 'Hang in there.'
+    one => 'Feeling the Monday blues?',
+    7 || six => 'Enjoy the weekend!',
+    _ => 'Hang in there.'
   };
 }
 
@@ -50,7 +50,6 @@ void main() {
   ) = userInfo({'name': 'Michael', 'height': 180});
   print('User $name is $height cm tall.');
 
-
   final json = {'name': 'Michael', 'height': 180};
   if (json case {'name': 'Michael', 'height': int h}) {
     print('Michael is $h cm tall.');
@@ -58,6 +57,9 @@ void main() {
 }
 
 base class Foo {}
+
 final class Bar {}
+
 interface class Car {}
+
 sealed class Zar {}

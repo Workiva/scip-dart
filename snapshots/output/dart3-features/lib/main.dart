@@ -1,4 +1,4 @@
-  (String, int) userInfo(Map<String, dynamic> json) {
+(String, int) userInfo(Map<String, dynamic> json) {
 // definition scip-dart pub dart3_features 1.0.0 lib/main.dart/
 // ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/string.dart/String#
 //         ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
@@ -8,152 +8,154 @@
 //                           ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/string.dart/String#
 //                                            ^^^^ definition local 0
 //                                            documentation ```dart
-    return (json['name'] as String, json['height'] as int);
+  return (json['name'] as String, json['height'] as int);
 //          ^^^^ reference local 0
 //                          ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/string.dart/String#
 //                                  ^^^^ reference local 0
 //                                                    ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
-  }
-  
-  void parser(int charCode) {
+}
+
+void parser(int charCode) {
 //     ^^^^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/parser().
 //     documentation ```dart
 //            ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
 //                ^^^^^^^^ definition local 1
 //                documentation ```dart
-    const slash = 1;
+  const slash = 1;
 //        ^^^^^ definition local 2
 //        documentation ```dart
-    const star = 2;
+  const star = 2;
 //        ^^^^ definition local 3
 //        documentation ```dart
-    const plus = 3;
+  const plus = 3;
 //        ^^^^ definition local 4
 //        documentation ```dart
-    const minus = 4;
+  const minus = 4;
 //        ^^^^^ definition local 5
 //        documentation ```dart
-  
-    final nextCharCode = 'a';
+
+  final nextCharCode = 'a';
 //        ^^^^^^^^^^^^ definition local 6
 //        documentation ```dart
-    const digit0 = 0;
+  const digit0 = 0;
 //        ^^^^^^ definition local 7
 //        documentation ```dart
-    const digit9 = 9;
+  const digit9 = 9;
 //        ^^^^^^ definition local 8
 //        documentation ```dart
-  
-    void skipComment() {}
+
+  void skipComment() {}
 //       ^^^^^^^^^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/skipComment().
 //       documentation ```dart
-    void operatorFn(int charCode) {}
+  void operatorFn(int charCode) {}
 //       ^^^^^^^^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/operatorFn().
 //       documentation ```dart
 //                  ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
 //                      ^^^^^^^^ definition local 9
 //                      documentation ```dart
-    void number() {}
+  void number() {}
 //       ^^^^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/number().
 //       documentation ```dart
-    void invalid() {}
+  void invalid() {}
 //       ^^^^^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/invalid().
 //       documentation ```dart
-  
-    switch (charCode) {
+
+  switch (charCode) {
 //          ^^^^^^^^ reference local 1
-      case slash when nextCharCode == slash:
+    case slash when nextCharCode == slash:
 //         ^^^^^ reference local 2
 //                    ^^^^^^^^^^^^ reference local 6
 //                                    ^^^^^ reference local 2
-        skipComment();
+      skipComment();
 //      ^^^^^^^^^^^ reference scip-dart pub dart3_features 1.0.0 lib/main.dart/skipComment().
-  
-      case slash || star || plus || minus:
+
+    case slash || star || plus || minus:
 //         ^^^^^ reference local 2
 //                  ^^^^ reference local 3
 //                          ^^^^ reference local 4
 //                                  ^^^^^ reference local 5
-        operatorFn(charCode);
+      operatorFn(charCode);
 //      ^^^^^^^^^^ reference scip-dart pub dart3_features 1.0.0 lib/main.dart/operatorFn().
 //                 ^^^^^^^^ reference local 1
-  
-      case >= digit0 && <= digit9:
+
+    case >= digit0 && <= digit9:
 //            ^^^^^^ reference local 7
 //                         ^^^^^^ reference local 8
-        number();
+      number();
 //      ^^^^^^ reference scip-dart pub dart3_features 1.0.0 lib/main.dart/number().
-  
-      default:
-        invalid();
+
+    default:
+      invalid();
 //      ^^^^^^^ reference scip-dart pub dart3_features 1.0.0 lib/main.dart/invalid().
-    }
   }
-  
-  const six = 6;
+}
+
+const six = 6;
 //      ^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/six.
 //      documentation ```dart
-  const msg = 'Feeling the Monday blues?';
+const msg = 'Feeling the Monday blues?';
 //      ^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/msg.
 //      documentation ```dart
-  String describeDate(DateTime dt) {
+String describeDate(DateTime dt) {
 //^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/string.dart/String#
 //       ^^^^^^^^^^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/describeDate().
 //       documentation ```dart
 //                    ^^^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/date_time.dart/DateTime#
 //                             ^^ definition local 10
 //                             documentation ```dart
-    const one = 1;
+  const one = 1;
 //        ^^^ definition local 11
 //        documentation ```dart
-    return switch (dt.weekday) {
+  return switch (dt.weekday) {
 //                 ^^ reference local 10
 //                    ^^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/date_time.dart/DateTime#weekday.
-        one => 'Feeling the Monday blues?',
+    one => 'Feeling the Monday blues?',
 //      ^^^ reference local 11
-        7 || six => 'Enjoy the weekend!',
+    7 || six => 'Enjoy the weekend!',
 //           ^^^ reference scip-dart pub dart3_features 1.0.0 lib/main.dart/six.
-        _ => 'Hang in there.'
-    };
-  }
-  
-  void main() {
+    _ => 'Hang in there.'
+  };
+}
+
+void main() {
 //     ^^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/main().
 //     documentation ```dart
-    var (
-      String name,
+  var (
+    String name,
 //    ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/string.dart/String#
-      int height,
+    int height,
 //    ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
-    ) = userInfo({'name': 'Michael', 'height': 180});
+  ) = userInfo({'name': 'Michael', 'height': 180});
 //      ^^^^^^^^ reference scip-dart pub dart3_features 1.0.0 lib/main.dart/userInfo().
-    print('User $name is $height cm tall.');
+  print('User $name is $height cm tall.');
 //  ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/print.dart/print().
 //               ^^^^ reference local 12
 //                        ^^^^^^ reference local 13
-  
-  
-    final json = {'name': 'Michael', 'height': 180};
+
+  final json = {'name': 'Michael', 'height': 180};
 //        ^^^^ definition local 14
 //        documentation ```dart
-    if (json case {'name': 'Michael', 'height': int h}) {
+  if (json case {'name': 'Michael', 'height': int h}) {
 //      ^^^^ reference local 14
 //                                              ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
-      print('Michael is $h cm tall.');
+    print('Michael is $h cm tall.');
 //    ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/print.dart/print().
 //                       ^ reference local 15
-    }
   }
-  
-  base class Foo {}
+}
+
+base class Foo {}
+
 //           ^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/Foo#
 //           documentation ```dart
-  final class Bar {}
+final class Bar {}
+
 //            ^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/Bar#
 //            documentation ```dart
-  interface class Car {}
+interface class Car {}
+
 //                ^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/Car#
 //                documentation ```dart
-  sealed class Zar {}
+sealed class Zar {}
 //             ^^^ definition scip-dart pub dart3_features 1.0.0 lib/main.dart/Zar#
 //             documentation ```dart
