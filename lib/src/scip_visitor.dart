@@ -198,11 +198,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
       ));
 
       occurrences.add(Occurrence(
-        range: _lineInfo.getRange(element.nameOffset, element.nameLength),
-        symbol: symbol,
-        symbolRoles: SymbolRole.Definition.value,
-        diagnostics: meta.diagnostics
-      ));
+          range: _lineInfo.getRange(element.nameOffset, element.nameLength),
+          symbol: symbol,
+          symbolRoles: SymbolRole.Definition.value,
+          diagnostics: meta.diagnostics));
     }
   }
 }

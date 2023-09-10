@@ -20,7 +20,10 @@ class SymbolMetadata {
 ///
 /// This information is used to embellish `SymbolInformation` struct's
 /// within the protobuf schema for scip
-SymbolMetadata getSymbolMetadata(Element element, List<AnalysisError> analysisErrors,) {
+SymbolMetadata getSymbolMetadata(
+  Element element,
+  List<AnalysisError> analysisErrors,
+) {
   final displayString = element.getDisplayString(
     withNullability: false,
     multiline: true,
@@ -32,15 +35,15 @@ SymbolMetadata getSymbolMetadata(Element element, List<AnalysisError> analysisEr
   );
 
   final diagnostics = analysisErrors
-    .where((error) => error.source == element.source)
-    .map((error) {
-      return proto.Diagnostic(
-        code: error.errorCode.uniqueName,
-        message: error.message,
-        severity: error.severity.toProto(),
-        tags: element.hasDeprecated ? [proto.DiagnosticTag.Deprecated] : null,
-      );
-    }).toList();
+      .where((error) => error.source == element.source)
+      .map((error) {
+    return proto.Diagnostic(
+      code: error.errorCode.uniqueName,
+      message: error.message,
+      severity: error.severity.toProto(),
+      tags: element.hasDeprecated ? [proto.DiagnosticTag.Deprecated] : null,
+    );
+  }).toList();
 
   return SymbolMetadata(
     documentation: [
@@ -54,9 +57,12 @@ SymbolMetadata getSymbolMetadata(Element element, List<AnalysisError> analysisEr
 extension _SeverityConverter on Severity {
   proto.Severity toProto() {
     switch (this) {
-      case Severity.error: return proto.Severity.Error;
-      case Severity.warning: return proto.Severity.Warning;
-      case Severity.info: return proto.Severity.Information;
+      case Severity.error:
+        return proto.Severity.Error;
+      case Severity.warning:
+        return proto.Severity.Warning;
+      case Severity.info:
+        return proto.Severity.Information;
     }
   }
 }
