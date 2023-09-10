@@ -81,10 +81,12 @@ Future<Index> indexPackage(
       resolvedUnits.whereType<ResolvedUnitResult>().map((resUnit) {
     final relativePath = p.relative(resUnit.path, from: dirPath);
 
+
     final visitor = ScipVisitor(
       relativePath,
       dirPath,
       resUnit.lineInfo,
+      resUnit.errors,
       packageConfig,
       pubspec,
     );
