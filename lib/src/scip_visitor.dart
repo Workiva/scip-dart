@@ -56,6 +56,8 @@ class ScipVisitor extends GeneralizingAstVisitor {
       _visitSimpleIdentifier(node);
     } else if (node is TypeAnnotation) {
       _visitTypeAnnotation(node);
+    } else if (node is ImportPrefixReference) {
+      _visitImportPrefixReference(node);
     }
 
     super.visitNode(node);
@@ -145,9 +147,27 @@ class ScipVisitor extends GeneralizingAstVisitor {
   }
 
   void _visitTypeAnnotation(TypeAnnotation node) {
-    final element = node is NamedType ? node.element : node.type?.element;
-
+    final element = node is NamedType
+      ? node.element
+      : node.type?.element;
     if (element == null) return;
+
+    var offset = node.offset;
+    if (node is NamedType && node.importPrefix != null) {
+      offset += node.importPrefix!.name.length + 1;
+    }
+
+    _registerAsReference(
+      element,
+      offset: offset,
+      length: element.nameLength,
+    );
+  }
+
+  void _visitImportPrefixReference(ImportPrefixReference node) {
+    final element = node.element;
+    if (element == null) return;
+
     _registerAsReference(
       element,
       offset: node.offset,
