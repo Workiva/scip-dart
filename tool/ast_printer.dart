@@ -40,13 +40,11 @@ Future<void> main(List<String> args) async {
 
   final resolvedUnits = await Future.wait(resolvedUnitFutures);
 
-  resolvedUnits
-    .whereType<ResolvedUnitResult>()
-    .forEach((unit) {
-      print('');
-      print('${chalk.yellow(unit.path.substring(dirPath.length + 1))}');
-      unit.unit.visitChildren(AstPrinter());
-    });
+  resolvedUnits.whereType<ResolvedUnitResult>().forEach((unit) {
+    print('');
+    print('${chalk.yellow(unit.path.substring(dirPath.length + 1))}');
+    unit.unit.visitChildren(AstPrinter());
+  });
   print('');
 }
 
@@ -56,7 +54,8 @@ class AstPrinter extends GeneralizingAstVisitor {
   @override
   void visitNode(AstNode node) {
     final indentStr = List.filled(indent, '    ').join('');
-    print('$indentStr${chalk.green(node.toString())} ${chalk.faint(node.runtimeType.toString())}');
+    print(
+        '$indentStr${chalk.green(node.toString())} ${chalk.faint(node.runtimeType.toString())}');
 
     indent++;
     super.visitNode(node);
