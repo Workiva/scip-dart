@@ -184,19 +184,19 @@
 //                     ^^^^^^^ reference local 4
 //                                 ^^^ reference local 5
   
-    print(math.Rectangle(1, 2, 3, 4));
+    print(math.Rectangle(1,2,3,4));
 //  ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/print.dart/print().
 //        ^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/math.
 //             ^^^^^^^^^ reference scip-dart pub dart:math 3.1.0 dart:math/rectangle.dart/Rectangle#
   
-    [1, 2].reduce((a, b) => a + b);
-//         ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/iterable.dart/Iterable#reduce().
-//                 ^ definition local 8
-//                 documentation ```dart
-//                    ^ definition local 9
-//                    documentation ```dart
-//                          ^ reference local 8
-//                              ^ reference local 9
+    [1,2].reduce((a, b) => a + b);
+//        ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/iterable.dart/Iterable#reduce().
+//                ^ definition local 8
+//                documentation ```dart
+//                   ^ definition local 9
+//                   documentation ```dart
+//                         ^ reference local 8
+//                             ^ reference local 9
   }
   
   void test(String Function(int) p) {}
@@ -213,4 +213,3 @@
 //                                            ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/string.dart/String#
 //                                                          ^ definition local 11
 //                                                          documentation ```dart
-  

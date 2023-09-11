@@ -48,12 +48,13 @@
   void main() {
 //     ^^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/main().
 //     documentation ```dart
-    more.loadLibrary().then((_) => {Bar('a').someMethod.call()});
+    more.loadLibrary().then((_) => {
 //  ^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/more.
 //                     ^^^^ reference scip-dart pub dart:async 3.1.0 dart:async/future.dart/Future#then().
 //                           ^ definition local 4
 //                           documentation ```dart
-//                                  ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#
-//                                           ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#someMethod().
+      Bar('a').someMethod.call()
+//    ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#
+//             ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#someMethod().
+    });
   }
-  
