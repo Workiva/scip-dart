@@ -45,6 +45,7 @@
 //             ^^^^ definition scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#type.
 //             documentation ```dart
     SoundMaker? soundMaker;
+//  ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/more.dart/SoundMaker#
 //              ^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/more.dart/Animal#soundMaker.
 //              documentation ```dart
   

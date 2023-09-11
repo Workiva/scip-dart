@@ -145,7 +145,9 @@ class ScipVisitor extends GeneralizingAstVisitor {
   }
 
   void _visitTypeAnnotation(TypeAnnotation node) {
-    final element = node.type?.element;
+    final element = node is NamedType
+      ? node.element
+      : node.type?.element;
 
     if (element == null) return;
     _registerAsReference(
