@@ -26,3 +26,6 @@ gen-proto:
 
 print:
 	scip print ./index.scip
+
+print-ast:
+	dart ./tool/ast_printer.dart ./snapshots/input/staging-project

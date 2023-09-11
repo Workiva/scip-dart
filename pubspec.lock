@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  chalk:
+    dependency: "direct main"
+    description:
+      name: chalk
+      sha256: "53491e94aea65cddf07a63491384cd2018c1ccf188c973dbb935fbee9db609c8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.1"
   checked_yaml:
     dependency: transitive
     description:
