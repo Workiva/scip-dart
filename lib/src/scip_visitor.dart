@@ -115,9 +115,12 @@ class ScipVisitor extends GeneralizingAstVisitor {
     // is a `CompoundAssignmentExpression`, we know this node is referring
     // to an assignment line. In that case, use the read/write element attached
     // to this node instead of the [node]'s element
-    if (node.parent is CompoundAssignmentExpression) {
-      final assignmentNode = node.parent as CompoundAssignmentExpression;
-      element = assignmentNode.readElement ?? assignmentNode.writeElement;
+    if (element == null) {
+      final assignmentExpr =
+          node.thisOrAncestorOfType<CompoundAssignmentExpression>();
+      if (assignmentExpr == null) return;
+
+      element = assignmentExpr.readElement ?? assignmentExpr.writeElement;
     }
 
     // When the identifier is a field, the analyzer creates synthetic getters/
