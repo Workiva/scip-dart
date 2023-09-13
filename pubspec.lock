@@ -133,7 +133,7 @@ packages:
       name: dart_dev
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.2"
   dart_style:
     dependency: transitive
     description:

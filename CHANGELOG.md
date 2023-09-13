@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.5
+
+- Fixed issues where cascade references would incorrectly index variables and assignments
+- Fixed issues where functions passed as parameters would incorrectly index their nested parameters
+
 ## 1.1.4
 
 - Put the generation of relationships field behind a `--index-relationships` flag which needs to be opted in. This was to continue to work on coverage of relationships support without effecting consumers.
