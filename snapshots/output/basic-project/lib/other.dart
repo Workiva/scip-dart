@@ -10,6 +10,18 @@
 //  ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
 //      ^^^^ definition local 0
 //      documentation ```dart
+    bool value;
+//  ^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/bool.dart/bool#
+//       ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#value.
+//       documentation ```dart
+    String value2;
+//  ^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/string.dart/String#
+//         ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#value2.
+//         documentation ```dart
+    double value3;
+//  ^^^^^^ reference scip-dart pub dart:core 2.18.0 dart:core/double.dart/double#
+//         ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#value3.
+//         documentation ```dart
     Foo(this._far);
 //  ^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#<constructor>().
 //  documentation ```dart
@@ -57,4 +69,21 @@
 //    ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#
 //             ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#someMethod().
     });
+  
+    Foo()..value = false;
+//  ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
+//         ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#value.
+  
+    final someStr = 'someStr';
+//        ^^^^^^^ definition local 5
+//        documentation ```dart
+    Foo()
+//  ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
+      ..value = true
+//      ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#value.
+      ..value2 = someStr
+//      ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#value2.
+//               ^^^^^^^ reference local 5
+      ..value3 = 2.15
+//      ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#value3.
   }

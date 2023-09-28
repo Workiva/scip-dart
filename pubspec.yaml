@@ -1,5 +1,5 @@
 name: scip_dart
-version: 1.1.4
+version: 1.1.5
 description: generates scip bindings for dart files
 repository: https://github.com/Workiva/scip-dart
 
