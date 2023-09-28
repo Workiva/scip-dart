@@ -123,8 +123,12 @@
     var (
       String name,
 //    ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/string.dart/String#
+//           ^^^^ definition local 12
+//           documentation ```dart
       int height,
 //    ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
+//        ^^^^^^ definition local 13
+//        documentation ```dart
     ) = userInfo({'name': 'Michael', 'height': 180});
 //      ^^^^^^^^ reference scip-dart pub dart3_features 1.0.0 lib/main.dart/userInfo().
     print('User $name is $height cm tall.');
@@ -138,6 +142,8 @@
     if (json case {'name': 'Michael', 'height': int h}) {
 //      ^^^^ reference local 14
 //                                              ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/int.dart/int#
+//                                                  ^ definition local 15
+//                                                  documentation ```dart
       print('Michael is $h cm tall.');
 //    ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/print.dart/print().
 //                       ^ reference local 15
