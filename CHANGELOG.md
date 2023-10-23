@@ -3,7 +3,6 @@
 ## 1.2.0
 
 - Added support for [occurrence diagnostics](https://github.com/sourcegraph/scip/blob/8d3634b4d6aa564129dac3ee462592ebc4203236/scip.proto#L579), all indexed packages will now include hints, warnings, and errors from the dart analysis server
-- Dependency updates
 
 ## 1.1.5
 
