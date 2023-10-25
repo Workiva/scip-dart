@@ -1,0 +1,36 @@
+[
+  {
+    "range": [
+      8,
+      8,
+      23
+    ],
+    "symbol": "local 1",
+    "symbolRoles": 1,
+    "diagnostics": [
+      {
+        "severity": "Information",
+        "code": "UNUSED_LOCAL_VARIABLE",
+        "message": "The value of the local variable '_unusedVariable' isn't used."
+      }
+    ]
+  },
+  {
+    "range": [
+      10,
+      2,
+      18
+    ],
+    "symbol": "scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedMethod().",
+    "diagnostics": [
+      {
+        "severity": "Information",
+        "code": "DEPRECATED_MEMBER_USE_FROM_SAME_PACKAGE",
+        "message": "'deprecatedMethod' is deprecated and shouldn't be used. This method is deprecated.",
+        "tags": [
+          "Deprecated"
+        ]
+      }
+    ]
+  }
+]
