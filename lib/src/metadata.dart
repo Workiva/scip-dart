@@ -39,7 +39,7 @@ class SymbolMetadata {
 /// within the protobuf schema for scip
 SymbolMetadata getSymbolMetadata(
   Element element,
-  AstNode node,
+  int offset,
   List<AnalysisError> analysisErrors,
 ) {
   final displayString = element.getDisplayString(
@@ -53,7 +53,7 @@ SymbolMetadata getSymbolMetadata(
   );
 
   final diagnostics = analysisErrors
-      .where((error) => error.offset == node.offset)
+      .where((error) => error.offset == offset)
       .map((error) => proto.Diagnostic(
               code: error.errorCode.name,
               message: error.message,

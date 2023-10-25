@@ -166,7 +166,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
   }) {
     final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
-      final meta = getSymbolMetadata(element, node, _analysisErrors);
+      final meta = getSymbolMetadata(element, offset, _analysisErrors);
       occurrences.add(Occurrence(
         range: _lineInfo.getRange(offset, length),
         symbol: symbol,
@@ -177,7 +177,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
         if (!globalExternalSymbols.any(
           (symbolInfo) => symbolInfo.symbol == symbol,
         )) {
-          final meta = getSymbolMetadata(element, node, _analysisErrors);
+          final meta = getSymbolMetadata(element, offset, _analysisErrors);
           globalExternalSymbols.add(SymbolInformation(
             symbol: symbol,
             documentation: meta.documentation,
@@ -198,7 +198,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
   }) {
     final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
-      final meta = getSymbolMetadata(element, node, _analysisErrors);
+      final meta = getSymbolMetadata(element, element.nameOffset, _analysisErrors);
       symbols.add(SymbolInformation(
         symbol: symbol,
         documentation: meta.documentation,

@@ -1,7 +1,7 @@
 gen-snaps:
-	gen-snap_basic-project
-	gen-snap_relationships-project
-	gen-snap_diagnostics
+	make gen-snap_basic-project
+	make gen-snap_relationships-project
+	make gen-snap_diagnostics
 
 gen-snap_basic-project:
 	dart run scip_dart ./snapshots/input/basic-project
@@ -13,7 +13,7 @@ gen-snap_relationships-project:
 
 gen-snap_diagnostics:
 	dart run scip_dart ./snapshots/input/diagnostics
-	scip print --json ./snapshots/input/diagnostics/index.scip | jq '.documents[].occurrences[] | select(.diagnostics)' | jq -s . > ./snapshots/output/diagnostics/output.json
+	scip print --json ./index.scip | jq '.documents[].occurrences[] | select(.diagnostics)' | jq -s . > ./snapshots/output/diagnostics/output.json
 
 
 run:
