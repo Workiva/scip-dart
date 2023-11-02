@@ -1,4 +1,3 @@
-import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/diagnostic/diagnostic.dart';
 import 'package:analyzer/error/error.dart';
@@ -39,7 +38,7 @@ class SymbolMetadata {
 /// within the protobuf schema for scip
 SymbolMetadata getSymbolMetadata(
   Element element,
-  AstNode node,
+  int offset,
   List<AnalysisError> analysisErrors,
 ) {
   final displayString = element.getDisplayString(
@@ -53,7 +52,7 @@ SymbolMetadata getSymbolMetadata(
   );
 
   final diagnostics = analysisErrors
-      .where((error) => error.offset == node.offset)
+      .where((error) => error.offset == offset)
       .map((error) => proto.Diagnostic(
               code: error.errorCode.name,
               message: error.message,

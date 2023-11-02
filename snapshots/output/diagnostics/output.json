@@ -1,0 +1,118 @@
+[
+  {
+    "range": [
+      2,
+      6,
+      18
+    ],
+    "symbol": "local 0",
+    "symbolRoles": 1,
+    "diagnostics": [
+      {
+        "severity": "Information",
+        "code": "UNUSED_ELEMENT",
+        "message": "The declaration '_UnusedClass' isn't referenced."
+      }
+    ]
+  },
+  {
+    "range": [
+      4,
+      5,
+      18
+    ],
+    "symbol": "local 1",
+    "symbolRoles": 1,
+    "diagnostics": [
+      {
+        "severity": "Information",
+        "code": "UNUSED_ELEMENT",
+        "message": "The declaration '_unusedMethod' isn't referenced."
+      }
+    ]
+  },
+  {
+    "range": [
+      6,
+      7,
+      30
+    ],
+    "symbol": "local 2",
+    "symbolRoles": 1,
+    "diagnostics": [
+      {
+        "severity": "Information",
+        "code": "UNUSED_ELEMENT",
+        "message": "The declaration '_unusedTopLevelVariable' isn't referenced."
+      }
+    ]
+  },
+  {
+    "range": [
+      16,
+      8,
+      22
+    ],
+    "symbol": "local 3",
+    "symbolRoles": 1,
+    "diagnostics": [
+      {
+        "severity": "Information",
+        "code": "UNUSED_LOCAL_VARIABLE",
+        "message": "The value of the local variable 'unusedVariable' isn't used."
+      }
+    ]
+  },
+  {
+    "range": [
+      18,
+      9,
+      41
+    ],
+    "symbol": "local 4",
+    "symbolRoles": 1,
+    "diagnostics": [
+      {
+        "severity": "Information",
+        "code": "UNUSED_LOCAL_VARIABLE",
+        "message": "The value of the local variable 'variableWithUnecssaryDeclaration' isn't used."
+      }
+    ]
+  },
+  {
+    "range": [
+      25,
+      2,
+      18
+    ],
+    "symbol": "scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedMethod().",
+    "diagnostics": [
+      {
+        "severity": "Information",
+        "code": "DEPRECATED_MEMBER_USE_FROM_SAME_PACKAGE",
+        "message": "'deprecatedMethod' is deprecated and shouldn't be used. This method is deprecated.",
+        "tags": [
+          "Deprecated"
+        ]
+      }
+    ]
+  },
+  {
+    "range": [
+      26,
+      18,
+      24
+    ],
+    "symbol": "scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedParam().(foobar)",
+    "diagnostics": [
+      {
+        "severity": "Information",
+        "code": "DEPRECATED_MEMBER_USE_FROM_SAME_PACKAGE",
+        "message": "'foobar' is deprecated and shouldn't be used. this param is deprecated.",
+        "tags": [
+          "Deprecated"
+        ]
+      }
+    ]
+  }
+]
