@@ -10,13 +10,7 @@ import 'package:scip_dart/src/version.dart';
 
 Future<void> main(List<String> args) async {
   final result = (ArgParser()
-        ..addFlag(
-          'index-relationships',
-          defaultsTo: false,
-          help: 'Whether or not to index symbol relationships. '
-              'This functionality is currently in alpha, and should not be '
-              'considered stable and accurate.',
-        )
+
         ..addFlag(
           'performance',
           aliases: ['perf'],
@@ -33,6 +27,10 @@ Future<void> main(List<String> args) async {
           'version',
           defaultsTo: false,
           help: 'Display the current version of scip-dart',
+        )
+        ..addFlag(
+          'index-relationships',
+          help: 'DEPRECATED, has no effect on executed code',
         )
         ..addMultiOption(
           'path',

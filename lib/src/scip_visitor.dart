@@ -5,7 +5,6 @@ import 'package:analyzer/error/error.dart';
 import 'package:analyzer/source/line_info.dart';
 import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
-import 'package:scip_dart/src/flags.dart';
 import 'package:scip_dart/src/metadata.dart';
 import 'package:scip_dart/src/gen/scip.pb.dart';
 import 'package:scip_dart/src/relationship_generator.dart';
@@ -67,10 +66,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
     final element = node.declaredElement!;
 
-    List<Relationship>? relationships;
-    if (Flags.instance.indexRelationships) {
-      relationships = relationshipsFor(node, element, _symbolGenerator);
-    }
+    final relationships = relationshipsFor(node, element, _symbolGenerator);
 
     _registerAsDefinition(
       element,

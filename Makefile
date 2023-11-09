@@ -7,14 +7,9 @@ gen-snap_basic-project:
 	dart run scip_dart ./snapshots/input/basic-project
 	scip snapshot --to ./snapshots/output/basic-project
 
-gen-snap_relationships-project:
-	dart run scip_dart --index-relationships ./snapshots/input/relationships-project
-	scip snapshot --to ./snapshots/output/relationships-project
-
 gen-snap_diagnostics:
 	dart run scip_dart ./snapshots/input/diagnostics
 	scip print --json ./index.scip | jq '.documents[].occurrences[] | select(.diagnostics)' | jq -s . > ./snapshots/output/diagnostics/output.json
-
 
 run:
 	dart run scip_dart ./snapshots/input/staging-project --verbose
