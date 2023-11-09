@@ -10,7 +10,6 @@ import 'package:scip_dart/src/version.dart';
 
 Future<void> main(List<String> args) async {
   final result = (ArgParser()
-
         ..addFlag(
           'performance',
           aliases: ['perf'],
