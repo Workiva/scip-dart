@@ -28,8 +28,12 @@ List<Relationship>? relationshipsFor(
   // Since mixins do not support inheritance, we only care about
   // methods that exist on classes
   if (node is MethodDeclaration && node.parent is ClassDeclaration) {
-    final parentNode = node.parent as ClassDeclaration;
-    final parentElement = parentNode.declaredElement as ClassElement;
+    final parentNode = node.parent as ClassDeclaration?;
+    final parentElement = parentNode?.declaredElement;
+
+    // this shouldn't happen, but if the parent element happens to be
+    // null, just fail fast
+    if (parentElement == null) return null;
 
     // retrieve all of the methods and accessors of every parent type that
     // has the same name of [node]. These are the elements that this [node]
