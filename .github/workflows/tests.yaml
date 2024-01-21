@@ -66,8 +66,8 @@ jobs:
         run: dart pub get
         working-directory: ./snapshots/input/diagnostics
 
-      - name: Install jq
-        uses: dcarbone/install-jq-action@v2.0.2
+      - name: Install JQ
+        run: sudo apt-get install jq
 
       - name: Snapshots Diff Check
         run: |
