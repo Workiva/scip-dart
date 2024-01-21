@@ -1,6 +1,5 @@
 gen-snaps:
 	make gen-snap_basic-project
-	make gen-snap_relationships-project
 	make gen-snap_diagnostics
 
 gen-snap_basic-project:

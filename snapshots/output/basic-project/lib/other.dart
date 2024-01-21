@@ -26,9 +26,7 @@
 //  ^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#<constructor>().
 //  documentation ```dart
 //  ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
-//      ^^^^ reference local 0
-//           ^^^^ definition local 1
-//           documentation ```dart
+//           ^^^^ reference local 0
   }
   
   class Bar {
@@ -36,24 +34,22 @@
 //      documentation ```dart
     String _someValue;
 //  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/string.dart/String#
-//         ^^^^^^^^^^ definition local 2
+//         ^^^^^^^^^^ definition local 1
 //         documentation ```dart
     Bar(this._someValue);
 //  ^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#<constructor>().
 //  documentation ```dart
 //  ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#
-//      ^^^^ reference local 2
-//           ^^^^^^^^^^ definition local 3
-//           documentation ```dart
+//           ^^^^^^^^^^ reference local 1
   
     void someMethod() {
 //       ^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#someMethod().
 //       documentation ```dart
       _someValue = 'asdf';
-//    ^^^^^^^^^^ reference local 2
+//    ^^^^^^^^^^ reference local 1
       print(_someValue);
 //    ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/print.dart/print().
-//          ^^^^^^^^^^ reference local 2
+//          ^^^^^^^^^^ reference local 1
     }
   }
   
@@ -63,7 +59,7 @@
     more.loadLibrary().then((_) => {
 //  ^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/more.
 //                     ^^^^ reference scip-dart pub dart:async 2.19.0 dart:async/future.dart/Future#then().
-//                           ^ definition local 4
+//                           ^ definition local 2
 //                           documentation ```dart
       Bar('a').someMethod.call()
 //    ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Bar#
@@ -75,7 +71,7 @@
 //         ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#value.
   
     final someStr = 'someStr';
-//        ^^^^^^^ definition local 5
+//        ^^^^^^^ definition local 3
 //        documentation ```dart
     Foo()
 //  ^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#
@@ -83,7 +79,7 @@
 //      ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#value.
       ..value2 = someStr
 //      ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#value2.
-//               ^^^^^^^ reference local 5
+//               ^^^^^^^ reference local 3
       ..value3 = 2.15
 //      ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/other.dart/Foo#value3.
   }
