@@ -28,10 +28,6 @@ jobs:
         run: dart pub get
         working-directory: ./snapshots/input/basic-project
 
-      - name: dart pub get relationships-project directory
-        run: dart pub get
-        working-directory: ./snapshots/input/relationships-project
-
       - name: Snapshots Diff Check
         run: |
           dart run scip_dart ./snapshots/input/basic-project
@@ -58,7 +54,7 @@ jobs:
           ./scip --version
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: 2.18.7
+          sdk: 2.19.6
       - name: pub get scip-dart package
         run: dart pub get
 
