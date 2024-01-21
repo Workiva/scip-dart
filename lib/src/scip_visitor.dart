@@ -92,9 +92,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
       _registerAsReference(
         fieldElement!,
         node,
-        offset: node.thisKeyword.offset,
-        length: node.thisKeyword.length,
+        offset: node.name.offset,
+        length: node.name.length,
       );
+      return;
     }
 
     _registerAsDefinition(element, node);
