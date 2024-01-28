@@ -13,6 +13,7 @@ jobs:
     strategy:
       matrix:
         sdk: [2.19.6, 3.1.0]
+        dir: [basic-project, diagnostics, dart3-features]
     steps:
       - uses: actions/checkout@v3
       - name: Install scip cli
@@ -23,33 +24,24 @@ jobs:
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: ${{ matrix.sdk }}
-      - name: dart pub get scip-dart package
+      - name: pub get scip-dart package
         run: dart pub get
 
       - name: pub get
-        working-directory: ./snapshots/input
-        run: |
-          (cd basic-project && dart pub get)
-          (cd diagnostics && dart pub get)
-          (cd dart3-features && dart pub get)
+        working-directory: ./snapshots/input/${{ matrix.dir }}
+        run: dart pub get
 
       - name: Snapshots Diff Check
         run: |
-          dart run scip_dart ./snapshots/input/basic-project
-          ./scip snapshot --to ./snapshots/output/basic-project
-
-          dart run scip_dart ./snapshots/input/diagnostics
-          ./scip snapshot --to ./snapshots/output/diagnostics
-
-          dart run scip_dart ./snapshots/input/dart3-features
-          ./scip snapshot --to ./snapshots/output/dart3-features
+          dart run scip_dart ./snapshots/input/${{ matrix.dir }}
+          ./scip snapshot --to ./snapshots/output/${{matrix.dir}}/${{matrix.sdk}}
 
           if [[ -z "$(git status --porcelain ./snapshots/output)" ]];
           then
             echo "No changes to snapshot files"
           else
             echo
-            echo "Snapshot diff detected differences, run 'make gen-snaps' to re-generate snapshots"
+            echo "Snapshot diff detected differences, run 'make regen-snapshots' to re-generate snapshots"
             git status --short ./snapshots/output
             echo
             exit 1

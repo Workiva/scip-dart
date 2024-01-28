@@ -1,14 +1,14 @@
   (String, int) userInfo(Map<String, dynamic> json) {
 // definition scip-dart pub dart3_features 1.0.0 lib/`main.dart`/
-// ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
-//         ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
+// ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`string.dart`/String#
+//         ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
 //              ^^^^^^^^ definition scip-dart pub dart3_features 1.0.0 lib/`main.dart`/userInfo().
 //              documentation
 //              > ```dart
 //              > (String, int) userInfo(Map<String, dynamic> json)
 //              > ```
-//                       ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`map.dart`/Map#
-//                           ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
+//                       ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`map.dart`/Map#
+//                           ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`string.dart`/String#
 //                                            ^^^^ definition local 0
 //                                            documentation
 //                                            > ```dart
@@ -16,9 +16,9 @@
 //                                            > ```
     return (json['name'] as String, json['height'] as int);
 //          ^^^^ reference local 0
-//                          ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
+//                          ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`string.dart`/String#
 //                                  ^^^^ reference local 0
-//                                                    ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
+//                                                    ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
   }
   
   void parser(int charCode) {
@@ -27,7 +27,7 @@
 //     > ```dart
 //     > void parser(int charCode)
 //     > ```
-//            ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
+//            ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
 //                ^^^^^^^^ definition local 1
 //                documentation
 //                > ```dart
@@ -64,8 +64,6 @@
 //        > ```dart
 //        > String nextCharCode
 //        > ```
-//        diagnostic Information:
-//        > The value of the local variable 'nextCharCode' isn't used.
     const digit0 = 0;
 //        ^^^^^^ definition local 7
 //        documentation
@@ -91,7 +89,7 @@
 //       > ```dart
 //       > void operatorFn(int charCode)
 //       > ```
-//                  ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
+//                  ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
 //                      ^^^^^^^^ definition local 9
 //                      documentation
 //                      > ```dart
@@ -114,26 +112,16 @@
 //          ^^^^^^^^ reference local 1
       case slash when nextCharCode == slash:
 //         ^^^^^ reference local 2
+//                    ^^^^^^^^^^^^ reference local 6
+//                                    ^^^^^ reference local 2
         skipComment();
 //      ^^^^^^^^^^^ reference scip-dart pub dart3_features 1.0.0 lib/`main.dart`/skipComment().
   
       case slash || star || plus || minus:
 //         ^^^^^ reference local 2
-//         diagnostic Error:
-//         > The operands of the operator '||' must be assignable to 'bool'.
-//         diagnostic Error:
-//         > The switch case expression type 'bool' must be a subtype of the switch expression type 'int'.
-//         diagnostic Error:
-//         > In constant expressions, operands of this operator must be of type 'bool'.
 //                  ^^^^ reference local 3
-//                  diagnostic Error:
-//                  > The operands of the operator '||' must be assignable to 'bool'.
 //                          ^^^^ reference local 4
-//                          diagnostic Error:
-//                          > The operands of the operator '||' must be assignable to 'bool'.
 //                                  ^^^^^ reference local 5
-//                                  diagnostic Error:
-//                                  > The operands of the operator '||' must be assignable to 'bool'.
         operatorFn(charCode);
 //      ^^^^^^^^^^ reference scip-dart pub dart3_features 1.0.0 lib/`main.dart`/operatorFn().
 //                 ^^^^^^^^ reference local 1
@@ -163,13 +151,13 @@
 //      > String msg
 //      > ```
   String describeDate(DateTime dt) {
-//^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
+//^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`string.dart`/String#
 //       ^^^^^^^^^^^^ definition scip-dart pub dart3_features 1.0.0 lib/`main.dart`/describeDate().
 //       documentation
 //       > ```dart
 //       > String describeDate(DateTime dt)
 //       > ```
-//                    ^^^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`date_time.dart`/DateTime#
+//                    ^^^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`date_time.dart`/DateTime#
 //                             ^^ definition local 10
 //                             documentation
 //                             > ```dart
@@ -181,13 +169,13 @@
 //        > ```dart
 //        > int one
 //        > ```
-//        diagnostic Information:
-//        > The value of the local variable 'one' isn't used.
     return switch (dt.weekday) {
 //                 ^^ reference local 10
-//                    ^^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`date_time.dart`/DateTime#weekday.
+//                    ^^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`date_time.dart`/DateTime#weekday.
       one => 'Feeling the Monday blues?',
+//    ^^^ reference local 11
       7 || six => 'Enjoy the weekend!',
+//         ^^^ reference scip-dart pub dart3_features 1.0.0 lib/`main.dart`/six.
       _ => 'Hang in there.'
     };
   }
@@ -200,62 +188,28 @@
 //     > ```
     var (
       String name,
-//     definition local 12
-//    documentation
-//    > ```dart
-//    > dynamic 
-//    > ```
-//    ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
-//           ^^^^ definition local 13
-//           documentation
-//           > ```dart
-//           > String name
-//           > ```
+//    ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`string.dart`/String#
       int height,
-//    ^^^ definition local 14
-//    documentation
-//    > ```dart
-//    > String int
-//    > ```
-//    diagnostic Error:
-//    > Expected to find ';'.
-//    diagnostic Information:
-//    > The value of the local variable 'int' isn't used.
-//               reference local 12
-//              diagnostic Error:
-//              > Expected an identifier.
-//              diagnostic Error:
-//              > Unexpected text ';'.
-//              diagnostic Error:
-//              > Expected to find ';'.
+//    ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
     ) = userInfo({'name': 'Michael', 'height': 180});
-//   reference local 12
-//  diagnostic Error:
-//  > Expected an identifier.
-//  diagnostic Error:
-//  > Unexpected text ';'.
-//     reference local 12
-//    diagnostic Error:
-//    > Expected an identifier.
 //      ^^^^^^^^ reference scip-dart pub dart3_features 1.0.0 lib/`main.dart`/userInfo().
     print('User $name is $height cm tall.');
-//  ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
-//               ^^^^ reference local 13
-//               diagnostic Error:
-//               > The non-nullable local variable 'name' must be assigned before it can be used.
+//  ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`print.dart`/print().
+//               ^^^^ reference local 12
+//                        ^^^^^^ reference local 13
   
     final json = {'name': 'Michael', 'height': 180};
-//        ^^^^ definition local 15
+//        ^^^^ definition local 14
 //        documentation
 //        > ```dart
 //        > Map<String, Object> json
 //        > ```
     if (json case {'name': 'Michael', 'height': int h}) {
-//      ^^^^ reference local 15
-//      diagnostic Error:
-//      > Conditions must have a static type of 'bool'.
+//      ^^^^ reference local 14
+//                                              ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
       print('Michael is $h cm tall.');
-//    ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
+//    ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`print.dart`/print().
+//                       ^ reference local 15
     }
   }
   
@@ -263,27 +217,27 @@
 //           ^^^ definition scip-dart pub dart3_features 1.0.0 lib/`main.dart`/Foo#
 //           documentation
 //           > ```dart
-//           > class Foo
+//           > base class Foo
 //           > ```
   
   final class Bar {}
 //            ^^^ definition scip-dart pub dart3_features 1.0.0 lib/`main.dart`/Bar#
 //            documentation
 //            > ```dart
-//            > class Bar
+//            > final class Bar
 //            > ```
   
   interface class Car {}
 //                ^^^ definition scip-dart pub dart3_features 1.0.0 lib/`main.dart`/Car#
 //                documentation
 //                > ```dart
-//                > class Car
+//                > interface class Car
 //                > ```
   
   sealed class Zar {}
 //             ^^^ definition scip-dart pub dart3_features 1.0.0 lib/`main.dart`/Zar#
 //             documentation
 //             > ```dart
-//             > class Zar
+//             > sealed class Zar
 //             > ```
   
