@@ -7,34 +7,35 @@
     int _far;
 //  ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
 //      ^^^^ definition local 0
-//      diagnostic Information:
-//      > The value of the field '_far' isn't used.
     bool value;
 //  ^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`bool.dart`/bool#
 //       ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value.
     String value2;
 //  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
 //         ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value2.
-    double value3;
+    double? value3;
 //  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`double.dart`/double#
-//         ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value3.
-    Foo(this._far);
+//          ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value3.
+    Foo(
 //  ^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().
-//  diagnostic Error:
-//  > Non-nullable instance field 'value' must be initialized.
-//  diagnostic Error:
-//  > Non-nullable instance field 'value2' must be initialized.
-//  diagnostic Error:
-//  > Non-nullable instance field 'value3' must be initialized.
 //  ^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#
-//  diagnostic Error:
-//  > Non-nullable instance field 'value' must be initialized.
-//  diagnostic Error:
-//  > Non-nullable instance field 'value2' must be initialized.
-//  diagnostic Error:
-//  > Non-nullable instance field 'value3' must be initialized.
-//      ^^^^ reference local 0
-//           ^^^^ definition local 1
+      this._far, {
+//    ^^^^ reference local 0
+//         ^^^^ definition local 1
+      required this.value,
+//             ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value.
+//                  ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().(value)
+      required this.value2,
+//             ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value2.
+//                  ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().(value2)
+      this.value3,
+//    ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value3.
+//         ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().(value3)
+    }) {
+      print(_far);
+//    ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
+//          ^^^^ reference local 0
+    }
   }
   
   class Bar {
@@ -69,19 +70,28 @@
 //             ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Bar#someMethod().
     });
   
-    Foo()..value = false;
+    Foo(1, value: true, value2: 'asdf')..value = false;
 //  ^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#
-//         ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value.
+//         ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().(value)
+//                      ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().(value2)
+//                                       ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value.
   
     final someStr = 'someStr';
 //        ^^^^^^^ definition local 5
-    Foo()
+    Foo(2, value: false, value2: 'some Val!')
 //  ^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#
+//         ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().(value)
+//                       ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().(value2)
       ..value = true
 //      ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value.
       ..value2 = someStr
 //      ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value2.
 //               ^^^^^^^ reference local 5
-      ..value3 = 2.15
+      ..value3 = 2.15;
 //      ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value3.
+  
+    more.test((_) => 'val');
+//  ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/more.
+//       ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/test().
+//             ^ definition local 6
   }
