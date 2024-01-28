@@ -25,11 +25,16 @@ const _unusedHintCodes = {
 /// Use [getSymbolMetadata] to retrieve [SymbolMetadata] for a provided
 /// [Element] type.
 class SymbolMetadata {
-  List<String> documentation;
+  proto.Document signatureDocumentation;
 
+  List<String>? documentation;
   List<proto.Diagnostic>? diagnostics;
 
-  SymbolMetadata({required this.documentation, this.diagnostics});
+  SymbolMetadata({
+    required this.signatureDocumentation,
+    this.documentation,
+    this.diagnostics,
+  });
 }
 
 /// Returns a [SymbolMetadata] object for a provided [Element] type.
@@ -65,10 +70,11 @@ SymbolMetadata getSymbolMetadata(
       .toList();
 
   return SymbolMetadata(
-    documentation: [
-      '```dart\n$displayString\n```',
-      if (docComment != null) docComment
-    ],
+    signatureDocumentation: proto.Document(
+      language: proto.Language.Dart.name,
+      text: displayString,
+    ),
+    documentation: docComment != null ? [docComment] : null,
     diagnostics: diagnostics.isNotEmpty ? diagnostics : null,
   );
 }

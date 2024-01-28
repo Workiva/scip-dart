@@ -177,6 +177,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
           globalExternalSymbols.add(SymbolInformation(
             symbol: symbol,
             documentation: meta.documentation,
+            signatureDocumentation: meta.signatureDocumentation,
           ));
         }
       }
@@ -200,6 +201,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
         symbol: symbol,
         documentation: meta.documentation,
         relationships: relationships,
+        signatureDocumentation: meta.signatureDocumentation,
       ));
 
       occurrences.add(Occurrence(
