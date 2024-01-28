@@ -65,7 +65,7 @@
 //        > ```dart
 //        > String unusedVariable
 //        > ```
-//        diagnostic Information:
+//        diagnostic Warning:
 //        > The value of the local variable 'unusedVariable' isn't used.
   
     String variableWithUnecssaryDeclaration = 'asdf';
@@ -75,7 +75,7 @@
 //         > ```dart
 //         > String variableWithUnecssaryDeclaration
 //         > ```
-//         diagnostic Information:
+//         diagnostic Warning:
 //         > The value of the local variable 'variableWithUnecssaryDeclaration' isn't used.
   
     // dead_code example

@@ -19,7 +19,7 @@
 //      > ```dart
 //      > int _far
 //      > ```
-//      diagnostic Information:
+//      diagnostic Warning:
 //      > The value of the field '_far' isn't used.
     bool value;
 //  ^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`bool.dart`/bool#

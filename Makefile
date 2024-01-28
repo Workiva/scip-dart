@@ -1,9 +1,5 @@
 regen-snapshots:
-	dart run scip_dart ./snapshots/input/basic-project
-	scip snapshot --to ./snapshots/output/basic-project
-
-	dart run scip_dart ./snapshots/input/diagnostics
-	scip snapshot --to ./snapshots/output/diagnostics
+	./tool/regen-snapshots.sh
 
 run:
 	dart run scip_dart ./snapshots/input/staging-project --verbose
