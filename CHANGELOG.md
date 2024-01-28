@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.1
+- Fixed a bug discovered with diagnostic reporting, where most diagnostics were missing
+
+## 1.2.0
+
+- Added support for [occurrence diagnostics](https://github.com/sourcegraph/scip/blob/8d3634b4d6aa564129dac3ee462592ebc4203236/scip.proto#L579), all indexed packages will now include hints, warnings, and errors from the dart analysis server
+
 ## 1.1.5
 
 - Fixed issues where cascade references would incorrectly index variables and assignments
@@ -12,12 +19,12 @@
 
 ## 1.1.3
 
-- generated scip bindings updated to provide relationship fields. This allows for "Go to Implementations" and other class/method inheritance navigation.
+- Generated scip bindings updated to provide relationship fields. This allows for "Go to Implementations" and other class/method inheritance navigation.
 
 ## 1.1.2
 
-- added `--version` flag to retrieve the version of scip-dart
-- populated `ToolInfo.version` in resulting scip files
+- Added `--version` flag to retrieve the version of scip-dart
+- Populated `ToolInfo.version` in resulting scip files
 
 ## 1.1.1
 

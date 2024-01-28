@@ -1,10 +1,10 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/error/error.dart';
 import 'package:analyzer/source/line_info.dart';
 import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
-import 'package:scip_dart/src/flags.dart';
 import 'package:scip_dart/src/metadata.dart';
 import 'package:scip_dart/src/gen/scip.pb.dart';
 import 'package:scip_dart/src/relationship_generator.dart';
@@ -17,6 +17,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
   final String _relativePath;
   final String _projectRoot;
   final LineInfo _lineInfo;
+  final List<AnalysisError> _analysisErrors;
 
   final SymbolGenerator _symbolGenerator;
 
@@ -27,6 +28,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
     this._relativePath,
     this._projectRoot,
     this._lineInfo,
+    this._analysisErrors,
     PackageConfig packageConfig,
     Pubspec pubspec,
   ) : _symbolGenerator = SymbolGenerator(
@@ -70,13 +72,11 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
     final element = node.declaredElement!;
 
-    List<Relationship>? relationships;
-    if (Flags.instance.indexRelationships) {
-      relationships = relationshipsFor(node, element, _symbolGenerator);
-    }
+    final relationships = relationshipsFor(node, element, _symbolGenerator);
 
     _registerAsDefinition(
       element,
+      node,
       relationships: relationships,
     );
   }
@@ -97,12 +97,13 @@ class ScipVisitor extends GeneralizingAstVisitor {
       final fieldElement = (element as FieldFormalParameterElement).field;
       _registerAsReference(
         fieldElement!,
+        node,
         offset: node.thisKeyword.offset,
         length: node.thisKeyword.length,
       );
     }
 
-    _registerAsDefinition(element);
+    _registerAsDefinition(element, node);
   }
 
   void _visitSimpleIdentifier(SimpleIdentifier node) {
@@ -141,10 +142,11 @@ class ScipVisitor extends GeneralizingAstVisitor {
     if (element == null || element.source == null) return;
 
     if (node.inDeclarationContext()) {
-      _registerAsDefinition(element);
+      _registerAsDefinition(element, node);
     } else {
       _registerAsReference(
         element,
+        node,
         offset: node.offset,
         length: node.name.length,
       );
@@ -193,22 +195,25 @@ class ScipVisitor extends GeneralizingAstVisitor {
   /// If [element] exists outside of the projects source, it will be added to the
   /// [globalExternalSymbols].
   void _registerAsReference(
-    Element element, {
+    Element element,
+    AstNode node, {
     required int offset,
     required int length,
   }) {
     final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
+      final meta = getSymbolMetadata(element, offset, _analysisErrors);
       occurrences.add(Occurrence(
         range: _lineInfo.getRange(offset, length),
         symbol: symbol,
+        diagnostics: meta.diagnostics,
       ));
 
       if (!element.source!.fullName.startsWith(_projectRoot)) {
         if (!globalExternalSymbols.any(
           (symbolInfo) => symbolInfo.symbol == symbol,
         )) {
-          final meta = getSymbolMetadata(element);
+          final meta = getSymbolMetadata(element, offset, _analysisErrors);
           globalExternalSymbols.add(SymbolInformation(
             symbol: symbol,
             documentation: meta.documentation,
@@ -223,12 +228,14 @@ class ScipVisitor extends GeneralizingAstVisitor {
   /// This adds both a symbol, and an occurrence for the element and it's
   /// name
   void _registerAsDefinition(
-    Element element, {
+    Element element,
+    AstNode node, {
     List<Relationship>? relationships,
   }) {
     final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
-      final meta = getSymbolMetadata(element);
+      final meta =
+          getSymbolMetadata(element, element.nameOffset, _analysisErrors);
       symbols.add(SymbolInformation(
         symbol: symbol,
         documentation: meta.documentation,
@@ -239,6 +246,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
         range: _lineInfo.getRange(element.nameOffset, element.nameLength),
         symbol: symbol,
         symbolRoles: SymbolRole.Definition.value,
+        diagnostics: meta.diagnostics,
       ));
     }
   }

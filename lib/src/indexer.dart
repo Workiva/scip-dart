@@ -85,6 +85,7 @@ Future<Index> indexPackage(
       relativePath,
       dirPath,
       resUnit.lineInfo,
+      resUnit.errors,
       packageConfig,
       pubspec,
     );
