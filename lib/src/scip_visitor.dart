@@ -164,6 +164,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
     _registerAsReference(
       element,
+      node,
       offset: offset,
       length: element.nameLength,
     );
@@ -175,6 +176,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
     _registerAsReference(
       element,
+      node,
       offset: node.offset,
       length: element.nameLength,
     );
@@ -184,7 +186,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
     final element = node.declaredElement;
     if (element == null) return;
 
-    _registerAsDefinition(element);
+    _registerAsDefinition(element, node);
   }
 
   /// Registers the provided [element] as a reference to an existing definition
