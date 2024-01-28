@@ -4,7 +4,7 @@ description: generates scip bindings for dart files
 repository: https://github.com/Workiva/scip-dart
 
 environment:
-  sdk: ">=2.18.0 <3.0.0"
+  sdk: ">=2.19.6 <4.0.0"
 
 executables:
   scip_dart:
