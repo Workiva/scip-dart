@@ -1,8 +1,8 @@
 #!/bin/bash
 
-dart --version
+# dart --version
 
-DART_VERSION=$(dart --version | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | awk 'NR==1')
+# DART_VERSION=$(dart --version | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | awk 'NR==1')
 
 
 PROJECTS=(
@@ -12,7 +12,6 @@ PROJECTS=(
 )
 
 for project in "${PROJECTS[@]}"; do
-    dart pub upgrade
     dart run scip_dart "./snapshots/input/$project"
-    scip snapshot --to "./snapshots/output/$project/$DART_VERSION"
+    scip snapshot --to "./snapshots/output/$project/"
 done
