@@ -1,5 +1,6 @@
 /// Comes From: https://github.com/sourcegraph/scip/blob/main/scip.proto
-/// scip v0.2.3
+/// scip v0.3.3
+
 // An index contains one or more pieces of information about a given piece of
 // source code or software artifact. Complementary information can be merged
 // together from multiple sources to provide a unified code intelligence
