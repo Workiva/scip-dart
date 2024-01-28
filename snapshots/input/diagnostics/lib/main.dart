@@ -4,7 +4,7 @@ class _UnusedClass {}
 
 void _unusedMethod() {}
 
-String _unusedTopLevelVariable = 'asdf';
+final _unusedTopLevelVariable = 'asdf';
 
 @Deprecated('This method is deprecated')
 void deprecatedMethod() {}
@@ -16,7 +16,7 @@ void deprecatedParam({
 void main() {
   final unusedVariable = 'asdf';
 
-  String variableWithUnecssaryDeclaration = 'asdf';
+  final variableWithUnnecessaryDeclaration = 'asdf';
 
   // dead_code example
   if (true) { } else {
@@ -25,6 +25,7 @@ void main() {
 
   deprecatedMethod();
   deprecatedParam(foobar: 2);
+  someDeprecatedFunc();
 }
 
 @deprecated

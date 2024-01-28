@@ -11,11 +11,10 @@
 //     diagnostic Information:
 //     > The declaration '_unusedMethod' isn't referenced.
   
-  String _unusedTopLevelVariable = 'asdf';
-//^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
-//       ^^^^^^^^^^^^^^^^^^^^^^^ definition local 2
-//       diagnostic Information:
-//       > The declaration '_unusedTopLevelVariable' isn't referenced.
+  final _unusedTopLevelVariable = 'asdf';
+//      ^^^^^^^^^^^^^^^^^^^^^^^ definition local 2
+//      diagnostic Information:
+//      > The declaration '_unusedTopLevelVariable' isn't referenced.
   
   @Deprecated('This method is deprecated')
 // ^^^^^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`annotations.dart`/Deprecated#
@@ -36,11 +35,10 @@
 //        diagnostic Information:
 //        > The value of the local variable 'unusedVariable' isn't used.
   
-    String variableWithUnecssaryDeclaration = 'asdf';
-//  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
-//         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ definition local 4
-//         diagnostic Information:
-//         > The value of the local variable 'variableWithUnecssaryDeclaration' isn't used.
+    final variableWithUnnecessaryDeclaration = 'asdf';
+//        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ definition local 4
+//        diagnostic Information:
+//        > The value of the local variable 'variableWithUnnecessaryDeclaration' isn't used.
   
     // dead_code example
     if (true) { } else {
@@ -57,6 +55,10 @@
 //                  ^^^^^^ reference scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedParam().(foobar)
 //                  diagnostic Information:
 //                  > 'foobar' is deprecated and shouldn't be used. this param is deprecated.
+    someDeprecatedFunc();
+//  ^^^^^^^^^^^^^^^^^^ reference scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/someDeprecatedFunc().
+//  diagnostic Information:
+//  > 'someDeprecatedFunc' is deprecated and shouldn't be used.
   }
   
   @deprecated
