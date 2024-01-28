@@ -10,6 +10,9 @@ on:
 jobs:
   snapshots:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sdk: [2.19.6, 3.1.0]
     steps:
       - uses: actions/checkout@v3
       - name: Install scip cli
@@ -19,8 +22,7 @@ jobs:
 
       - uses: dart-lang/setup-dart@v1
         with:
-          # use a fixed version number so changes to 'stable', dont break snapshot diffs (language version is used in the scip symbol)
-          sdk: 2.19.6
+          sdk: ${{ matrix.sdk }}
       - name: dart pub get scip-dart package
         run: dart pub get
 
