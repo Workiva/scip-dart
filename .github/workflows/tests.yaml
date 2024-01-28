@@ -42,7 +42,7 @@ jobs:
           else
             echo
             echo "Snapshot diff detected differences, run 'make regen-snapshots' to re-generate snapshots"
-            git diff ./snapshots/output
+            git --no-pager diff ./snapshots/output
             echo
             exit 1
           fi
