@@ -24,13 +24,12 @@ jobs:
       - name: dart pub get scip-dart package
         run: dart pub get
 
-      - name: dart pub get basic-project directory
-        run: dart pub get
-        working-directory: ./snapshots/input/basic-project
-
-      - name: dart pub get diagnostics directory
-        run: dart pub get
-        working-directory: ./snapshots/input/diagnostics
+      - name: pub get
+        working-directory: ./snapshots/input
+        run: |
+          (cd basic-project && dart pub get)
+          (cd diagnostics && dart pub get)
+          (cd dart3-features && dart pub get)
 
       - name: Snapshots Diff Check
         run: |
@@ -39,6 +38,9 @@ jobs:
 
           dart run scip_dart ./snapshots/input/diagnostics
           ./scip snapshot --to ./snapshots/output/diagnostics
+
+          dart run scip_dart ./snapshots/input/dart3-features
+          ./scip snapshot --to ./snapshots/output/dart3-features
 
           if [[ -z "$(git status --porcelain ./snapshots/output)" ]];
           then
@@ -50,6 +52,7 @@ jobs:
             echo
             exit 1
           fi
+
 
   consumer:
     runs-on: ubuntu-latest

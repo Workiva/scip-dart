@@ -5,6 +5,9 @@ regen-snapshots:
 	dart run scip_dart ./snapshots/input/diagnostics
 	scip snapshot --to ./snapshots/output/diagnostics
 
+	dart run scip_dart ./snapshots/input/dart3-features
+	scip snapshot --to ./snapshots/output/dart3-features
+
 run:
 	dart run scip_dart ./snapshots/input/staging-project --verbose
 
