@@ -56,6 +56,12 @@ class ScipVisitor extends GeneralizingAstVisitor {
       _visitNormalFormalParameter(node);
     } else if (node is SimpleIdentifier) {
       _visitSimpleIdentifier(node);
+    } else if (node is TypeAnnotation) {
+      _visitTypeAnnotation(node);
+    } else if (node is ImportPrefixReference) {
+      _visitImportPrefixReference(node);
+    } else if (node is DeclaredVariablePattern) {
+      _visitPatternField(node);
     }
 
     super.visitNode(node);
@@ -145,6 +151,42 @@ class ScipVisitor extends GeneralizingAstVisitor {
         length: node.name.length,
       );
     }
+  }
+
+  void _visitTypeAnnotation(TypeAnnotation node) {
+    final element = node is NamedType ? node.element : node.type?.element;
+    if (element == null) return;
+
+    var offset = node.offset;
+    if (node is NamedType && node.importPrefix != null) {
+      offset += node.importPrefix!.name.length + 1;
+    }
+
+    _registerAsReference(
+      element,
+      node,
+      offset: offset,
+      length: element.nameLength,
+    );
+  }
+
+  void _visitImportPrefixReference(ImportPrefixReference node) {
+    final element = node.element;
+    if (element == null) return;
+
+    _registerAsReference(
+      element,
+      node,
+      offset: node.offset,
+      length: element.nameLength,
+    );
+  }
+
+  void _visitPatternField(DeclaredVariablePattern node) {
+    final element = node.declaredElement;
+    if (element == null) return;
+
+    _registerAsDefinition(element, node);
   }
 
   /// Registers the provided [element] as a reference to an existing definition

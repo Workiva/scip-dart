@@ -17,8 +17,12 @@ lint:
 stats:
 	scip stats
 
+# Requires running `dart pub global acitvate protoc_plugin`
 gen-proto:
 	protoc --dart_out=. ./lib/src/gen/scip.proto
 
 print:
 	scip print ./index.scip
+
+print-ast:
+	dart ./tool/ast_printer.dart ./snapshots/input/staging-project

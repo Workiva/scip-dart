@@ -20,7 +20,7 @@
 //     > The declaration '_unusedMethod' isn't referenced.
   
   String _unusedTopLevelVariable = 'asdf';
-//^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
+//^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`string.dart`/String#
 //       ^^^^^^^^^^^^^^^^^^^^^^^ definition local 2
 //       documentation
 //       > ```dart
@@ -30,7 +30,7 @@
 //       > The declaration '_unusedTopLevelVariable' isn't referenced.
   
   @Deprecated('This method is deprecated')
-// ^^^^^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`annotations.dart`/Deprecated#
+// ^^^^^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`annotations.dart`/Deprecated#
   void deprecatedMethod() {}
 //     ^^^^^^^^^^^^^^^^ definition scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedMethod().
 //     documentation
@@ -45,7 +45,7 @@
 //     > void deprecatedParam({dynamic foobar})
 //     > ```
     @Deprecated('this param is deprecated') dynamic foobar
-//   ^^^^^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`annotations.dart`/Deprecated#
+//   ^^^^^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`annotations.dart`/Deprecated#
 //                                                  ^^^^^^ definition scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedParam().(foobar)
 //                                                  documentation
 //                                                  > ```dart
@@ -65,23 +65,23 @@
 //        > ```dart
 //        > String unusedVariable
 //        > ```
-//        diagnostic Information:
+//        diagnostic Warning:
 //        > The value of the local variable 'unusedVariable' isn't used.
   
     String variableWithUnecssaryDeclaration = 'asdf';
-//  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
+//  ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`string.dart`/String#
 //         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ definition local 4
 //         documentation
 //         > ```dart
 //         > String variableWithUnecssaryDeclaration
 //         > ```
-//         diagnostic Information:
+//         diagnostic Warning:
 //         > The value of the local variable 'variableWithUnecssaryDeclaration' isn't used.
   
     // dead_code example
     if (true) { } else {
       print('This condition is never met!');
-//    ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
+//    ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`print.dart`/print().
     }
   
     deprecatedMethod();
@@ -96,7 +96,7 @@
   }
   
   @deprecated
-// ^^^^^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`annotations.dart`/deprecated.
+// ^^^^^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`annotations.dart`/deprecated.
   void someDeprecatedFunc() {}
 //     ^^^^^^^^^^^^^^^^^^ definition scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/someDeprecatedFunc().
 //     documentation
