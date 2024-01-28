@@ -1,14 +1,14 @@
   (String, int) userInfo(Map<String, dynamic> json) {
 // definition scip-dart pub dart3_features 1.0.0 lib/`main.dart`/
-// ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`string.dart`/String#
-//         ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
+// ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
+//         ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
 //              ^^^^^^^^ definition scip-dart pub dart3_features 1.0.0 lib/`main.dart`/userInfo().
 //              documentation
 //              > ```dart
 //              > (String, int) userInfo(Map<String, dynamic> json)
 //              > ```
-//                       ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`map.dart`/Map#
-//                           ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`string.dart`/String#
+//                       ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`map.dart`/Map#
+//                           ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
 //                                            ^^^^ definition local 0
 //                                            documentation
 //                                            > ```dart
@@ -16,9 +16,9 @@
 //                                            > ```
     return (json['name'] as String, json['height'] as int);
 //          ^^^^ reference local 0
-//                          ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`string.dart`/String#
+//                          ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
 //                                  ^^^^ reference local 0
-//                                                    ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
+//                                                    ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
   }
   
   void parser(int charCode) {
@@ -27,7 +27,7 @@
 //     > ```dart
 //     > void parser(int charCode)
 //     > ```
-//            ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
+//            ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
 //                ^^^^^^^^ definition local 1
 //                documentation
 //                > ```dart
@@ -89,7 +89,7 @@
 //       > ```dart
 //       > void operatorFn(int charCode)
 //       > ```
-//                  ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
+//                  ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
 //                      ^^^^^^^^ definition local 9
 //                      documentation
 //                      > ```dart
@@ -151,13 +151,13 @@
 //      > String msg
 //      > ```
   String describeDate(DateTime dt) {
-//^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`string.dart`/String#
+//^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
 //       ^^^^^^^^^^^^ definition scip-dart pub dart3_features 1.0.0 lib/`main.dart`/describeDate().
 //       documentation
 //       > ```dart
 //       > String describeDate(DateTime dt)
 //       > ```
-//                    ^^^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`date_time.dart`/DateTime#
+//                    ^^^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`date_time.dart`/DateTime#
 //                             ^^ definition local 10
 //                             documentation
 //                             > ```dart
@@ -171,7 +171,7 @@
 //        > ```
     return switch (dt.weekday) {
 //                 ^^ reference local 10
-//                    ^^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`date_time.dart`/DateTime#weekday.
+//                    ^^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`date_time.dart`/DateTime#weekday.
       one => 'Feeling the Monday blues?',
 //    ^^^ reference local 11
       7 || six => 'Enjoy the weekend!',
@@ -188,13 +188,13 @@
 //     > ```
     var (
       String name,
-//    ^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`string.dart`/String#
+//    ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
       int height,
-//    ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
+//    ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
     ) = userInfo({'name': 'Michael', 'height': 180});
 //      ^^^^^^^^ reference scip-dart pub dart3_features 1.0.0 lib/`main.dart`/userInfo().
     print('User $name is $height cm tall.');
-//  ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`print.dart`/print().
+//  ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
 //               ^^^^ reference local 12
 //                        ^^^^^^ reference local 13
   
@@ -206,9 +206,9 @@
 //        > ```
     if (json case {'name': 'Michael', 'height': int h}) {
 //      ^^^^ reference local 14
-//                                              ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
+//                                              ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
       print('Michael is $h cm tall.');
-//    ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`print.dart`/print().
+//    ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
 //                       ^ reference local 15
     }
   }

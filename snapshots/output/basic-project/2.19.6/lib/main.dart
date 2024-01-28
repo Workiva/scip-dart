@@ -6,7 +6,7 @@
   /// Takes a number
   /// Returns a number
   int fib(int n) {
-//^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
+//^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
 //    ^^^ definition scip-dart pub dart_test 1.0.0 lib/`main.dart`/fib().
 //    documentation
 //    > ```dart
@@ -16,7 +16,7 @@
 //    > This is a fib function
 //    > Takes a number
 //    > Returns a number
-//        ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
+//        ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
 //            ^ definition local 0
 //            documentation
 //            > ```dart
@@ -37,14 +37,14 @@
 //     > ```dart
 //     > void print_fib(int a)
 //     > ```
-//               ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
+//               ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
 //                   ^ definition local 1
 //                   documentation
 //                   > ```dart
 //                   > int a
 //                   > ```
     print(fib(a));
-//  ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`print.dart`/print().
+//  ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
 //        ^^^ reference scip-dart pub dart_test 1.0.0 lib/`main.dart`/fib().
 //            ^ reference local 1
   }
@@ -56,7 +56,7 @@
 //      > String y
 //      > ```
   String capture() {
-//^^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`string.dart`/String#
+//^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
 //       ^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`main.dart`/capture().
 //       documentation
 //       > ```dart
@@ -96,7 +96,7 @@
 //           > int i
 //           > ```
       print(i);
-//    ^^^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`print.dart`/print().
+//    ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
 //          ^ reference local 3
     }
   
@@ -148,7 +148,7 @@
 //     > Reference class: [SomeLocalClass]
 //     > Reference external class: [Foo]
 //     > Missing Reference: [IDontExist]
-//                  ^^^ reference scip-dart pub dart:core 3.1.0 dart:core/`int.dart`/int#
+//                  ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
 //                      ^^^^^ definition local 5
 //                      documentation
 //                      > ```dart
