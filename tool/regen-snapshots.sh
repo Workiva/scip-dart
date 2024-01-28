@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# dart --version
-
-# DART_VERSION=$(dart --version | grep -o '[0-9]*\.[0-9]*\.[0-9]*' | awk 'NR==1')
-
-
 PROJECTS=(
     basic-project
     dart3-features
