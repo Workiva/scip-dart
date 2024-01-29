@@ -32,12 +32,12 @@
 //     ^^^^ definition scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/main().
     final unusedVariable = 'asdf';
 //        ^^^^^^^^^^^^^^ definition local 3
-//        diagnostic Information:
+//        diagnostic Warning:
 //        > The value of the local variable 'unusedVariable' isn't used.
   
     final variableWithUnnecessaryDeclaration = 'asdf';
 //        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ definition local 4
-//        diagnostic Information:
+//        diagnostic Warning:
 //        > The value of the local variable 'variableWithUnnecessaryDeclaration' isn't used.
   
     // dead_code example
