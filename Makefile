@@ -1,14 +1,9 @@
-gen-snaps:
-	make gen-snap_basic-project
-	make gen-snap_diagnostics
-
-gen-snap_basic-project:
+regen-snapshots:
 	dart run scip_dart ./snapshots/input/basic-project
 	scip snapshot --to ./snapshots/output/basic-project
 
-gen-snap_diagnostics:
 	dart run scip_dart ./snapshots/input/diagnostics
-	scip print --json ./index.scip | jq '.documents[].occurrences[] | select(.diagnostics)' | jq -s . > ./snapshots/output/diagnostics/output.json
+	scip snapshot --to ./snapshots/output/diagnostics
 
 run:
 	dart run scip_dart ./snapshots/input/staging-project --verbose
