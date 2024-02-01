@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.0
+- Default `index-relationships` to `true`, now all scip files will be generating relationship data by default
+- Fixed issue where `this.<param>` declared in a constructor (NormalFormalParameters), was incorrectly referencing the `this` part of the parameter
+- Updated the internal protobuf spec to the latest version. This includes populating `signatureDocumentation` as apart of symbol information declarations
+
 ## 1.2.1
 - Fixed a bug discovered with diagnostic reporting, where most diagnostics were missing
 
