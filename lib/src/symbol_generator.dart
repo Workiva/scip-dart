@@ -51,7 +51,7 @@ class SymbolGenerator {
       _getDescriptor(element),
     ].join(' ');
   }
-  
+
   String symbolForFile(String path) {
     return [
       'scip-dart',
@@ -75,12 +75,14 @@ class SymbolGenerator {
     }
 
     if (uri.toString().startsWith('dart')) {
+      final packageVersion =
+          element.library!.languageVersion.package.toString();
       return [
+        'scip-dart',
+        'pub $uri $packageVersion',
         _getPackage(element),
         _escapeNamespacePath(_pathForSdkElement(element)) + '/'
       ].join(' ');
-    } else {
-
     }
 
     if (uri.toString().startsWith('package')) {
@@ -244,32 +246,6 @@ class SymbolGenerator {
     if (element is FieldElement) {
       final encEle = element.enclosingElement;
       return '${_getDescriptor(encEle)}${element.name}.';
-    }
-
-    if (
-      element is LibraryImportElement || 
-      element is LibraryExportElement || 
-      element is PartElement
-    ) {
-      DirectiveUriWithSource directiveUri;
-      if (element is LibraryImportElement) {
-        directiveUri = element.uri as DirectiveUriWithSource;
-      } else if (element is LibraryExportElement) {
-        directiveUri = element.uri as DirectiveUriWithSource;
-      } else if (element is PartElement) {
-        directiveUri = element.uri as DirectiveUriWithSource;
-      } else {
-        return null;
-      }
-
-      final config = _packageConfig.packageOf(Uri.file(sourcePath));
-      if (config == null) {
-        throw Exception('Could not find package for $sourcePath. Have you run pub get?');
-      }
-
-      return _escapeNamespacePath(
-        sourcePath.substring(config.root.toFilePath().length),
-      );
     }
 
     display(

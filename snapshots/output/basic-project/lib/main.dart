@@ -1,5 +1,6 @@
   import 'package:dart_test/other.dart';
 // definition scip-dart pub dart_test 1.0.0 lib/`main.dart`/
+//       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/
   
   /// This is a fib function
   ///
