@@ -14,31 +14,38 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install scip cli
         run: |
-          bash -c 'curl -L "https://github.com/sourcegraph/scip/releases/download/v0.2.3/scip-linux-amd64.tar.gz"' | tar xzf - scip
+          bash -c 'curl -L "https://github.com/sourcegraph/scip/releases/download/v0.3.3/scip-linux-amd64.tar.gz"' | tar xzf - scip
           ./scip --version
 
       - uses: dart-lang/setup-dart@v1
         with:
           # use a fixed version number so changes to 'stable', dont break snapshot diffs (language version is used in the scip symbol)
-          sdk: 2.18.7
-      - name: pub get scip-dart package
+          sdk: 2.19.6
+      - name: dart pub get scip-dart package
         run: dart pub get
 
-      - name: pub get snapshots directory
+      - name: dart pub get basic-project directory
         run: dart pub get
         working-directory: ./snapshots/input/basic-project
+
+      - name: dart pub get diagnostics directory
+        run: dart pub get
+        working-directory: ./snapshots/input/diagnostics
 
       - name: Snapshots Diff Check
         run: |
           dart run scip_dart ./snapshots/input/basic-project
           ./scip snapshot --to ./snapshots/output/basic-project
 
+          dart run scip_dart ./snapshots/input/diagnostics
+          ./scip snapshot --to ./snapshots/output/diagnostics
+
           if [[ -z "$(git status --porcelain ./snapshots/output)" ]];
           then
             echo "No changes to snapshot files"
           else
             echo
-            echo "Snapshot diff detected differences, run 'make run snap' to re-generate snapshots"
+            echo "Snapshot diff detected differences, run 'make gen-snaps' to re-generate snapshots"
             git status --short ./snapshots/output
             echo
             exit 1
@@ -46,7 +53,6 @@ jobs:
 
   consumer:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         repo: [
@@ -61,7 +67,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: 2.18.7
+          sdk: 2.19.6
       - run: dart pub get
 
       # Setup repo to run on

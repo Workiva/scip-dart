@@ -1,6 +1,7 @@
 version: 2
 updates:
-  - package-ecosystem: "pub"
-    directory: "/"
+  - package-ecosystem: pub
+    versioning-strategy: increase
+    directory: /
     schedule:
-      interval: "weekly"
+      interval: weekly
