@@ -47,7 +47,7 @@ class SymbolGenerator {
     return [
       'scip-dart',
       _getPackage(element),
-      _getDescriptor(element),
+      descriptor,
     ].join(' ');
   }
 
