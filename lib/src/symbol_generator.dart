@@ -17,7 +17,7 @@ class SymbolGenerator {
   /// that should be used for the element. If no element is found,
   /// [_localElementIndex] should be used to generate one.
   ///
-  /// Use []
+  /// Use [_localSymbolFor] to generate new local symbols
   Map<Element, String> _localElementRegistry = {};
 
   SymbolGenerator(this._packageConfig, this._pubspec);
@@ -47,7 +47,7 @@ class SymbolGenerator {
     return [
       'scip-dart',
       _getPackage(element),
-      _getDescriptor(element),
+      descriptor,
     ].join(' ');
   }
 
