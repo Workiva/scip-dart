@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.0
+- Exported `SymbolGenerator` from the `symbol_generator.dart` entrypoint. Making use of this will allow generation of scip symbols outside of scip-darts main use case of indexing all the symbols in a dart repo
+
 ## 1.3.0
 - Default `index-relationships` to `true`, now all scip files will be generating relationship data by default
 - Fixed issue where `this.<param>` declared in a constructor (NormalFormalParameters), was incorrectly referencing the `this` part of the parameter
