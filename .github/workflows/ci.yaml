@@ -6,6 +6,10 @@ on:
       - master
   pull_request:
 
+permissions:
+  pull-requests: write
+  contents: write
+  id-token: write
 
 jobs:
   checks:
