@@ -1,13 +1,42 @@
 name: Tests
 
 on:
+  pull_request:
   push:
     branches:
       - master
-  pull_request:
 
+permissions:
+  pull-requests: write
+  contents: write
+  id-token: write
 
 jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 2.19.6
+
+      - run: dart pub get
+
+      - name: Analyze
+        run: dart run dart_dev analyze
+
+      - name: Format
+        run: dart run dart_dev format --check
+
+      - name: Validate Dependencies
+        run: dart run dependency_validator
+
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          path: ./
+          format: cyclonedx-json
+
   snapshots:
     runs-on: ubuntu-latest
     steps:
