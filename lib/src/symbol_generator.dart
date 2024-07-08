@@ -40,9 +40,6 @@ class SymbolGenerator {
       var element = node.declaredElement;
       if (element == null) return null;
 
-      if (node is FieldFormalParameter) {
-        return (element as FieldFormalParameterElement).field;
-      }
       return element;
     } else if (node is SimpleIdentifier) {
       var element = node.staticElement;
@@ -73,8 +70,7 @@ class SymbolGenerator {
       if (element?.isSynthetic == true && element is PropertyAccessorElement) {
         // The values field on enums is synthetic, and has no explicit definition like
         // other fields do. Skip indexing for this case.
-        if (element.enclosingElement is EnumElement &&
-            element.name == 'values') {
+        if (element.enclosingElement is EnumElement && element.name == 'values') {
           return null;
         }
 
