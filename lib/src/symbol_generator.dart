@@ -29,12 +29,12 @@ class SymbolGenerator {
     if (node is Declaration) {
       return node.declaredElement;
     } else if (node is NormalFormalParameter) {
-
       // if this parameter is a child of a GenericFunctionType (can be a
       // typedef, or a function as a parameter), we don't want to index it
       // as a definition (nothing is defined, just referenced). Return false
       // and let the [_visitSimpleIdentifier] declare the reference
-      final parentParameter = node.parent?.thisOrAncestorOfType<GenericFunctionType>();
+      final parentParameter =
+          node.parent?.thisOrAncestorOfType<GenericFunctionType>();
       if (parentParameter != null) return null;
 
       var element = node.declaredElement;
@@ -77,18 +77,16 @@ class SymbolGenerator {
       // element is null if there's nothing really to do for this node. Example: `void`
       // TODO: One weird issue found: named parameters of external symbols were element.source
       //       EX: `color(path, front: Styles.YELLOW);` where `color` comes from the chalk-dart package
-      if (element == null || element.source == null) return null;
+      if (element?.source == null) return null;
 
-    return node.staticElement;
+      return element;
+    }
+
+    display('WARN: Received unknown ast node type in elementFor: '
+        '${node.runtimeType} ($node). Skipping');
+
+    return null;
   }
-
-  display(
-    'WARN: Received unknown ast node type in elementFor: '
-    '${node.runtimeType} ($node). Skipping'
-  );
-
-  return null;
-}
 
   /// For a given `Element` returns the scip symbol form.
   ///
@@ -305,5 +303,3 @@ class SymbolGenerator {
     }
   }
 }
-
-

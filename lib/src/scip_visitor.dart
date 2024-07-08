@@ -156,7 +156,8 @@ class ScipVisitor extends GeneralizingAstVisitor {
     final symbol = _symbolGenerator.symbolFor(element);
     if (symbol == null) return null;
 
-    final meta = getSymbolMetadata(element, element.nameOffset, _analysisErrors);
+    final meta =
+        getSymbolMetadata(element, element.nameOffset, _analysisErrors);
     symbols.add(SymbolInformation(
       symbol: symbol,
       documentation: meta.documentation,
