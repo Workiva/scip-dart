@@ -78,14 +78,16 @@ class ScipVisitor extends GeneralizingAstVisitor {
     final element = _symbolGenerator.elementFor(node);
     if (element == null) return;
 
+    // if the parameter is a `this.someFieldOnThClass`, we need to register
+    // it as a reference to said field, as well as a declaration of a parameter.
     if (node is FieldFormalParameter) {
+      final fieldElement = (element as FieldFormalParameterElement).field;
       _registerAsReference(
-        element,
+        fieldElement!,
         node,
         offset: node.name.offset,
         length: node.name.length,
       );
-      return;
     }
 
     _registerAsDefinition(element, node);
