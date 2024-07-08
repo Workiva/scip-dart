@@ -43,6 +43,9 @@
 //  ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#
 //              ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#name.
 //                                   ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#type.
+      print(AnimalType.values);
+//    ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
+//          ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#
       switch (type) {
 //            ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#type.
         case AnimalType.cat:

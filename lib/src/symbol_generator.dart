@@ -71,6 +71,12 @@ class SymbolGenerator {
       // When the identifier is a field, the analyzer creates synthetic getters/
       // setters for it. We need to get the backing field.
       if (element?.isSynthetic == true && element is PropertyAccessorElement) {
+        // The values field on enums is synthetic, and has no explicit definition like
+        // other fields do. Skip indexing for this case.
+        if (element.enclosingElement is EnumElement && element.name == 'values') {
+          return null;
+        }
+
         element = element.variable;
       }
 
