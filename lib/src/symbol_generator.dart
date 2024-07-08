@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:package_config/package_config.dart';
@@ -21,6 +22,73 @@ class SymbolGenerator {
   Map<Element, String> _localElementRegistry = {};
 
   SymbolGenerator(this._packageConfig, this._pubspec);
+
+  /// For a given [AstNode], returns the correlating [Element] type
+  /// that should be used to generate the symbol
+  Element? elementFor(AstNode node) {
+    if (node is Declaration) {
+      return node.declaredElement;
+    } else if (node is NormalFormalParameter) {
+
+      // if this parameter is a child of a GenericFunctionType (can be a
+      // typedef, or a function as a parameter), we don't want to index it
+      // as a definition (nothing is defined, just referenced). Return false
+      // and let the [_visitSimpleIdentifier] declare the reference
+      final parentParameter = node.parent?.thisOrAncestorOfType<GenericFunctionType>();
+      if (parentParameter != null) return null;
+
+      var element = node.declaredElement;
+      if (element == null) return null;
+
+      if (node is FieldFormalParameter) {
+        return (element as FieldFormalParameterElement).field;
+      }
+      return element;
+    } else if (node is SimpleIdentifier) {
+      var element = node.staticElement;
+
+      // Both `.loadLibrary()`, and `.call()` are synthetic functions that
+      // have no definition. These should therefore should not be indexed.
+      if (element is FunctionElement && element.isSynthetic) {
+        if ([
+          FunctionElement.LOAD_LIBRARY_NAME,
+          FunctionElement.CALL_METHOD_NAME,
+        ].contains(element.name)) return null;
+      }
+
+      // [element] for assignment fields is null. If the parent node
+      // is a `CompoundAssignmentExpression`, we know this node is referring
+      // to an assignment line. In that case, use the read/write element attached
+      // to this node instead of the [node]'s element
+      if (element == null) {
+        final assignmentExpr =
+            node.thisOrAncestorOfType<CompoundAssignmentExpression>();
+        if (assignmentExpr == null) return null;
+
+        element = assignmentExpr.readElement ?? assignmentExpr.writeElement;
+      }
+
+      // When the identifier is a field, the analyzer creates synthetic getters/
+      // setters for it. We need to get the backing field.
+      if (element?.isSynthetic == true && element is PropertyAccessorElement) {
+        element = element.variable;
+      }
+
+      // element is null if there's nothing really to do for this node. Example: `void`
+      // TODO: One weird issue found: named parameters of external symbols were element.source
+      //       EX: `color(path, front: Styles.YELLOW);` where `color` comes from the chalk-dart package
+      if (element == null || element.source == null) return null;
+
+    return node.staticElement;
+  }
+
+  display(
+    'WARN: Received unknown ast node type in elementFor: '
+    '${node.runtimeType} ($node). Skipping'
+  );
+
+  return null;
+}
 
   /// For a given `Element` returns the scip symbol form.
   ///
@@ -237,3 +305,5 @@ class SymbolGenerator {
     }
   }
 }
+
+
