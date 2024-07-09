@@ -23,10 +23,13 @@
 //         ^^^^ reference local 0
       required this.value,
 //                  ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value.
+//                  ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().(value)
       required this.value2,
 //                  ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value2.
+//                  ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().(value2)
       this.value3,
 //         ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value3.
+//         ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().(value3)
     }) {
       print(_far);
 //    ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().

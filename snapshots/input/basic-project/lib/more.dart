@@ -20,6 +20,7 @@ class Animal with SleepMixin {
   SoundMaker? soundMaker;
 
   Animal(this.name, {required this.type}) {
+    print(AnimalType.values);
     switch (type) {
       case AnimalType.cat:
         soundMaker = () => print('Meow!');
