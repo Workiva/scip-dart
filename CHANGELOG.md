@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.1
+- Added `elementFor` to the exported `SymbolGenerator` that can be used to retrieve the analyzer `Element` that should be used when generating symbols
+- Fixed issue where the synthetic `values` field on `Enum` types was getting indexed (we just dont want to index this)
+- Fixed issue where named normal formal parameters were only declared as references to their targeting field, now they are both a reference and a definition
+
 ## 1.4.0
 - Exported `SymbolGenerator` from the `symbol_generator.dart` entrypoint. Making use of this will allow generation of scip symbols outside of scip-darts main use case of indexing all the symbols in a dart repo
 
