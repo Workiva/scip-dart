@@ -88,7 +88,8 @@ jobs:
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: 2.19.6
-      - run: dart pub get
+      - working-directory: ${{ matrix.consumer.packagePath || './' }}
+        run: dart pub get
 
       # Setup repo to run on
       - uses: actions/checkout@v4
