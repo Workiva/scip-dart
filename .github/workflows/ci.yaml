@@ -78,7 +78,7 @@ jobs:
         consumer: [
           { repo: "Workiva/over_react" },
           { repo: "Workiva/w_module" },
-          { repo: "rrousselGit/provider", packagePath: "/provider/packages/provider" },
+          { repo: "rrousselGit/provider", packagePath: "/packages/provider" },
           { repo: "dart-lang/args", ref: "v2.4.2" } # master requires dart 3
         ]
 
