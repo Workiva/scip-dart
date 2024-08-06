@@ -88,8 +88,7 @@ jobs:
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: 2.19.6
-      - working-directory: ${{ matrix.consumer.packagePath || './' }}
-        run: dart pub get
+      - run: dart pub get
 
       # Setup repo to run on
       - uses: actions/checkout@v4
@@ -98,7 +97,7 @@ jobs:
           path: ${{ matrix.consumer.repo}}
           ref: ${{ matrix.consumer.ref || 'master' }}
       - run: dart pub get
-        working-directory: ${{ matrix.consumer.repo }}
+        working-directory: ${{ matrix.consumer.repo }}${{ matrix.consumer.packagePath || '' }}
 
       - run: |
           dart run scip_dart ./${{ matrix.consumer.repo }}${{ matrix.consumer.packagePath || '' }} || exit 1
