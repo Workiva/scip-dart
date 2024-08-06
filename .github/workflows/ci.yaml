@@ -78,7 +78,6 @@ jobs:
         consumer: [
           { repo: "Workiva/over_react" },
           { repo: "Workiva/w_module" },
-          { repo: "rrousselGit/provider", packagePath: "/packages/provider" },
           { repo: "dart-lang/args", ref: "v2.4.2" } # master requires dart 3
         ]
 
@@ -97,7 +96,7 @@ jobs:
           path: ${{ matrix.consumer.repo}}
           ref: ${{ matrix.consumer.ref || 'master' }}
       - run: dart pub get
-        working-directory: ${{ matrix.consumer.repo }}${{ matrix.consumer.packagePath || '' }}
+        working-directory: ${{ matrix.consumer.repo }}
 
       - run: |
-          dart run scip_dart ./${{ matrix.consumer.repo }}${{ matrix.consumer.packagePath || '' }} || exit 1
+          dart run scip_dart ./${{ matrix.consumer.repo }} || exit 1
