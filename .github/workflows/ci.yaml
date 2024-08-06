@@ -74,11 +74,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        repo: [
-          "Workiva/over_react",
-          "Workiva/w_module",
-          "rrousselGit/provider",
-          "dart-lang/args",
+        consumer: [
+          { repo: "Workiva/over_react", ref: "master"},
+          { repo: "Workiva/w_module", ref: "master"},
+          { repo: "rrousselGit/provider", ref: "master"},
+          { repo: "dart-lang/args", ref: "v2.4.2" } # master requires dart 3
         ]
 
     steps:
@@ -92,10 +92,11 @@ jobs:
       # Setup repo to run on
       - uses: actions/checkout@v4
         with:
-          repository: ${{ matrix.repo }}
-          path: ${{ matrix.repo }}
+          repository: ${{ matrix.consumer.repo }}
+          path: ${{ matrix.consumer.repo }}
+          ref: ${{ matrix.consumer.ref }}
       - run: dart pub get
-        working-directory: ${{ matrix.repo }}
+        working-directory: ${{ matrix.consumer.repo }}
 
       - run: |
-          dart run scip_dart ./${{ matrix.repo }} || exit 1
+          dart run scip_dart ./${{ matrix.consumer.repo }} || exit 1
