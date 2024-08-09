@@ -121,11 +121,59 @@ class SymbolGenerator {
     ].join(' ');
   }
 
-  String fileSymbolFor(String path) {
+  String symbolForFile(String path) {
     return [
       'scip-dart',
       'pub ${_pubspec.name} ${_pubspec.version}',
       '${_escapeNamespacePath(path)}/',
+    ].join(' ');
+  }
+
+  String? symbolForDirective(Directive node, Element element) {
+    Uri uri;
+    if (element is LibraryImportElement) {
+      uri = (element.uri as DirectiveUriWithSource).source.uri;
+    } else if (element is LibraryExportElement) {
+      uri = (element.uri as DirectiveUriWithSource).source.uri;
+    } else if (element is PartElement) {
+      uri = (element.uri as DirectiveUriWithSource).source.uri;
+    } else if (node is PartOfDirective && element is LibraryElement) {
+      uri = element.source.uri;
+    } else {
+      return null;
+    }
+
+    if (uri.toString().startsWith('dart')) {
+      final packageVersion =
+          element.library!.languageVersion.package.toString();
+      return [
+        'scip-dart',
+        'pub $uri $packageVersion',
+        _getPackage(element),
+        _escapeNamespacePath(_pathForSdkElement(element)) + '/'
+      ].join(' ');
+    }
+
+    if (uri.toString().startsWith('package')) {
+      final resolvedUri = _packageConfig.resolve(uri);
+      if (resolvedUri == null) return null;
+      uri = resolvedUri;
+    }
+
+    final config = _packageConfig.packageOf(uri);
+    if (config == null) return null;
+
+    final relativePath = _escapeNamespacePath(
+      uri.toFilePath().substring(config.root.toFilePath().length),
+    );
+
+    final packageName = config.name;
+    final version = PackageVersionCache.versionFor(config.root.toFilePath());
+
+    return [
+      'scip-dart',
+      'pub $packageName $version',
+      '$relativePath/',
     ].join(' ');
   }
 
