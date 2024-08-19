@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.3
+- Updated the min dart version to `>=2.19 <3.0.0`, this is a pre-step to supporting dart 3
+
+## 1.4.2
+- Minor dependency updates and a test release for auto-tagging
+
 ## 1.4.1
 - Added `elementFor` to the exported `SymbolGenerator` that can be used to retrieve the analyzer `Element` that should be used when generating symbols
 - Fixed issue where the synthetic `values` field on `Enum` types was getting indexed (we just dont want to index this)
