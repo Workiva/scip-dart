@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   checks:
-    uses: Workiva/gha-dart-oss/.github/workflows/checks.yaml@v0.1.1
+    uses: Workiva/gha-dart-oss/.github/workflows/checks.yaml@v0.1.2
 
   sbom:
     runs-on: ubuntu-latest
