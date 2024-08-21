@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.4
+- Minor update to release CI
+
 ## 1.4.3
 - Updated the min dart version to `>=2.19 <3.0.0`, this is a pre-step to supporting dart 3
 
