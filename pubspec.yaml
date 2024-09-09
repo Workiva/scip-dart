@@ -19,7 +19,7 @@ dependencies:
 
 dev_dependencies:
   chalk: ^1.2.1
-  dart_dev: ^4.1.1
+  dart_dev: ^4.2.0
   dependency_validator: ^4.1.0
   glob: ^2.1.1
   workiva_analysis_options: ^1.4.1
