@@ -143,11 +143,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
         )) {
           final meta = getSymbolMetadata(element, offset, _analysisErrors);
           globalExternalSymbols.add(SymbolInformation(
-            symbol: symbol,
-            documentation: meta.documentation,
-            signatureDocumentation: meta.signatureDocumentation,
-            kind: symbolKindFor(element)
-          ));
+              symbol: symbol,
+              documentation: meta.documentation,
+              signatureDocumentation: meta.signatureDocumentation,
+              kind: symbolKindFor(element)));
         }
       }
     }

@@ -15,12 +15,14 @@ SymbolInformation_Kind symbolKindFor(Element element) {
     MethodElement: SymbolInformation_Kind.Method,
     FunctionElement: SymbolInformation_Kind.Function,
     TopLevelVariableElement: SymbolInformation_Kind.Variable,
-    PrefixElement: SymbolInformation_Kind.Namespace, // unsure if this is the right call for this
+    PrefixElement: SymbolInformation_Kind
+        .Namespace, // unsure if this is the right call for this
     TypeParameterElement: SymbolInformation_Kind.TypeParameter,
     ParameterElement: SymbolInformation_Kind.Parameter,
     PropertyAccessorElement: SymbolInformation_Kind.Property,
     FieldElement: SymbolInformation_Kind.Field,
   };
 
-  return mappings[element.runtimeType] ?? SymbolInformation_Kind.UnspecifiedKind;
+  return mappings[element.runtimeType] ??
+      SymbolInformation_Kind.UnspecifiedKind;
 }
