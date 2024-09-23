@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.5.0
+- Adds support for SymbolInformation.kind on the following symbols: class, enum, type alias, constructor, method, function, variable, parameter, property, and field.
+
 ## 1.4.4
 - Minor update to release CI
 
