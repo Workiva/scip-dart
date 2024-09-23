@@ -5,6 +5,7 @@ import 'package:analyzer/error/error.dart';
 import 'package:analyzer/source/line_info.dart';
 import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
+import 'package:scip_dart/src/kind_generator.dart';
 import 'package:scip_dart/src/metadata.dart';
 import 'package:scip_dart/src/gen/scip.pb.dart';
 import 'package:scip_dart/src/relationship_generator.dart';
@@ -142,10 +143,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
         )) {
           final meta = getSymbolMetadata(element, offset, _analysisErrors);
           globalExternalSymbols.add(SymbolInformation(
-            symbol: symbol,
-            documentation: meta.documentation,
-            signatureDocumentation: meta.signatureDocumentation,
-          ));
+              symbol: symbol,
+              documentation: meta.documentation,
+              signatureDocumentation: meta.signatureDocumentation,
+              kind: symbolKindFor(element)));
         }
       }
     }
@@ -170,6 +171,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
       documentation: meta.documentation,
       relationships: relationships,
       signatureDocumentation: meta.signatureDocumentation,
+      kind: symbolKindFor(element),
     ));
 
     occurrences.add(Occurrence(
