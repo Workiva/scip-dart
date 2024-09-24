@@ -13,15 +13,13 @@ SymbolInformation_Kind symbolKindFor(Element el) {
   if (el is ClassElement) {
     return SymbolInformation_Kind.Class;
   } else if (el is MixinElement) {
-    // Pending: https://github.com/sourcegraph/scip/pull/277
-    // return SymbolInformation_Kind.Mixin;
+    return SymbolInformation_Kind.Mixin;
   } else if (el is EnumElement) {
     return SymbolInformation_Kind.Enum;
   } else if (el is TypeAliasElement) {
     return SymbolInformation_Kind.TypeAlias;
   } else if (el is ExtensionElement) {
-    // Pending: https://github.com/sourcegraph/scip/pull/277
-    // return SymbolInformation_Kind.Extension;
+    return SymbolInformation_Kind.Extension;
   } else if (el is ConstructorElement) {
     return SymbolInformation_Kind.Constructor;
   } else if (el is MethodElement) {
