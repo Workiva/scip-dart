@@ -525,6 +525,7 @@ class SymbolInformation_Kind extends $pb.ProtobufEnum {
   static const SymbolInformation_Kind EnumMember = SymbolInformation_Kind._(12, _omitEnumNames ? '' : 'EnumMember');
   static const SymbolInformation_Kind Error = SymbolInformation_Kind._(63, _omitEnumNames ? '' : 'Error');
   static const SymbolInformation_Kind Event = SymbolInformation_Kind._(13, _omitEnumNames ? '' : 'Event');
+  static const SymbolInformation_Kind Extension = SymbolInformation_Kind._(84, _omitEnumNames ? '' : 'Extension');
   static const SymbolInformation_Kind Fact = SymbolInformation_Kind._(14, _omitEnumNames ? '' : 'Fact');
   static const SymbolInformation_Kind Field = SymbolInformation_Kind._(15, _omitEnumNames ? '' : 'Field');
   static const SymbolInformation_Kind File = SymbolInformation_Kind._(16, _omitEnumNames ? '' : 'File');
@@ -543,6 +544,7 @@ class SymbolInformation_Kind extends $pb.ProtobufEnum {
   static const SymbolInformation_Kind MethodReceiver = SymbolInformation_Kind._(27, _omitEnumNames ? '' : 'MethodReceiver');
   static const SymbolInformation_Kind MethodSpecification = SymbolInformation_Kind._(67, _omitEnumNames ? '' : 'MethodSpecification');
   static const SymbolInformation_Kind Message = SymbolInformation_Kind._(28, _omitEnumNames ? '' : 'Message');
+  static const SymbolInformation_Kind Mixin = SymbolInformation_Kind._(85, _omitEnumNames ? '' : 'Mixin');
   static const SymbolInformation_Kind Modifier = SymbolInformation_Kind._(65, _omitEnumNames ? '' : 'Modifier');
   static const SymbolInformation_Kind Module = SymbolInformation_Kind._(29, _omitEnumNames ? '' : 'Module');
   static const SymbolInformation_Kind Namespace = SymbolInformation_Kind._(30, _omitEnumNames ? '' : 'Namespace');
@@ -610,6 +612,7 @@ class SymbolInformation_Kind extends $pb.ProtobufEnum {
     EnumMember,
     Error,
     Event,
+    Extension,
     Fact,
     Field,
     File,
@@ -628,6 +631,7 @@ class SymbolInformation_Kind extends $pb.ProtobufEnum {
     MethodReceiver,
     MethodSpecification,
     Message,
+    Mixin,
     Modifier,
     Module,
     Namespace,
