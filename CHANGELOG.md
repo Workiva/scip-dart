@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.5.1
+- Adds support for missing SymbolInformation.kind on extension, mixin symbols
+
 ## 1.5.0
 - Adds support for SymbolInformation.kind on the following symbols: class, enum, type alias, constructor, method, function, variable, parameter, property, and field.
 
