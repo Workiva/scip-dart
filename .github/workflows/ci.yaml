@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install scip cli
         run: |
-          bash -c 'curl -L "https://github.com/sourcegraph/scip/releases/download/v0.3.3/scip-linux-amd64.tar.gz"' | tar xzf - scip
+          bash -c 'curl -L "https://github.com/sourcegraph/scip/releases/download/v0.5.0/scip-linux-amd64.tar.gz"' | tar xzf - scip
           ./scip --version
 
       - uses: dart-lang/setup-dart@v1

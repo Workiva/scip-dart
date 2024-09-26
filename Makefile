@@ -22,3 +22,8 @@ gen-proto:
 
 print:
 	scip print ./index.scip
+
+.PHONY: test
+test:
+	dart run scip_dart ./test
+	scip test ./test
