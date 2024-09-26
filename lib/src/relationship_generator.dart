@@ -36,19 +36,17 @@ List<Relationship>? relationshipsFor(
     if (parentElement == null) return null;
 
     late final String name;
-    if (node is MethodDeclaration) {
-      name = node.name.toString();
-    } else if (element is FieldElement) {
-      name = element.name;
-    } else if (element is PropertyAccessorElement) {
-      name = element.name;
+    if (element is PropertyAccessorElement) {
+      name = element.variable.name;
+    } else {
+      name = element.name.toString();
     }
 
     // retrieve all of the methods and accessors of every parent type that
     // has the same name of [node]. These are the elements that this [node]
     // are overriding
     final referencingElements = parentElement.allSupertypes
-        .map((type) => [...type.methods, ...type.accessors])
+        .map((type) => [...type.methods, ...type.accessors.map((a) => a.variable)])
         .expand((type) => type)
         .where((type) => type.name == name);
 

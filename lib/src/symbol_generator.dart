@@ -257,11 +257,18 @@ class SymbolGenerator {
 
     if (element is PropertyAccessorElement) {
       final parentName = element.enclosingElement.name;
+
+      var prefix = '';
+      if (element.isGetter) {
+        prefix = '<get>';
+      } else if (element.isSetter) {
+        prefix = '<set>';
+      }
+
       return [
         '$namespace/',
         if (parentName != null) '$parentName#',
-        if (element.isGetter) '`<get>${element.name}`.',
-        if (element.isSetter) '`<set>${element.name.replaceFirst('=', '')}`.',
+        '`$prefix${element.variable.name}`.',
       ].join();
     }
 

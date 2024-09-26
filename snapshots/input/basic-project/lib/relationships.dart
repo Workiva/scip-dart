@@ -1,5 +1,6 @@
 abstract class Mammal {
-  String get getter;
+  String get someGetter;
+  set someSetter(String v);
   String field = '';
 }
 
@@ -22,5 +23,8 @@ class Dog extends Animal with SwimAction {
   String sound() => 'woof';
 
   @override
-  String get getter => 'value';
+  String get someGetter => 'value';
+
+  @override
+  set someSetter(String v) {};
 }
