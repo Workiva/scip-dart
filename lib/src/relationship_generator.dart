@@ -27,13 +27,22 @@ List<Relationship>? relationshipsFor(
 
   // Since mixins do not support inheritance, we only care about
   // methods that exist on classes
-  if (node is MethodDeclaration && node.parent is ClassDeclaration) {
-    final parentNode = node.parent as ClassDeclaration?;
+  if (element is MethodElement || element is FieldElement || element is PropertyAccessorElement) {
+    final parentNode = node.thisOrAncestorOfType<ClassDeclaration>();
     final parentElement = parentNode?.declaredElement;
 
     // this shouldn't happen, but if the parent element happens to be
     // null, just fail fast
     if (parentElement == null) return null;
+
+    late final String name;
+    if (node is MethodDeclaration) {
+      name = node.name.toString();
+    } else if (element is FieldElement) {
+      name = element.name;
+    } else if (element is PropertyAccessorElement) {
+      name = element.name;
+    }
 
     // retrieve all of the methods and accessors of every parent type that
     // has the same name of [node]. These are the elements that this [node]
@@ -41,7 +50,7 @@ List<Relationship>? relationshipsFor(
     final referencingElements = parentElement.allSupertypes
         .map((type) => [...type.methods, ...type.accessors])
         .expand((type) => type)
-        .where((type) => type.name == node.name.toString());
+        .where((type) => type.name == name);
 
     if (referencingElements.isNotEmpty) {
       return referencingElements

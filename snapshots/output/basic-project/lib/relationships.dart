@@ -1,9 +1,12 @@
   abstract class Mammal {
 // definition scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/
 //               ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#
-    String get hierarchy;
+    String get getter;
 //  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
-//             ^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#hierarchy.
+//             ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#`<get>getter`.
+    String field = '';
+//  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
+//         ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#field.
   }
   
   abstract class Animal extends Mammal {
@@ -13,6 +16,13 @@
     String sound() => 'NOISE!';
 //  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
 //         ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Animal#sound().
+  
+    @override
+//   ^^^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`annotations.dart`/override.
+    String field = 'asdf';
+//  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
+//         ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Animal#field.
+//         relationship scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#`<get>field`. implementation reference
   }
   
   mixin SwimAction {
@@ -31,6 +41,14 @@
 //                              ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/SwimAction#
     @override
 //   ^^^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`annotations.dart`/override.
+    String field = 'otherVal';
+//  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
+//         ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Dog#field.
+//         relationship scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Animal#`<get>field`. implementation reference
+//         relationship scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#`<get>field`. implementation reference
+  
+    @override
+//   ^^^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`annotations.dart`/override.
     String sound() => 'woof';
 //  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
 //         ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Dog#sound().
@@ -38,8 +56,8 @@
   
     @override
 //   ^^^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`annotations.dart`/override.
-    String get hierarchy => 'dog.animal.mammal';
+    String get getter => 'value';
 //  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
-//             ^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Dog#hierarchy.
-//             relationship scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#hierarchy. implementation reference
+//             ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Dog#`<get>getter`.
+//             relationship scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#`<get>getter`. implementation reference
   }

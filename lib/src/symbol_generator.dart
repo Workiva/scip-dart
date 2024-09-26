@@ -260,7 +260,8 @@ class SymbolGenerator {
       return [
         '$namespace/',
         if (parentName != null) '$parentName#',
-        '${element.name}.'
+        if (element.isGetter) '`<get>${element.name}`.',
+        if (element.isSetter) '`<set>${element.name.replaceFirst('=', '')}`.',
       ].join();
     }
 
