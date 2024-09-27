@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.2
+- Improved support for getters/setters, utilizing `<get>`/`<set>` keywords within indexed symbols
+- Fixed relationship indexing for fields, getters, and setters
+
 ## 1.5.1
 - Adds support for missing SymbolInformation.kind on extension, mixin symbols
 
