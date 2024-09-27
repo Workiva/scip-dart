@@ -35,29 +35,31 @@ List<Relationship>? relationshipsFor(
     // null, just fail fast
     if (parentElement == null) return null;
 
-    late final String name;
-    if (element is PropertyAccessorElement) {
-      name = element.variable.name;
-    } else {
-      name = element.name.toString();
+    late final Iterable<Element> referencingElements;
+    if (element is MethodElement) {
+      referencingElements = parentElement.allSupertypes
+        .expand((type) => type.methods)
+        .where((type) => type.name == element.name);
+    } else if (element is FieldElement) {
+      referencingElements = parentElement.allSupertypes
+        .expand((type) => type.accessors)
+        .map((acc) => acc.variable)
+        .where((variable) => variable.name == element.name)
+        .toSet(); // remove any duplicates caused from synthetic getters/setters
+    } if (element is PropertyAccessorElement) {
+      referencingElements = parentElement.allSupertypes
+        .expand((type) => type.accessors)
+        .where((acc) => acc.isSetter == element.isSetter)
+        .where((acc) => acc.isGetter == element.isGetter)
+        .where((acc) => acc.variable.name == element.variable.name);
     }
 
-    // retrieve all of the methods and accessors of every parent type that
-    // has the same name of [node]. These are the elements that this [node]
-    // are overriding
-    final referencingElements = parentElement.allSupertypes
-        .map((type) => [...type.methods, ...type.accessors.map((a) => a.variable)])
-        .expand((type) => type)
-        .where((type) => type.name == name);
-
-    if (referencingElements.isNotEmpty) {
-      return referencingElements
-          .map((type) => Relationship(
-              symbol: symbolGenerator.symbolFor(type),
-              isImplementation: true,
-              isReference: true))
-          .toList();
-    }
+    return referencingElements
+        .map((type) => Relationship(
+            symbol: symbolGenerator.symbolFor(type),
+            isImplementation: true,
+            isReference: true))
+        .toList();
   }
 
   return null;

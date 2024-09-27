@@ -27,7 +27,6 @@
 //  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
 //         ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Animal#field.
 //         relationship scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#field. implementation reference
-//         relationship scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#field. implementation reference
   }
   
   mixin SwimAction {
@@ -50,8 +49,6 @@
 //  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
 //         ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Dog#field.
 //         relationship scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Animal#field. implementation reference
-//         relationship scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Animal#field. implementation reference
-//         relationship scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#field. implementation reference
 //         relationship scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#field. implementation reference
   
     @override
@@ -66,13 +63,13 @@
     String get someGetter => 'value';
 //  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
 //             ^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Dog#`<get>someGetter`.
-//             relationship scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#someGetter. implementation reference
+//             relationship scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#`<get>someGetter`. implementation reference
   
     @override
 //   ^^^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`annotations.dart`/override.
     set someSetter(String v) {};
 //      ^^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Dog#`<set>someSetter`.
-//      relationship scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#someSetter. implementation reference
+//      relationship scip-dart pub dart_test 1.0.0 lib/`relationships.dart`/Mammal#`<set>someSetter`. implementation reference
 //                 ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
 //                        ^ definition local 1
   }
