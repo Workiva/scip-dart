@@ -27,7 +27,9 @@ List<Relationship>? relationshipsFor(
 
   // Since mixins do not support inheritance, we only care about
   // methods that exist on classes
-  if (element is MethodElement || element is FieldElement || element is PropertyAccessorElement) {
+  if (element is MethodElement ||
+      element is FieldElement ||
+      element is PropertyAccessorElement) {
     final parentNode = node.thisOrAncestorOfType<ClassDeclaration>();
     final parentElement = parentNode?.declaredElement;
 
@@ -38,20 +40,21 @@ List<Relationship>? relationshipsFor(
     late final Iterable<Element> referencingElements;
     if (element is MethodElement) {
       referencingElements = parentElement.allSupertypes
-        .expand((type) => type.methods)
-        .where((type) => type.name == element.name);
+          .expand((type) => type.methods)
+          .where((type) => type.name == element.name);
     } else if (element is FieldElement) {
       referencingElements = parentElement.allSupertypes
-        .expand((type) => type.accessors)
-        .map((acc) => acc.variable)
-        .where((variable) => variable.name == element.name)
-        .toSet(); // remove any duplicates caused from synthetic getters/setters
-    } if (element is PropertyAccessorElement) {
+          .expand((type) => type.accessors)
+          .map((acc) => acc.variable)
+          .where((variable) => variable.name == element.name)
+          .toSet(); // remove any duplicates caused from synthetic getters/setters
+    }
+    if (element is PropertyAccessorElement) {
       referencingElements = parentElement.allSupertypes
-        .expand((type) => type.accessors)
-        .where((acc) => acc.isSetter == element.isSetter)
-        .where((acc) => acc.isGetter == element.isGetter)
-        .where((acc) => acc.variable.name == element.variable.name);
+          .expand((type) => type.accessors)
+          .where((acc) => acc.isSetter == element.isSetter)
+          .where((acc) => acc.isGetter == element.isGetter)
+          .where((acc) => acc.variable.name == element.variable.name);
     }
 
     return referencingElements
