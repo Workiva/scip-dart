@@ -41,3 +41,12 @@ extension LineInfoExtension on LineInfo {
     ];
   }
 }
+
+/// Removes single or double quotes from a string if they exist
+String stripQuotes(String input) {
+  // check if input is wrapped in quotes. If it is, remove them
+  if (input.startsWith('"') && input.endsWith('"') || input.startsWith("'") && input.endsWith("'")) {
+    return input.substring(1, input.length -1);
+  }
+  return input;
+}

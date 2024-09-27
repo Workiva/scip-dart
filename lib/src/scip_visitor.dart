@@ -36,7 +36,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
           packageConfig,
           pubspec,
         ) {
-    final fileSymbol = _symbolGenerator.fileSymbolFor(_relativePath);
+    final fileSymbol = _symbolGenerator.symbolForFile(_relativePath);
     occurrences.add(Occurrence(
       symbol: fileSymbol,
       range: [0, 0, 0],
@@ -57,6 +57,8 @@ class ScipVisitor extends GeneralizingAstVisitor {
       _visitNormalFormalParameter(node);
     } else if (node is SimpleIdentifier) {
       _visitSimpleIdentifier(node);
+    } else if (node is Directive) {
+      _visitDirective(node);
     }
 
     super.visitNode(node);
@@ -112,6 +114,27 @@ class ScipVisitor extends GeneralizingAstVisitor {
         offset: node.offset,
         length: node.name.length,
       );
+    }
+  }
+
+  void _visitDirective(Directive node) {
+    final element = node.element!;
+
+    StringLiteral uriLiteral;
+    if (node is UriBasedDirective) {
+      uriLiteral = node.uri;
+    } else if (node is PartOfDirective && node.uri != null) {
+      uriLiteral = node.uri!;
+    } else {
+      return;
+    }
+
+    final symbol = _symbolGenerator.symbolForDirective(node, element);
+    if (symbol != null) {
+       occurrences.add(Occurrence(
+        range: _lineInfo.getRange(uriLiteral.offset, uriLiteral.length),
+        symbol: symbol,
+      ));
     }
   }
 
