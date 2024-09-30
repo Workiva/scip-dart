@@ -93,10 +93,10 @@ packages:
     dependency: "direct dev"
     description:
       name: dependency_validator
-      sha256: "16906f2137a312d0ffe754aee156436563a63d6ab7faaded83d401b5385d5d35"
+      sha256: "81b5dc4cc34a1c05d2fa24aa8d658cb8f048ca23e63d5aaec420200190f1c4b0"
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.0"
+    version: "4.1.1"
   file:
     dependency: transitive
     description:
