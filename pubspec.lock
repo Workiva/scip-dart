@@ -85,10 +85,10 @@ packages:
     dependency: "direct dev"
     description:
       name: dart_dev
-      sha256: "08242d23f0e4e754d979e903a6e8f4e377b8e2764d8fe350bce335e3fdb5a82e"
+      sha256: "7b867857c016721705603c616ed12983b3d1ffa06e122869012963fc98ecd281"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.0"
+    version: "4.2.2"
   dependency_validator:
     dependency: "direct dev"
     description:
