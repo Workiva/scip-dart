@@ -245,10 +245,10 @@ packages:
     dependency: "direct dev"
     description:
       name: workiva_analysis_options
-      sha256: be5aa4af270a6378743b85179594b31791019da2469b05ae21207a97c31ecb7a
+      sha256: "0a3c7880dfa23aa24ca8dcefe9906c5dccadb4cbd5ce8e9a98f8d83a877a2fa7"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.2"
+    version: "1.4.3"
   yaml:
     dependency: transitive
     description:
