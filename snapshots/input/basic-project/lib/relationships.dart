@@ -26,5 +26,5 @@ class Dog extends Animal with SwimAction {
   String get someGetter => 'value';
 
   @override
-  set someSetter(String v) {};
+  set someSetter(String v) => print(v);
 }

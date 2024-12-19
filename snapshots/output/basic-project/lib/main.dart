@@ -95,7 +95,7 @@
 //                  ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
 //                      ^^^^^ definition local 5
     Foo(1, value: true, value2: '');
-//  ^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#
+//  ^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().
 //         ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().(value)
 //                      ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().(value2)
   }

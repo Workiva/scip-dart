@@ -36,6 +36,8 @@ class Animal with SleepMixin {
     }
   }
 
+  factory Animal.cat() => Animal('Timmy', type: AnimalType.cat);
+
   void makeSound() {
     soundMaker?.call();
   }
@@ -54,16 +56,19 @@ void main() {
   List<int> numbers = [1, 2, 3, 4, 5];
   int sum = calculateSum(numbers);
 
-  Animal cat = Animal('Kitty', type: AnimalType.cat);
+  Animal bird = Animal('Kitty', type: AnimalType.bird);
   Animal dog = Animal('Buddy', type: AnimalType.dog);
+  Animal cat = Animal.cat();
 
-  cat.makeSound();
-  cat.sleep();
+  bird.makeSound();
+  bird.sleep();
 
   dog.makeSound();
   dog.sleep();
 
-  print(cat);
+  cat.makeSound();
+
+  print(bird);
   print(dog);
   print('The sum of $numbers is $sum');
 
