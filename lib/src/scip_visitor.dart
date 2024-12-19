@@ -109,9 +109,6 @@ class ScipVisitor extends GeneralizingAstVisitor {
     final element = _symbolGenerator.elementFor(node);
     if (element == null) return;
 
-    // print('$node - ${node.runtimeType} - ${node.offset} - ${element.runtimeType}');
-    print('${node.parent} - ${node.parent!.parent.runtimeType}');
-
     if (node.inDeclarationContext()) {
       _registerAsDefinition(element, node);
     } else {

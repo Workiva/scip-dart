@@ -40,40 +40,19 @@
   
     Animal(this.name, {required this.type}) {
 //  ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#`<constructor>`().
-//  ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#
-//              ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#name.
-//                                   ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#type.
-//                                   ^^^^ definition scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#`<constructor>`().(type)
       print(AnimalType.values);
-//    ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
-//          ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#
       switch (type) {
-//            ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#type.
         case AnimalType.cat:
-//           ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#
-//                      ^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#cat.
           soundMaker = () => print('Meow!');
-//        ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#soundMaker.
-//                           ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
           break;
         case AnimalType.dog:
-//           ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#
-//                      ^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#dog.
           soundMaker = () => print('Woof!');
-//        ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#soundMaker.
-//                           ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
           break;
         case AnimalType.bird:
-//           ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#
-//                      ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#bird.
           soundMaker = () => print('Chirp!');
-//        ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#soundMaker.
-//                           ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
           break;
         default:
           soundMaker = () => print('Unknown animal type');
-//        ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#soundMaker.
-//                           ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
       }
     }
   
@@ -125,14 +104,14 @@
     Animal cat = Animal('Kitty', type: AnimalType.cat);
 //  ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#
 //         ^^^ definition local 5
-//               ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#
+//               ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#`<constructor>`().
 //                               ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#`<constructor>`().(type)
 //                                     ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#
 //                                                ^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#cat.
     Animal dog = Animal('Buddy', type: AnimalType.dog);
 //  ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#
 //         ^^^ definition local 6
-//               ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#
+//               ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#`<constructor>`().
 //                               ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#`<constructor>`().(type)
 //                                     ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#
 //                                                ^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#dog.
@@ -164,8 +143,8 @@
   
     print(math.Rectangle(1,2,3,4));
 //  ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
-//        ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/math.
-//             ^^^^^^^^^ reference scip-dart pub dart:math 2.19.0 dart:math/`rectangle.dart`/Rectangle#
+//        ^^^^ reference scip-dart pub dart:math 2.19.0 dart:math/`rectangle.dart`/Rectangle#`<constructor>`().
+//             ^^^^^^^^^ reference scip-dart pub dart:math 2.19.0 dart:math/`rectangle.dart`/Rectangle#`<constructor>`().
   
     [1,2].reduce((a, b) => a + b);
 //        ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`iterable.dart`/Iterable#reduce().
