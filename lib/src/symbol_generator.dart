@@ -44,6 +44,13 @@ class SymbolGenerator {
     } else if (node is SimpleIdentifier) {
       var element = node.staticElement;
 
+      // A SimpleIdentifier with a direct parent of a ConstructorDeclaration
+      // is the reference to the class itself. In scip, we want to ignore
+      // this as the constructor has its own definition, and only that
+      if (node.parent is ConstructorDeclaration) {
+        return null;
+      }
+
       // if we're nested under a ConstructorName identifier, use the constructor
       // as the element to annotate instead of the reference to the Class
       final parentConstructor = node.thisOrAncestorOfType<ConstructorName>();

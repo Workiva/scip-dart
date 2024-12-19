@@ -53,12 +53,6 @@ class ScipVisitor extends GeneralizingAstVisitor {
     // to correctly parse all [Declaration] ast nodes.
     if (node is Declaration) {
       _visitDeclaration(node);
-
-      // A constructor's ast has a reference to the class declaration in its children
-      // we only want to mark the direct constructor for this, and skip the child
-      // reference. Stop cascading into children in this case
-      if (node is ConstructorDeclaration) return;
-
     } else if (node is NormalFormalParameter) {
       _visitNormalFormalParameter(node);
     } else if (node is SimpleIdentifier) {
