@@ -44,6 +44,13 @@ class SymbolGenerator {
     } else if (node is SimpleIdentifier) {
       var element = node.staticElement;
 
+      // if we're nested under a ConstructorName identifier, use the constructor
+      // as the element to annotate instead of the reference to the Class
+      final parentConstructor = node.thisOrAncestorOfType<ConstructorName>();
+      if (parentConstructor != null) {
+        return parentConstructor.staticElement;
+      }
+
       // Both `.loadLibrary()`, and `.call()` are synthetic functions that
       // have no definition. These should therefore should not be indexed.
       if (element is FunctionElement && element.isSynthetic) {
