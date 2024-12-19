@@ -55,18 +55,23 @@ class SymbolGenerator {
       // as the element to annotate instead of the reference to the Class
       final parentConstructor = node.thisOrAncestorOfType<ConstructorName>();
       if (parentConstructor != null) {
-        // ConstructorNames can also include a PrefixIdentifier: `math.Rectangle()`
-        // both 'math' and 'Rectangle' are simple identifiers. We only want
-        // the constructor element fo 'Rectangle' in this case
+
+        // ConstructorNames can also include an import PrefixIdentifier: `math.Rectangle()`
+        // both 'math' and 'Rectangle' are SimpleIdentifiers. We only want the constructor
+        // element fo 'Rectangle' in this case
         final parentPrefixIdentifier = node.thisOrAncestorOfType<PrefixedIdentifier>();
-        if (parentPrefixIdentifier != null) {
-          if (parentPrefixIdentifier.identifier == node) {
-            return parentConstructor.staticElement;
-          }
+        if (parentPrefixIdentifier?.prefix == node) return element;
+
+        // Constructors can be named: `Foo.bar()`, both `Foo` and `bar` are SimpleIdentifiers
+        // When the constructor is named, 'bar' is the constructor reference and `Foo` should
+        // reference the class 
+        if (parentConstructor.name == node) {
+          return parentConstructor.staticElement;
+        } if (parentConstructor.name != null) {
           return element;
         }
         
-        // Otherwise, element is just `Rectangle()`, so simply return the
+        // Otherwise, constructor is just `Foo()`, so simply return the
         // constructor's element
         return parentConstructor.staticElement;
       }

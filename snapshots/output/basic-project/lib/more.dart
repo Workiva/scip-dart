@@ -145,7 +145,7 @@
     Animal cat = Animal.cat();
 //  ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#
 //         ^^^ definition local 7
-//               ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#cat().
+//               ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#
 //                      ^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#cat().
   
     bird.makeSound();
