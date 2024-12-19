@@ -76,6 +76,13 @@
       }
     }
   
+    factory Animal.cat() => Animal('Timmy', type: AnimalType.cat);
+//                 ^^^ definition scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#cat().
+//                          ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#`<constructor>`().
+//                                          ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#`<constructor>`().(type)
+//                                                ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#
+//                                                           ^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#cat.
+  
     void makeSound() {
 //       ^^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#makeSound().
       soundMaker?.call();
@@ -121,13 +128,13 @@
 //            ^^^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/calculateSum().
 //                         ^^^^^^^ reference local 3
   
-    Animal cat = Animal('Kitty', type: AnimalType.cat);
+    Animal bird = Animal('Kitty', type: AnimalType.bird);
 //  ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#
-//         ^^^ definition local 5
-//               ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#`<constructor>`().
-//                               ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#`<constructor>`().(type)
-//                                     ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#
-//                                                ^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#cat.
+//         ^^^^ definition local 5
+//                ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#`<constructor>`().
+//                                ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#`<constructor>`().(type)
+//                                      ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#
+//                                                 ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#bird.
     Animal dog = Animal('Buddy', type: AnimalType.dog);
 //  ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#
 //         ^^^ definition local 6
@@ -135,13 +142,18 @@
 //                               ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#`<constructor>`().(type)
 //                                     ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#
 //                                                ^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#dog.
+    Animal cat = Animal.cat();
+//  ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#
+//         ^^^ definition local 7
+//               ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#cat().
+//                      ^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#cat().
   
-    cat.makeSound();
-//  ^^^ reference local 5
-//      ^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#makeSound().
-    cat.sleep();
-//  ^^^ reference local 5
-//      ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/SleepMixin#sleep().
+    bird.makeSound();
+//  ^^^^ reference local 5
+//       ^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#makeSound().
+    bird.sleep();
+//  ^^^^ reference local 5
+//       ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/SleepMixin#sleep().
   
     dog.makeSound();
 //  ^^^ reference local 6
@@ -150,9 +162,13 @@
 //  ^^^ reference local 6
 //      ^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/SleepMixin#sleep().
   
-    print(cat);
+    cat.makeSound();
+//  ^^^ reference local 7
+//      ^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#makeSound().
+  
+    print(bird);
 //  ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
-//        ^^^ reference local 5
+//        ^^^^ reference local 5
     print(dog);
 //  ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
 //        ^^^ reference local 6
@@ -163,24 +179,24 @@
   
     print(math.Rectangle(1,2,3,4));
 //  ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
-//        ^^^^ reference scip-dart pub dart:math 2.19.0 dart:math/`rectangle.dart`/Rectangle#`<constructor>`().
+//        ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/math.
 //             ^^^^^^^^^ reference scip-dart pub dart:math 2.19.0 dart:math/`rectangle.dart`/Rectangle#`<constructor>`().
   
     [1,2].reduce((a, b) => a + b);
 //        ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`iterable.dart`/Iterable#reduce().
-//                ^ definition local 7
-//                   ^ definition local 8
-//                         ^ reference local 7
-//                             ^ reference local 8
+//                ^ definition local 8
+//                   ^ definition local 9
+//                         ^ reference local 8
+//                             ^ reference local 9
   }
   
   void test(String Function(int) p) {}
 //     ^^^^ definition scip-dart pub dart_test 1.0.0 lib/`more.dart`/test().
 //          ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
 //                          ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
-//                               ^ definition local 9
+//                               ^ definition local 10
   void deepTest(String Function(void Function(String test)) p) {}
 //     ^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`more.dart`/deepTest().
 //              ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
 //                                            ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
-//                                                          ^ definition local 10
+//                                                          ^ definition local 11
