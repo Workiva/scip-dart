@@ -45,8 +45,7 @@ class SymbolGenerator {
       var element = node.staticElement;
 
       // A SimpleIdentifier with a direct parent of a ConstructorDeclaration
-      // is the reference to the class itself. In scip, we want to ignore
-      // this as the constructor has its own definition, and only that
+      // is the reference to the class itself. Skip this declaration
       if (node.parent is ConstructorDeclaration) {
         return null;
       }
@@ -57,7 +56,7 @@ class SymbolGenerator {
       if (parentConstructor != null) {
         // ConstructorNames can also include an import PrefixIdentifier: `math.Rectangle()`
         // both 'math' and 'Rectangle' are SimpleIdentifiers. We only want the constructor
-        // element fo 'Rectangle' in this case
+        // element for 'Rectangle' in this case
         final parentPrefixIdentifier =
             node.thisOrAncestorOfType<PrefixedIdentifier>();
         if (parentPrefixIdentifier?.prefix == node) return element;
