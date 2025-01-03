@@ -44,6 +44,37 @@ class SymbolGenerator {
     } else if (node is SimpleIdentifier) {
       var element = node.staticElement;
 
+      // A SimpleIdentifier with a direct parent of a ConstructorDeclaration
+      // is the reference to the class itself. Skip this declaration
+      if (node.parent is ConstructorDeclaration) {
+        return null;
+      }
+
+      // if we're nested under a ConstructorName identifier, use the constructor
+      // as the element to annotate instead of the reference to the Class
+      final parentConstructor = node.thisOrAncestorOfType<ConstructorName>();
+      if (parentConstructor != null) {
+        // ConstructorNames can also include an import PrefixIdentifier: `math.Rectangle()`
+        // both 'math' and 'Rectangle' are SimpleIdentifiers. We only want the constructor
+        // element for 'Rectangle' in this case
+        final parentPrefixIdentifier =
+            node.thisOrAncestorOfType<PrefixedIdentifier>();
+        if (parentPrefixIdentifier?.prefix == node) return element;
+
+        // Constructors can be named: `Foo.bar()`, both `Foo` and `bar` are SimpleIdentifiers
+        // When the constructor is named, 'bar' is the constructor reference and `Foo` should
+        // reference the class
+        if (parentConstructor.name == node) {
+          return parentConstructor.staticElement;
+        } else if (parentConstructor.name != null) {
+          return element;
+        }
+
+        // Otherwise, constructor is just `Foo()`, so simply return the
+        // constructor's element
+        return parentConstructor.staticElement;
+      }
+
       // Both `.loadLibrary()`, and `.call()` are synthetic functions that
       // have no definition. These should therefore should not be indexed.
       if (element is FunctionElement && element.isSynthetic) {
