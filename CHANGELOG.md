@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.4
+- Fixed a bug where constructor references weren't correctly indexed
+
+## 1.5.3
+- Dependency bumps
+
 ## 1.5.2
 - Improved support for getters/setters, utilizing `<get>`/`<set>` keywords within indexed symbols
 - Fixed relationship indexing for fields, getters, and setters
