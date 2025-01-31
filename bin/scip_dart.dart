@@ -10,6 +10,13 @@ import 'package:scip_dart/src/version.dart';
 
 Future<void> main(List<String> args) async {
   final result = (ArgParser()
+        ..addOption(
+          'output',
+          abbr: 'o',
+          defaultsTo: 'index.scip',
+          help:
+              'The output file to write the index to. Use "-" to write to stdout',
+        )
         ..addFlag(
           'performance',
           aliases: ['perf'],
@@ -71,5 +78,10 @@ Future<void> main(List<String> args) async {
 
   final index = await indexPackage(packageRoot, packageConfig, pubspec);
 
-  File('index.scip').writeAsBytesSync(index.writeToBuffer());
+  if (result['output'] as String == '-') {
+    stdout.add(index.writeToBuffer());
+    stdout.flush();
+  } else {
+    File(result['output'] as String).writeAsBytesSync(index.writeToBuffer());
+  }
 }
