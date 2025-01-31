@@ -78,7 +78,6 @@ Future<void> main(List<String> args) async {
 
   final index = await indexPackage(packageRoot, packageConfig, pubspec);
 
-  print(result['output']);
   if (result['output'] as String == '-') {
     stdout.add(index.writeToBuffer());
     stdout.flush();
