@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.0
+- Added `--output` flag to configure output location of the generated index file 
+
 ## 1.5.4
 - Fixed a bug where constructor references weren't correctly indexed
 
