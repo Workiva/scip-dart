@@ -1,0 +1,11 @@
+  name: dart_test
+// reference scip-dart pub dart_test 1.0.0 `pubspec.yaml`/
+  version: 1.0.0
+  
+  environment:
+    sdk: '>=2.19.0 <3.0.0'
+  
+  
+  dependencies:
+    pubspec_lock_parse: ^2.0.2
+//  ^^^^^^^^^^^^^^^^^^ reference scip-dart pub pubspec_lock_parse 2.2.0 `pubspec.yaml`/

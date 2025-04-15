@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
+import 'package:pubspec_lock_parse/pubspec_lock_parse.dart';
 import 'package:scip_dart/scip_dart.dart';
 import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
@@ -74,9 +75,18 @@ Future<void> main(List<String> args) async {
     stderr.writeln('ERROR: Unable to locate pubspec.yaml');
     exit(1);
   }
-  final pubspec = Pubspec.parse(pubspecFile.readAsStringSync());
+  final pubspecStr = pubspecFile.readAsStringSync();
+  final pubspec = Pubspec.parse(pubspecStr);
 
-  final index = await indexPackage(packageRoot, packageConfig, pubspec);
+  final pubspecLockFile = File(p.join(packageRoot, 'pubspec.lock'));
+   if (!pubspecLockFile.existsSync()) {
+    stderr.writeln('ERROR: Unable to locate pubspec.lock. Have you ran pub get?');
+    exit(1);
+  }
+  final pubspecLock = PubspecLock.parse(pubspecLockFile.readAsStringSync());
+
+
+  final index = await indexPackage(packageRoot, packageConfig, pubspec, pubspecStr, pubspecLock);
 
   if (result['output'] as String == '-') {
     stdout.add(index.writeToBuffer());

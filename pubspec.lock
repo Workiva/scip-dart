@@ -185,6 +185,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  pubspec_lock_parse:
+    dependency: "direct main"
+    description:
+      name: pubspec_lock_parse
+      sha256: "020cb470287124c936c30ebfc2f927b287f275b7bf7fc2ab11577e592c017764"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   pubspec_parse:
     dependency: "direct main"
     description:
@@ -193,6 +201,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  pubspec_writer_extensions:
+    dependency: "direct main"
+    description:
+      name: pubspec_writer_extensions
+      sha256: b6a581f8198c3af726ea9d640009d97894262f2cf047589522626375bde21aa4
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   source_span:
     dependency: transitive
     description:
@@ -257,5 +273,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
+  yaml_writer:
+    dependency: "direct main"
+    description:
+      name: yaml_writer
+      sha256: "76740047e3d4b1687c588bc8cb3466bea55a7d915a91bb23e99ea2a8c58337b6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
 sdks:
   dart: ">=2.19.0 <3.0.0"
