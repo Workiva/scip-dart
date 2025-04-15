@@ -6,6 +6,18 @@ import 'package:scip_dart/src/utils.dart';
 
 import 'gen/scip.pb.dart';
 
+/// Generates a scip document representation of a pubspec.yaml file. Output
+/// specification looks like the following:
+/// 
+/// ```yaml
+/// # scip-dart pub foo_pkg 1.0.0 `pubspec.yaml`/
+///  name: foo_pkg
+///  version: 1.0.0
+///  
+///  dependencies:
+///    some_pkg: ^1.0.5
+/// #  ^^^^^^^^ scip-dart pub some_pkg 1.5.6 `pubspec.yaml`/
+/// ```
 Document indexPubspec({
   required Pubspec pubspec, 
   required String pubspecStr, 
