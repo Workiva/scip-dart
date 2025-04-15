@@ -44,7 +44,7 @@ extension LineInfoExtension on LineInfo {
 }
 
 String? getYamlSection(
-  String str, 
+  String str,
   Pattern startRegex, {
   bool skipMatchedLine = false,
 }) {
@@ -70,8 +70,8 @@ String? getYamlSection(
       .toList();
 
   return [if (!skipMatchedLine) sectionKeyLine, ...inSectionLines]
-    .where((line) => line.trim().isNotEmpty)
-    .join('\n');
+      .where((line) => line.trim().isNotEmpty)
+      .join('\n');
 }
 
 int getYamlIndentSize(String str) {

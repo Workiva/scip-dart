@@ -17,8 +17,7 @@ dependencies:
   protobuf: ^3.1.0
   pubspec_parse: ^1.2.1
   pubspec_lock_parse: ^2.2.0
-  pubspec_writer_extensions: ^1.0.0
-  yaml_writer: ^1.0.3
+  collection: ^1.18.0
 
 dev_dependencies:
   chalk: ^1.2.1

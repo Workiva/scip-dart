@@ -20,8 +20,8 @@ Future<void> main(List<String> args) async {
               'The output file to write the index to. Use "-" to write to stdout',
         )
         ..addFlag(
-          'index-pubspec', 
-          defaultsTo: false, 
+          'index-pubspec',
+          defaultsTo: false,
           help: 'Whether or not to index the pubspec.yaml file',
         )
         ..addFlag(
@@ -84,13 +84,13 @@ Future<void> main(List<String> args) async {
   final pubspecStr = pubspecFile.readAsStringSync();
   final pubspec = Pubspec.parse(pubspecStr);
 
-  
   final index = await indexPackage(packageRoot, packageConfig, pubspec);
 
   if (result['index-pubspec'] as bool) {
     final pubspecLockFile = File(p.join(packageRoot, 'pubspec.lock'));
     if (!pubspecLockFile.existsSync()) {
-      stderr.writeln('ERROR: Unable to locate pubspec.lock. Have you ran pub get?');
+      stderr.writeln(
+          'ERROR: Unable to locate pubspec.lock. Have you ran pub get?');
       exit(1);
     }
     final pubspecLock = PubspecLock.parse(pubspecLockFile.readAsStringSync());
