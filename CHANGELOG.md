@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.1
+- Added a default disabled flag for indexing pubspec.yaml files `--index-pubspec`. 
+
 ## 1.6.0
 - Added `--output` flag to configure output location of the generated index file 
 
