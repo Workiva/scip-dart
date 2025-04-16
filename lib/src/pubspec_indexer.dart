@@ -28,7 +28,7 @@ Document indexPubspec({
     'scip-dart',
     'pub',
     pubspec.name,
-    pubspec.version!,
+    pubspec.version ?? '*',
     '`pubspec.yaml`/',
   ].join(' ');
 
