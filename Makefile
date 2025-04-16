@@ -1,8 +1,8 @@
 regen-snapshots:
-	dart run scip_dart ./snapshots/input/basic-project
+	dart run scip_dart ./snapshots/input/basic-project --index-pubspec
 	scip snapshot --to ./snapshots/output/basic-project
 
-	dart run scip_dart ./snapshots/input/diagnostics
+	dart run scip_dart ./snapshots/input/diagnostics --index-pubspec
 	scip snapshot --to ./snapshots/output/diagnostics
 
 run:

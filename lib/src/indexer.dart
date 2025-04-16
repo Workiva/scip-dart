@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:path/path.dart' as p;
@@ -18,17 +16,6 @@ Future<Index> indexPackage(
   Pubspec pubspec,
 ) async {
   final dirPath = p.normalize(p.absolute(root));
-
-  final rootHasPubspecFile = await File(
-    p.join(dirPath, 'pubspec.yaml'),
-  ).exists();
-  if (!rootHasPubspecFile) {
-    stderr.writeln(
-      'Provided path does not contain a pubspec.yaml file. '
-      'Unable to index',
-    );
-    exit(1);
-  }
 
   final metadata = Metadata(
     projectRoot: Uri.file(dirPath).toString(),
