@@ -36,6 +36,7 @@ Document indexPubspec({
     symbols.add(info);
     occurrences.add(Occurrence(
       symbol: info.symbol,
+      symbolRoles: SymbolRole.Definition.value,
       range: [0, 0, 0],
     ));
   }
