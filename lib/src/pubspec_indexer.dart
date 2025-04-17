@@ -34,7 +34,10 @@ Document indexPubspec({
   if (pubspec.publishTo != 'none') {
     final info = _buildFileSymbol(pubspec);
     symbols.add(info);
-    occurrences.add(Occurrence(symbol: info.symbol, range: [0, 0, 0],));
+    occurrences.add(Occurrence(
+      symbol: info.symbol,
+      range: [0, 0, 0],
+    ));
   }
 
   final deps = {
