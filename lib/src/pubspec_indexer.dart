@@ -24,30 +24,18 @@ Document indexPubspec({
 }) {
   final pubspecLineInfo = LineInfo.fromContent(pubspecStr);
 
-  final fileSymbol = [
-    'scip-dart',
-    'pub',
-    pubspec.name,
-    pubspec.version ?? '*',
-    '`pubspec.yaml`/',
-  ].join(' ');
+  final symbols = <SymbolInformation>[];
+  final occurrences = <Occurrence>[];
 
-  final symbols = <SymbolInformation>[
-    SymbolInformation(
-        symbol: fileSymbol,
-        kind: SymbolInformation_Kind
-            .UnspecifiedKind, // TODO: Add SymbolInformation_Kind.Dependency
-        signatureDocumentation: Document(
-            language: Language.YAML.name,
-            text: ['name: ${pubspec.name}', 'version: ${pubspec.version}']
-                .join('\n')))
-  ];
-  final occurrences = <Occurrence>[
-    Occurrence(
-      symbol: fileSymbol,
-      range: [0, 0, 0],
-    )
-  ];
+  // a 'none' publishTo implies that the pubspec.yaml file (and project) are not
+  // actually published to a pub server, and only used for testing. We still want
+  // to index the dependencies in this case, but avoid creating the file symbol
+  // to reduce duplicate packages names
+  if (pubspec.publishTo != 'none') {
+    final info = _buildFileSymbol(pubspec);
+    symbols.add(info);
+    occurrences.add(Occurrence(symbol: info.symbol, range: [0, 0, 0],));
+  }
 
   final deps = {
     DependencyKind.regular: pubspec.dependencies,
@@ -73,6 +61,29 @@ Document indexPubspec({
   );
 }
 
+SymbolInformation _buildFileSymbol(Pubspec pubspec) {
+  final symbol = [
+    'scip-dart',
+    'pub',
+    pubspec.name,
+    pubspec.version ?? '*',
+    '`pubspec.yaml`/',
+  ].join(' ');
+
+  return SymbolInformation(
+    symbol: symbol,
+    kind: SymbolInformation_Kind
+        .UnspecifiedKind, // TODO: Add SymbolInformation_Kind.Dependency
+    signatureDocumentation: Document(
+      language: Language.YAML.name,
+      text: [
+        'name: ${pubspec.name}',
+        'version: ${pubspec.version}',
+      ].join('\n'),
+    ),
+  );
+}
+
 SymbolInformation _buildSymbol(String depName, PubspecLock lock) {
   final depVersion = lock.packages[depName]?.version.toString();
   if (depVersion == null) {
@@ -80,23 +91,27 @@ SymbolInformation _buildSymbol(String depName, PubspecLock lock) {
         'Unable to find ${depName} in pubspec.lock. Have you ran pub get?');
   }
 
+  final symbol = [
+    'scip-dart',
+    'pub',
+    depName,
+    depVersion,
+    '`pubspec.yaml`/',
+  ].join(' ');
+
   return SymbolInformation(
-      displayName: depName,
-      symbol: [
-        'scip-dart',
-        'pub',
-        depName,
-        depVersion,
-        '`pubspec.yaml`/',
-      ].join(' '),
-      kind: SymbolInformation_Kind
-          .UnspecifiedKind, // TODO: Add SymbolInformation_Kind.Dependency and SymbolInformation_Kind.DevDependency
-      signatureDocumentation: Document(
-          language: Language.YAML.name,
-          text: [
-            'name: $depName',
-            'version: $depVersion',
-          ].join('\n')));
+    displayName: depName,
+    symbol: symbol,
+    kind: SymbolInformation_Kind
+        .UnspecifiedKind, // TODO: Add SymbolInformation_Kind.Dependency and SymbolInformation_Kind.DevDependency
+    signatureDocumentation: Document(
+      language: Language.YAML.name,
+      text: [
+        'name: $depName',
+        'version: $depVersion',
+      ].join('\n'),
+    ),
+  );
 }
 
 enum DependencyKind {
