@@ -43,5 +43,5 @@ class SomeLocalClass {}
 /// Reference external class: [Foo]
 /// Missing Reference: [IDontExist]
 void someFunction(int value) {
-  Foo(1);
+  Foo(1, value: true, value2: '');
 }

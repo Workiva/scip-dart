@@ -1,9 +1,14 @@
 abstract class Mammal {
-  String get hierarchy;
+  String get someGetter;
+  set someSetter(String v);
+  String field = '';
 }
 
 abstract class Animal extends Mammal {
   String sound() => 'NOISE!';
+
+  @override
+  String field = 'asdf';
 }
 
 mixin SwimAction {
@@ -12,8 +17,14 @@ mixin SwimAction {
 
 class Dog extends Animal with SwimAction {
   @override
+  String field = 'otherVal';
+
+  @override
   String sound() => 'woof';
 
   @override
-  String get hierarchy => 'dog.animal.mammal';
+  String get someGetter => 'value';
+
+  @override
+  set someSetter(String v) => print(v);
 }
