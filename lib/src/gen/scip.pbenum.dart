@@ -1,16 +1,20 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: lib/src/gen/scip.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
-// ignore_for_file: UNDEFINED_SHOWN_NAME
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+
 import 'dart:core' as $core;
+
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class ProtocolVersion extends $pb.ProtobufEnum {
-  static const ProtocolVersion UnspecifiedProtocolVersion = ProtocolVersion._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UnspecifiedProtocolVersion');
+  static const ProtocolVersion UnspecifiedProtocolVersion = ProtocolVersion._(0, _omitEnumNames ? '' : 'UnspecifiedProtocolVersion');
 
   static const $core.List<ProtocolVersion> values = <ProtocolVersion> [
     UnspecifiedProtocolVersion,
@@ -23,9 +27,9 @@ class ProtocolVersion extends $pb.ProtobufEnum {
 }
 
 class TextEncoding extends $pb.ProtobufEnum {
-  static const TextEncoding UnspecifiedTextEncoding = TextEncoding._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UnspecifiedTextEncoding');
-  static const TextEncoding UTF8 = TextEncoding._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UTF8');
-  static const TextEncoding UTF16 = TextEncoding._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UTF16');
+  static const TextEncoding UnspecifiedTextEncoding = TextEncoding._(0, _omitEnumNames ? '' : 'UnspecifiedTextEncoding');
+  static const TextEncoding UTF8 = TextEncoding._(1, _omitEnumNames ? '' : 'UTF8');
+  static const TextEncoding UTF16 = TextEncoding._(2, _omitEnumNames ? '' : 'UTF16');
 
   static const $core.List<TextEncoding> values = <TextEncoding> [
     UnspecifiedTextEncoding,
@@ -39,14 +43,40 @@ class TextEncoding extends $pb.ProtobufEnum {
   const TextEncoding._($core.int v, $core.String n) : super(v, n);
 }
 
+/// Encoding used to interpret the 'character' value in source ranges.
+class PositionEncoding extends $pb.ProtobufEnum {
+  static const PositionEncoding UnspecifiedPositionEncoding = PositionEncoding._(0, _omitEnumNames ? '' : 'UnspecifiedPositionEncoding');
+  static const PositionEncoding UTF8CodeUnitOffsetFromLineStart = PositionEncoding._(1, _omitEnumNames ? '' : 'UTF8CodeUnitOffsetFromLineStart');
+  static const PositionEncoding UTF16CodeUnitOffsetFromLineStart = PositionEncoding._(2, _omitEnumNames ? '' : 'UTF16CodeUnitOffsetFromLineStart');
+  static const PositionEncoding UTF32CodeUnitOffsetFromLineStart = PositionEncoding._(3, _omitEnumNames ? '' : 'UTF32CodeUnitOffsetFromLineStart');
+
+  static const $core.List<PositionEncoding> values = <PositionEncoding> [
+    UnspecifiedPositionEncoding,
+    UTF8CodeUnitOffsetFromLineStart,
+    UTF16CodeUnitOffsetFromLineStart,
+    UTF32CodeUnitOffsetFromLineStart,
+  ];
+
+  static final $core.Map<$core.int, PositionEncoding> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static PositionEncoding? valueOf($core.int value) => _byValue[value];
+
+  const PositionEncoding._($core.int v, $core.String n) : super(v, n);
+}
+
+/// SymbolRole declares what "role" a symbol has in an occurrence. A role is
+/// encoded as a bitset where each bit represents a different role. For example,
+/// to determine if the `Import` role is set, test whether the second bit of the
+/// enum value is defined. In pseudocode, this can be implemented with the
+/// logic: `const isImportRole = (role.value & SymbolRole.Import.value) > 0`.
 class SymbolRole extends $pb.ProtobufEnum {
-  static const SymbolRole UnspecifiedSymbolRole = SymbolRole._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UnspecifiedSymbolRole');
-  static const SymbolRole Definition = SymbolRole._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Definition');
-  static const SymbolRole Import = SymbolRole._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Import');
-  static const SymbolRole WriteAccess = SymbolRole._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'WriteAccess');
-  static const SymbolRole ReadAccess = SymbolRole._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ReadAccess');
-  static const SymbolRole Generated = SymbolRole._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Generated');
-  static const SymbolRole Test = SymbolRole._(32, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Test');
+  static const SymbolRole UnspecifiedSymbolRole = SymbolRole._(0, _omitEnumNames ? '' : 'UnspecifiedSymbolRole');
+  static const SymbolRole Definition = SymbolRole._(1, _omitEnumNames ? '' : 'Definition');
+  static const SymbolRole Import = SymbolRole._(2, _omitEnumNames ? '' : 'Import');
+  static const SymbolRole WriteAccess = SymbolRole._(4, _omitEnumNames ? '' : 'WriteAccess');
+  static const SymbolRole ReadAccess = SymbolRole._(8, _omitEnumNames ? '' : 'ReadAccess');
+  static const SymbolRole Generated = SymbolRole._(16, _omitEnumNames ? '' : 'Generated');
+  static const SymbolRole Test = SymbolRole._(32, _omitEnumNames ? '' : 'Test');
+  static const SymbolRole ForwardDefinition = SymbolRole._(64, _omitEnumNames ? '' : 'ForwardDefinition');
 
   static const $core.List<SymbolRole> values = <SymbolRole> [
     UnspecifiedSymbolRole,
@@ -56,6 +86,7 @@ class SymbolRole extends $pb.ProtobufEnum {
     ReadAccess,
     Generated,
     Test,
+    ForwardDefinition,
   ];
 
   static final $core.Map<$core.int, SymbolRole> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -65,43 +96,43 @@ class SymbolRole extends $pb.ProtobufEnum {
 }
 
 class SyntaxKind extends $pb.ProtobufEnum {
-  static const SyntaxKind UnspecifiedSyntaxKind = SyntaxKind._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UnspecifiedSyntaxKind');
-  static const SyntaxKind Comment = SyntaxKind._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Comment');
-  static const SyntaxKind PunctuationDelimiter = SyntaxKind._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PunctuationDelimiter');
-  static const SyntaxKind PunctuationBracket = SyntaxKind._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PunctuationBracket');
-  static const SyntaxKind Keyword = SyntaxKind._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Keyword');
-  static const SyntaxKind IdentifierOperator = SyntaxKind._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierOperator');
-  static const SyntaxKind Identifier = SyntaxKind._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Identifier');
-  static const SyntaxKind IdentifierBuiltin = SyntaxKind._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierBuiltin');
-  static const SyntaxKind IdentifierNull = SyntaxKind._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierNull');
-  static const SyntaxKind IdentifierConstant = SyntaxKind._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierConstant');
-  static const SyntaxKind IdentifierMutableGlobal = SyntaxKind._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierMutableGlobal');
-  static const SyntaxKind IdentifierParameter = SyntaxKind._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierParameter');
-  static const SyntaxKind IdentifierLocal = SyntaxKind._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierLocal');
-  static const SyntaxKind IdentifierShadowed = SyntaxKind._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierShadowed');
-  static const SyntaxKind IdentifierNamespace = SyntaxKind._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierNamespace');
-  static const SyntaxKind IdentifierFunction = SyntaxKind._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierFunction');
-  static const SyntaxKind IdentifierFunctionDefinition = SyntaxKind._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierFunctionDefinition');
-  static const SyntaxKind IdentifierMacro = SyntaxKind._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierMacro');
-  static const SyntaxKind IdentifierMacroDefinition = SyntaxKind._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierMacroDefinition');
-  static const SyntaxKind IdentifierType = SyntaxKind._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierType');
-  static const SyntaxKind IdentifierBuiltinType = SyntaxKind._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierBuiltinType');
-  static const SyntaxKind IdentifierAttribute = SyntaxKind._(21, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IdentifierAttribute');
-  static const SyntaxKind RegexEscape = SyntaxKind._(22, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RegexEscape');
-  static const SyntaxKind RegexRepeated = SyntaxKind._(23, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RegexRepeated');
-  static const SyntaxKind RegexWildcard = SyntaxKind._(24, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RegexWildcard');
-  static const SyntaxKind RegexDelimiter = SyntaxKind._(25, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RegexDelimiter');
-  static const SyntaxKind RegexJoin = SyntaxKind._(26, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RegexJoin');
-  static const SyntaxKind StringLiteral = SyntaxKind._(27, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'StringLiteral');
-  static const SyntaxKind StringLiteralEscape = SyntaxKind._(28, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'StringLiteralEscape');
-  static const SyntaxKind StringLiteralSpecial = SyntaxKind._(29, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'StringLiteralSpecial');
-  static const SyntaxKind StringLiteralKey = SyntaxKind._(30, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'StringLiteralKey');
-  static const SyntaxKind CharacterLiteral = SyntaxKind._(31, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CharacterLiteral');
-  static const SyntaxKind NumericLiteral = SyntaxKind._(32, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NumericLiteral');
-  static const SyntaxKind BooleanLiteral = SyntaxKind._(33, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BooleanLiteral');
-  static const SyntaxKind Tag = SyntaxKind._(34, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Tag');
-  static const SyntaxKind TagAttribute = SyntaxKind._(35, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TagAttribute');
-  static const SyntaxKind TagDelimiter = SyntaxKind._(36, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TagDelimiter');
+  static const SyntaxKind UnspecifiedSyntaxKind = SyntaxKind._(0, _omitEnumNames ? '' : 'UnspecifiedSyntaxKind');
+  static const SyntaxKind Comment = SyntaxKind._(1, _omitEnumNames ? '' : 'Comment');
+  static const SyntaxKind PunctuationDelimiter = SyntaxKind._(2, _omitEnumNames ? '' : 'PunctuationDelimiter');
+  static const SyntaxKind PunctuationBracket = SyntaxKind._(3, _omitEnumNames ? '' : 'PunctuationBracket');
+  static const SyntaxKind Keyword = SyntaxKind._(4, _omitEnumNames ? '' : 'Keyword');
+  static const SyntaxKind IdentifierOperator = SyntaxKind._(5, _omitEnumNames ? '' : 'IdentifierOperator');
+  static const SyntaxKind Identifier = SyntaxKind._(6, _omitEnumNames ? '' : 'Identifier');
+  static const SyntaxKind IdentifierBuiltin = SyntaxKind._(7, _omitEnumNames ? '' : 'IdentifierBuiltin');
+  static const SyntaxKind IdentifierNull = SyntaxKind._(8, _omitEnumNames ? '' : 'IdentifierNull');
+  static const SyntaxKind IdentifierConstant = SyntaxKind._(9, _omitEnumNames ? '' : 'IdentifierConstant');
+  static const SyntaxKind IdentifierMutableGlobal = SyntaxKind._(10, _omitEnumNames ? '' : 'IdentifierMutableGlobal');
+  static const SyntaxKind IdentifierParameter = SyntaxKind._(11, _omitEnumNames ? '' : 'IdentifierParameter');
+  static const SyntaxKind IdentifierLocal = SyntaxKind._(12, _omitEnumNames ? '' : 'IdentifierLocal');
+  static const SyntaxKind IdentifierShadowed = SyntaxKind._(13, _omitEnumNames ? '' : 'IdentifierShadowed');
+  static const SyntaxKind IdentifierNamespace = SyntaxKind._(14, _omitEnumNames ? '' : 'IdentifierNamespace');
+  static const SyntaxKind IdentifierFunction = SyntaxKind._(15, _omitEnumNames ? '' : 'IdentifierFunction');
+  static const SyntaxKind IdentifierFunctionDefinition = SyntaxKind._(16, _omitEnumNames ? '' : 'IdentifierFunctionDefinition');
+  static const SyntaxKind IdentifierMacro = SyntaxKind._(17, _omitEnumNames ? '' : 'IdentifierMacro');
+  static const SyntaxKind IdentifierMacroDefinition = SyntaxKind._(18, _omitEnumNames ? '' : 'IdentifierMacroDefinition');
+  static const SyntaxKind IdentifierType = SyntaxKind._(19, _omitEnumNames ? '' : 'IdentifierType');
+  static const SyntaxKind IdentifierBuiltinType = SyntaxKind._(20, _omitEnumNames ? '' : 'IdentifierBuiltinType');
+  static const SyntaxKind IdentifierAttribute = SyntaxKind._(21, _omitEnumNames ? '' : 'IdentifierAttribute');
+  static const SyntaxKind RegexEscape = SyntaxKind._(22, _omitEnumNames ? '' : 'RegexEscape');
+  static const SyntaxKind RegexRepeated = SyntaxKind._(23, _omitEnumNames ? '' : 'RegexRepeated');
+  static const SyntaxKind RegexWildcard = SyntaxKind._(24, _omitEnumNames ? '' : 'RegexWildcard');
+  static const SyntaxKind RegexDelimiter = SyntaxKind._(25, _omitEnumNames ? '' : 'RegexDelimiter');
+  static const SyntaxKind RegexJoin = SyntaxKind._(26, _omitEnumNames ? '' : 'RegexJoin');
+  static const SyntaxKind StringLiteral = SyntaxKind._(27, _omitEnumNames ? '' : 'StringLiteral');
+  static const SyntaxKind StringLiteralEscape = SyntaxKind._(28, _omitEnumNames ? '' : 'StringLiteralEscape');
+  static const SyntaxKind StringLiteralSpecial = SyntaxKind._(29, _omitEnumNames ? '' : 'StringLiteralSpecial');
+  static const SyntaxKind StringLiteralKey = SyntaxKind._(30, _omitEnumNames ? '' : 'StringLiteralKey');
+  static const SyntaxKind CharacterLiteral = SyntaxKind._(31, _omitEnumNames ? '' : 'CharacterLiteral');
+  static const SyntaxKind NumericLiteral = SyntaxKind._(32, _omitEnumNames ? '' : 'NumericLiteral');
+  static const SyntaxKind BooleanLiteral = SyntaxKind._(33, _omitEnumNames ? '' : 'BooleanLiteral');
+  static const SyntaxKind Tag = SyntaxKind._(34, _omitEnumNames ? '' : 'Tag');
+  static const SyntaxKind TagAttribute = SyntaxKind._(35, _omitEnumNames ? '' : 'TagAttribute');
+  static const SyntaxKind TagDelimiter = SyntaxKind._(36, _omitEnumNames ? '' : 'TagDelimiter');
 
   static const SyntaxKind IdentifierKeyword = Keyword;
   static const SyntaxKind IdentifierModule = IdentifierNamespace;
@@ -153,11 +184,11 @@ class SyntaxKind extends $pb.ProtobufEnum {
 }
 
 class Severity extends $pb.ProtobufEnum {
-  static const Severity UnspecifiedSeverity = Severity._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UnspecifiedSeverity');
-  static const Severity Error = Severity._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Error');
-  static const Severity Warning = Severity._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Warning');
-  static const Severity Information = Severity._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Information');
-  static const Severity Hint = Severity._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Hint');
+  static const Severity UnspecifiedSeverity = Severity._(0, _omitEnumNames ? '' : 'UnspecifiedSeverity');
+  static const Severity Error = Severity._(1, _omitEnumNames ? '' : 'Error');
+  static const Severity Warning = Severity._(2, _omitEnumNames ? '' : 'Warning');
+  static const Severity Information = Severity._(3, _omitEnumNames ? '' : 'Information');
+  static const Severity Hint = Severity._(4, _omitEnumNames ? '' : 'Hint');
 
   static const $core.List<Severity> values = <Severity> [
     UnspecifiedSeverity,
@@ -174,9 +205,9 @@ class Severity extends $pb.ProtobufEnum {
 }
 
 class DiagnosticTag extends $pb.ProtobufEnum {
-  static const DiagnosticTag UnspecifiedDiagnosticTag = DiagnosticTag._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UnspecifiedDiagnosticTag');
-  static const DiagnosticTag Unnecessary = DiagnosticTag._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Unnecessary');
-  static const DiagnosticTag Deprecated = DiagnosticTag._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Deprecated');
+  static const DiagnosticTag UnspecifiedDiagnosticTag = DiagnosticTag._(0, _omitEnumNames ? '' : 'UnspecifiedDiagnosticTag');
+  static const DiagnosticTag Unnecessary = DiagnosticTag._(1, _omitEnumNames ? '' : 'Unnecessary');
+  static const DiagnosticTag Deprecated = DiagnosticTag._(2, _omitEnumNames ? '' : 'Deprecated');
 
   static const $core.List<DiagnosticTag> values = <DiagnosticTag> [
     UnspecifiedDiagnosticTag,
@@ -190,105 +221,128 @@ class DiagnosticTag extends $pb.ProtobufEnum {
   const DiagnosticTag._($core.int v, $core.String n) : super(v, n);
 }
 
+/// Language standardises names of common programming languages that can be used
+/// for the `Document.language` field. The primary purpose of this enum is to
+/// prevent a situation where we have a single programming language ends up with
+/// multiple string representations. For example, the C++ language uses the name
+/// "CPP" in this enum and other names such as "cpp" are incompatible.
+/// Feel free to send a pull-request to add missing programming languages.
 class Language extends $pb.ProtobufEnum {
-  static const Language UnspecifiedLanguage = Language._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UnspecifiedLanguage');
-  static const Language ABAP = Language._(60, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ABAP');
-  static const Language APL = Language._(49, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'APL');
-  static const Language Ada = Language._(39, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Ada');
-  static const Language Agda = Language._(45, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Agda');
-  static const Language AsciiDoc = Language._(86, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AsciiDoc');
-  static const Language Assembly = Language._(58, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Assembly');
-  static const Language Awk = Language._(66, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Awk');
-  static const Language Bat = Language._(68, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Bat');
-  static const Language BibTeX = Language._(81, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BibTeX');
-  static const Language C = Language._(34, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C');
-  static const Language COBOL = Language._(59, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COBOL');
-  static const Language CPP = Language._(35, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CPP');
-  static const Language CSS = Language._(26, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CSS');
-  static const Language CSharp = Language._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CSharp');
-  static const Language Clojure = Language._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Clojure');
-  static const Language Coffeescript = Language._(21, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Coffeescript');
-  static const Language CommonLisp = Language._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CommonLisp');
-  static const Language Coq = Language._(47, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Coq');
-  static const Language Dart = Language._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Dart');
-  static const Language Delphi = Language._(57, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Delphi');
-  static const Language Diff = Language._(88, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Diff');
-  static const Language Dockerfile = Language._(80, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Dockerfile');
-  static const Language Dyalog = Language._(50, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Dyalog');
-  static const Language Elixir = Language._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Elixir');
-  static const Language Erlang = Language._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Erlang');
-  static const Language FSharp = Language._(42, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FSharp');
-  static const Language Fish = Language._(65, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Fish');
-  static const Language Flow = Language._(24, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Flow');
-  static const Language Fortran = Language._(56, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Fortran');
-  static const Language Git_Commit = Language._(91, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Git_Commit');
-  static const Language Git_Config = Language._(89, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Git_Config');
-  static const Language Git_Rebase = Language._(92, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Git_Rebase');
-  static const Language Go = Language._(33, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Go');
-  static const Language Groovy = Language._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Groovy');
-  static const Language HTML = Language._(30, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'HTML');
-  static const Language Hack = Language._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Hack');
-  static const Language Handlebars = Language._(90, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Handlebars');
-  static const Language Haskell = Language._(44, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Haskell');
-  static const Language Idris = Language._(46, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Idris');
-  static const Language Ini = Language._(72, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Ini');
-  static const Language J = Language._(51, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'J');
-  static const Language JSON = Language._(75, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'JSON');
-  static const Language Java = Language._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Java');
-  static const Language JavaScript = Language._(22, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'JavaScript');
-  static const Language JavaScriptReact = Language._(93, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'JavaScriptReact');
-  static const Language Jsonnet = Language._(76, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Jsonnet');
-  static const Language Julia = Language._(55, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Julia');
-  static const Language Kotlin = Language._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Kotlin');
-  static const Language LaTeX = Language._(83, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LaTeX');
-  static const Language Lean = Language._(48, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Lean');
-  static const Language Less = Language._(27, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Less');
-  static const Language Lua = Language._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Lua');
-  static const Language Makefile = Language._(79, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Makefile');
-  static const Language Markdown = Language._(84, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Markdown');
-  static const Language Matlab = Language._(52, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Matlab');
-  static const Language Nix = Language._(77, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Nix');
-  static const Language OCaml = Language._(41, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OCaml');
-  static const Language Objective_C = Language._(36, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Objective_C');
-  static const Language Objective_CPP = Language._(37, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Objective_CPP');
-  static const Language PHP = Language._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PHP');
-  static const Language PLSQL = Language._(70, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PLSQL');
-  static const Language Perl = Language._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Perl');
-  static const Language PowerShell = Language._(67, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PowerShell');
-  static const Language Prolog = Language._(71, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Prolog');
-  static const Language Python = Language._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Python');
-  static const Language R = Language._(54, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'R');
-  static const Language Racket = Language._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Racket');
-  static const Language Raku = Language._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Raku');
-  static const Language Razor = Language._(62, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Razor');
-  static const Language ReST = Language._(85, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ReST');
-  static const Language Ruby = Language._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Ruby');
-  static const Language Rust = Language._(40, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Rust');
-  static const Language SAS = Language._(61, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SAS');
-  static const Language SCSS = Language._(29, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SCSS');
-  static const Language SML = Language._(43, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SML');
-  static const Language SQL = Language._(69, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SQL');
-  static const Language Sass = Language._(28, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sass');
-  static const Language Scala = Language._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Scala');
-  static const Language Scheme = Language._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Scheme');
-  static const Language ShellScript = Language._(64, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ShellScript');
-  static const Language Skylark = Language._(78, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Skylark');
-  static const Language Swift = Language._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Swift');
-  static const Language TOML = Language._(73, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TOML');
-  static const Language TeX = Language._(82, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TeX');
-  static const Language TypeScript = Language._(23, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TypeScript');
-  static const Language TypeScriptReact = Language._(94, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TypeScriptReact');
-  static const Language VisualBasic = Language._(63, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VisualBasic');
-  static const Language Vue = Language._(25, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Vue');
-  static const Language Wolfram = Language._(53, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Wolfram');
-  static const Language XML = Language._(31, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'XML');
-  static const Language XSL = Language._(32, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'XSL');
-  static const Language YAML = Language._(74, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'YAML');
-  static const Language Zig = Language._(38, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Zig');
+  static const Language UnspecifiedLanguage = Language._(0, _omitEnumNames ? '' : 'UnspecifiedLanguage');
+  static const Language ABAP = Language._(60, _omitEnumNames ? '' : 'ABAP');
+  static const Language Apex = Language._(96, _omitEnumNames ? '' : 'Apex');
+  static const Language APL = Language._(49, _omitEnumNames ? '' : 'APL');
+  static const Language Ada = Language._(39, _omitEnumNames ? '' : 'Ada');
+  static const Language Agda = Language._(45, _omitEnumNames ? '' : 'Agda');
+  static const Language AsciiDoc = Language._(86, _omitEnumNames ? '' : 'AsciiDoc');
+  static const Language Assembly = Language._(58, _omitEnumNames ? '' : 'Assembly');
+  static const Language Awk = Language._(66, _omitEnumNames ? '' : 'Awk');
+  static const Language Bat = Language._(68, _omitEnumNames ? '' : 'Bat');
+  static const Language BibTeX = Language._(81, _omitEnumNames ? '' : 'BibTeX');
+  static const Language C = Language._(34, _omitEnumNames ? '' : 'C');
+  static const Language COBOL = Language._(59, _omitEnumNames ? '' : 'COBOL');
+  static const Language CPP = Language._(35, _omitEnumNames ? '' : 'CPP');
+  static const Language CSS = Language._(26, _omitEnumNames ? '' : 'CSS');
+  static const Language CSharp = Language._(1, _omitEnumNames ? '' : 'CSharp');
+  static const Language Clojure = Language._(8, _omitEnumNames ? '' : 'Clojure');
+  static const Language Coffeescript = Language._(21, _omitEnumNames ? '' : 'Coffeescript');
+  static const Language CommonLisp = Language._(9, _omitEnumNames ? '' : 'CommonLisp');
+  static const Language Coq = Language._(47, _omitEnumNames ? '' : 'Coq');
+  static const Language CUDA = Language._(97, _omitEnumNames ? '' : 'CUDA');
+  static const Language Dart = Language._(3, _omitEnumNames ? '' : 'Dart');
+  static const Language Delphi = Language._(57, _omitEnumNames ? '' : 'Delphi');
+  static const Language Diff = Language._(88, _omitEnumNames ? '' : 'Diff');
+  static const Language Dockerfile = Language._(80, _omitEnumNames ? '' : 'Dockerfile');
+  static const Language Dyalog = Language._(50, _omitEnumNames ? '' : 'Dyalog');
+  static const Language Elixir = Language._(17, _omitEnumNames ? '' : 'Elixir');
+  static const Language Erlang = Language._(18, _omitEnumNames ? '' : 'Erlang');
+  static const Language FSharp = Language._(42, _omitEnumNames ? '' : 'FSharp');
+  static const Language Fish = Language._(65, _omitEnumNames ? '' : 'Fish');
+  static const Language Flow = Language._(24, _omitEnumNames ? '' : 'Flow');
+  static const Language Fortran = Language._(56, _omitEnumNames ? '' : 'Fortran');
+  static const Language Git_Commit = Language._(91, _omitEnumNames ? '' : 'Git_Commit');
+  static const Language Git_Config = Language._(89, _omitEnumNames ? '' : 'Git_Config');
+  static const Language Git_Rebase = Language._(92, _omitEnumNames ? '' : 'Git_Rebase');
+  static const Language Go = Language._(33, _omitEnumNames ? '' : 'Go');
+  static const Language GraphQL = Language._(98, _omitEnumNames ? '' : 'GraphQL');
+  static const Language Groovy = Language._(7, _omitEnumNames ? '' : 'Groovy');
+  static const Language HTML = Language._(30, _omitEnumNames ? '' : 'HTML');
+  static const Language Hack = Language._(20, _omitEnumNames ? '' : 'Hack');
+  static const Language Handlebars = Language._(90, _omitEnumNames ? '' : 'Handlebars');
+  static const Language Haskell = Language._(44, _omitEnumNames ? '' : 'Haskell');
+  static const Language Idris = Language._(46, _omitEnumNames ? '' : 'Idris');
+  static const Language Ini = Language._(72, _omitEnumNames ? '' : 'Ini');
+  static const Language J = Language._(51, _omitEnumNames ? '' : 'J');
+  static const Language JSON = Language._(75, _omitEnumNames ? '' : 'JSON');
+  static const Language Java = Language._(6, _omitEnumNames ? '' : 'Java');
+  static const Language JavaScript = Language._(22, _omitEnumNames ? '' : 'JavaScript');
+  static const Language JavaScriptReact = Language._(93, _omitEnumNames ? '' : 'JavaScriptReact');
+  static const Language Jsonnet = Language._(76, _omitEnumNames ? '' : 'Jsonnet');
+  static const Language Julia = Language._(55, _omitEnumNames ? '' : 'Julia');
+  static const Language Justfile = Language._(109, _omitEnumNames ? '' : 'Justfile');
+  static const Language Kotlin = Language._(4, _omitEnumNames ? '' : 'Kotlin');
+  static const Language LaTeX = Language._(83, _omitEnumNames ? '' : 'LaTeX');
+  static const Language Lean = Language._(48, _omitEnumNames ? '' : 'Lean');
+  static const Language Less = Language._(27, _omitEnumNames ? '' : 'Less');
+  static const Language Lua = Language._(12, _omitEnumNames ? '' : 'Lua');
+  static const Language Luau = Language._(108, _omitEnumNames ? '' : 'Luau');
+  static const Language Makefile = Language._(79, _omitEnumNames ? '' : 'Makefile');
+  static const Language Markdown = Language._(84, _omitEnumNames ? '' : 'Markdown');
+  static const Language Matlab = Language._(52, _omitEnumNames ? '' : 'Matlab');
+  static const Language Nickel = Language._(110, _omitEnumNames ? '' : 'Nickel');
+  static const Language Nix = Language._(77, _omitEnumNames ? '' : 'Nix');
+  static const Language OCaml = Language._(41, _omitEnumNames ? '' : 'OCaml');
+  static const Language Objective_C = Language._(36, _omitEnumNames ? '' : 'Objective_C');
+  static const Language Objective_CPP = Language._(37, _omitEnumNames ? '' : 'Objective_CPP');
+  static const Language Pascal = Language._(99, _omitEnumNames ? '' : 'Pascal');
+  static const Language PHP = Language._(19, _omitEnumNames ? '' : 'PHP');
+  static const Language PLSQL = Language._(70, _omitEnumNames ? '' : 'PLSQL');
+  static const Language Perl = Language._(13, _omitEnumNames ? '' : 'Perl');
+  static const Language PowerShell = Language._(67, _omitEnumNames ? '' : 'PowerShell');
+  static const Language Prolog = Language._(71, _omitEnumNames ? '' : 'Prolog');
+  static const Language Protobuf = Language._(100, _omitEnumNames ? '' : 'Protobuf');
+  static const Language Python = Language._(15, _omitEnumNames ? '' : 'Python');
+  static const Language R = Language._(54, _omitEnumNames ? '' : 'R');
+  static const Language Racket = Language._(11, _omitEnumNames ? '' : 'Racket');
+  static const Language Raku = Language._(14, _omitEnumNames ? '' : 'Raku');
+  static const Language Razor = Language._(62, _omitEnumNames ? '' : 'Razor');
+  static const Language Repro = Language._(102, _omitEnumNames ? '' : 'Repro');
+  static const Language ReST = Language._(85, _omitEnumNames ? '' : 'ReST');
+  static const Language Ruby = Language._(16, _omitEnumNames ? '' : 'Ruby');
+  static const Language Rust = Language._(40, _omitEnumNames ? '' : 'Rust');
+  static const Language SAS = Language._(61, _omitEnumNames ? '' : 'SAS');
+  static const Language SCSS = Language._(29, _omitEnumNames ? '' : 'SCSS');
+  static const Language SML = Language._(43, _omitEnumNames ? '' : 'SML');
+  static const Language SQL = Language._(69, _omitEnumNames ? '' : 'SQL');
+  static const Language Sass = Language._(28, _omitEnumNames ? '' : 'Sass');
+  static const Language Scala = Language._(5, _omitEnumNames ? '' : 'Scala');
+  static const Language Scheme = Language._(10, _omitEnumNames ? '' : 'Scheme');
+  static const Language ShellScript = Language._(64, _omitEnumNames ? '' : 'ShellScript');
+  static const Language Skylark = Language._(78, _omitEnumNames ? '' : 'Skylark');
+  static const Language Slang = Language._(107, _omitEnumNames ? '' : 'Slang');
+  static const Language Solidity = Language._(95, _omitEnumNames ? '' : 'Solidity');
+  static const Language Svelte = Language._(106, _omitEnumNames ? '' : 'Svelte');
+  static const Language Swift = Language._(2, _omitEnumNames ? '' : 'Swift');
+  static const Language Tcl = Language._(101, _omitEnumNames ? '' : 'Tcl');
+  static const Language TOML = Language._(73, _omitEnumNames ? '' : 'TOML');
+  static const Language TeX = Language._(82, _omitEnumNames ? '' : 'TeX');
+  static const Language Thrift = Language._(103, _omitEnumNames ? '' : 'Thrift');
+  static const Language TypeScript = Language._(23, _omitEnumNames ? '' : 'TypeScript');
+  static const Language TypeScriptReact = Language._(94, _omitEnumNames ? '' : 'TypeScriptReact');
+  static const Language Verilog = Language._(104, _omitEnumNames ? '' : 'Verilog');
+  static const Language VHDL = Language._(105, _omitEnumNames ? '' : 'VHDL');
+  static const Language VisualBasic = Language._(63, _omitEnumNames ? '' : 'VisualBasic');
+  static const Language Vue = Language._(25, _omitEnumNames ? '' : 'Vue');
+  static const Language Wolfram = Language._(53, _omitEnumNames ? '' : 'Wolfram');
+  static const Language XML = Language._(31, _omitEnumNames ? '' : 'XML');
+  static const Language XSL = Language._(32, _omitEnumNames ? '' : 'XSL');
+  static const Language YAML = Language._(74, _omitEnumNames ? '' : 'YAML');
+  static const Language Zig = Language._(38, _omitEnumNames ? '' : 'Zig');
 
   static const $core.List<Language> values = <Language> [
     UnspecifiedLanguage,
     ABAP,
+    Apex,
     APL,
     Ada,
     Agda,
@@ -306,6 +360,7 @@ class Language extends $pb.ProtobufEnum {
     Coffeescript,
     CommonLisp,
     Coq,
+    CUDA,
     Dart,
     Delphi,
     Diff,
@@ -321,6 +376,7 @@ class Language extends $pb.ProtobufEnum {
     Git_Config,
     Git_Rebase,
     Go,
+    GraphQL,
     Groovy,
     HTML,
     Hack,
@@ -335,28 +391,34 @@ class Language extends $pb.ProtobufEnum {
     JavaScriptReact,
     Jsonnet,
     Julia,
+    Justfile,
     Kotlin,
     LaTeX,
     Lean,
     Less,
     Lua,
+    Luau,
     Makefile,
     Markdown,
     Matlab,
+    Nickel,
     Nix,
     OCaml,
     Objective_C,
     Objective_CPP,
+    Pascal,
     PHP,
     PLSQL,
     Perl,
     PowerShell,
     Prolog,
+    Protobuf,
     Python,
     R,
     Racket,
     Raku,
     Razor,
+    Repro,
     ReST,
     Ruby,
     Rust,
@@ -369,11 +431,18 @@ class Language extends $pb.ProtobufEnum {
     Scheme,
     ShellScript,
     Skylark,
+    Slang,
+    Solidity,
+    Svelte,
     Swift,
+    Tcl,
     TOML,
     TeX,
+    Thrift,
     TypeScript,
     TypeScriptReact,
+    Verilog,
+    VHDL,
     VisualBasic,
     Vue,
     Wolfram,
@@ -390,16 +459,16 @@ class Language extends $pb.ProtobufEnum {
 }
 
 class Descriptor_Suffix extends $pb.ProtobufEnum {
-  static const Descriptor_Suffix UnspecifiedSuffix = Descriptor_Suffix._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'UnspecifiedSuffix');
-  static const Descriptor_Suffix Namespace = Descriptor_Suffix._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Namespace');
-  static const Descriptor_Suffix Type = Descriptor_Suffix._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Type');
-  static const Descriptor_Suffix Term = Descriptor_Suffix._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Term');
-  static const Descriptor_Suffix Method = Descriptor_Suffix._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Method');
-  static const Descriptor_Suffix TypeParameter = Descriptor_Suffix._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TypeParameter');
-  static const Descriptor_Suffix Parameter = Descriptor_Suffix._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Parameter');
-  static const Descriptor_Suffix Macro = Descriptor_Suffix._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Macro');
-  static const Descriptor_Suffix Meta = Descriptor_Suffix._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Meta');
-  static const Descriptor_Suffix Local = Descriptor_Suffix._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Local');
+  static const Descriptor_Suffix UnspecifiedSuffix = Descriptor_Suffix._(0, _omitEnumNames ? '' : 'UnspecifiedSuffix');
+  static const Descriptor_Suffix Namespace = Descriptor_Suffix._(1, _omitEnumNames ? '' : 'Namespace');
+  static const Descriptor_Suffix Type = Descriptor_Suffix._(2, _omitEnumNames ? '' : 'Type');
+  static const Descriptor_Suffix Term = Descriptor_Suffix._(3, _omitEnumNames ? '' : 'Term');
+  static const Descriptor_Suffix Method = Descriptor_Suffix._(4, _omitEnumNames ? '' : 'Method');
+  static const Descriptor_Suffix TypeParameter = Descriptor_Suffix._(5, _omitEnumNames ? '' : 'TypeParameter');
+  static const Descriptor_Suffix Parameter = Descriptor_Suffix._(6, _omitEnumNames ? '' : 'Parameter');
+  static const Descriptor_Suffix Meta = Descriptor_Suffix._(7, _omitEnumNames ? '' : 'Meta');
+  static const Descriptor_Suffix Local = Descriptor_Suffix._(8, _omitEnumNames ? '' : 'Local');
+  static const Descriptor_Suffix Macro = Descriptor_Suffix._(9, _omitEnumNames ? '' : 'Macro');
 
   static const Descriptor_Suffix Package = Namespace;
 
@@ -411,9 +480,9 @@ class Descriptor_Suffix extends $pb.ProtobufEnum {
     Method,
     TypeParameter,
     Parameter,
-    Macro,
     Meta,
     Local,
+    Macro,
   ];
 
   static final $core.Map<$core.int, Descriptor_Suffix> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -422,3 +491,200 @@ class Descriptor_Suffix extends $pb.ProtobufEnum {
   const Descriptor_Suffix._($core.int v, $core.String n) : super(v, n);
 }
 
+///  (optional) Kind represents the fine-grained category of a symbol, suitable for presenting
+///  information about the symbol's meaning in the language.
+///
+///  For example:
+///  - A Java method would have the kind `Method` while a Go function would
+///    have the kind `Function`, even if the symbols for these use the same
+///    syntax for the descriptor `SymbolDescriptor.Suffix.Method`.
+///  - A Go struct has the symbol kind `Struct` while a Java class has
+///    the symbol kind `Class` even if they both have the same descriptor:
+///    `SymbolDescriptor.Suffix.Type`.
+///
+///  Since Kind is more fine-grained than Suffix:
+///  - If two symbols have the same Kind, they should share the same Suffix.
+///  - If two symbols have different Suffixes, they should have different Kinds.
+class SymbolInformation_Kind extends $pb.ProtobufEnum {
+  static const SymbolInformation_Kind UnspecifiedKind = SymbolInformation_Kind._(0, _omitEnumNames ? '' : 'UnspecifiedKind');
+  static const SymbolInformation_Kind AbstractMethod = SymbolInformation_Kind._(66, _omitEnumNames ? '' : 'AbstractMethod');
+  static const SymbolInformation_Kind Accessor = SymbolInformation_Kind._(72, _omitEnumNames ? '' : 'Accessor');
+  static const SymbolInformation_Kind Array = SymbolInformation_Kind._(1, _omitEnumNames ? '' : 'Array');
+  static const SymbolInformation_Kind Assertion = SymbolInformation_Kind._(2, _omitEnumNames ? '' : 'Assertion');
+  static const SymbolInformation_Kind AssociatedType = SymbolInformation_Kind._(3, _omitEnumNames ? '' : 'AssociatedType');
+  static const SymbolInformation_Kind Attribute = SymbolInformation_Kind._(4, _omitEnumNames ? '' : 'Attribute');
+  static const SymbolInformation_Kind Axiom = SymbolInformation_Kind._(5, _omitEnumNames ? '' : 'Axiom');
+  static const SymbolInformation_Kind Boolean = SymbolInformation_Kind._(6, _omitEnumNames ? '' : 'Boolean');
+  static const SymbolInformation_Kind Class = SymbolInformation_Kind._(7, _omitEnumNames ? '' : 'Class');
+  static const SymbolInformation_Kind Constant = SymbolInformation_Kind._(8, _omitEnumNames ? '' : 'Constant');
+  static const SymbolInformation_Kind Constructor = SymbolInformation_Kind._(9, _omitEnumNames ? '' : 'Constructor');
+  static const SymbolInformation_Kind Contract = SymbolInformation_Kind._(62, _omitEnumNames ? '' : 'Contract');
+  static const SymbolInformation_Kind DataFamily = SymbolInformation_Kind._(10, _omitEnumNames ? '' : 'DataFamily');
+  static const SymbolInformation_Kind Delegate = SymbolInformation_Kind._(73, _omitEnumNames ? '' : 'Delegate');
+  static const SymbolInformation_Kind Enum = SymbolInformation_Kind._(11, _omitEnumNames ? '' : 'Enum');
+  static const SymbolInformation_Kind EnumMember = SymbolInformation_Kind._(12, _omitEnumNames ? '' : 'EnumMember');
+  static const SymbolInformation_Kind Error = SymbolInformation_Kind._(63, _omitEnumNames ? '' : 'Error');
+  static const SymbolInformation_Kind Event = SymbolInformation_Kind._(13, _omitEnumNames ? '' : 'Event');
+  static const SymbolInformation_Kind Extension = SymbolInformation_Kind._(84, _omitEnumNames ? '' : 'Extension');
+  static const SymbolInformation_Kind Fact = SymbolInformation_Kind._(14, _omitEnumNames ? '' : 'Fact');
+  static const SymbolInformation_Kind Field = SymbolInformation_Kind._(15, _omitEnumNames ? '' : 'Field');
+  static const SymbolInformation_Kind File = SymbolInformation_Kind._(16, _omitEnumNames ? '' : 'File');
+  static const SymbolInformation_Kind Function = SymbolInformation_Kind._(17, _omitEnumNames ? '' : 'Function');
+  static const SymbolInformation_Kind Getter = SymbolInformation_Kind._(18, _omitEnumNames ? '' : 'Getter');
+  static const SymbolInformation_Kind Grammar = SymbolInformation_Kind._(19, _omitEnumNames ? '' : 'Grammar');
+  static const SymbolInformation_Kind Instance = SymbolInformation_Kind._(20, _omitEnumNames ? '' : 'Instance');
+  static const SymbolInformation_Kind Interface = SymbolInformation_Kind._(21, _omitEnumNames ? '' : 'Interface');
+  static const SymbolInformation_Kind Key = SymbolInformation_Kind._(22, _omitEnumNames ? '' : 'Key');
+  static const SymbolInformation_Kind Lang = SymbolInformation_Kind._(23, _omitEnumNames ? '' : 'Lang');
+  static const SymbolInformation_Kind Lemma = SymbolInformation_Kind._(24, _omitEnumNames ? '' : 'Lemma');
+  static const SymbolInformation_Kind Library = SymbolInformation_Kind._(64, _omitEnumNames ? '' : 'Library');
+  static const SymbolInformation_Kind Macro = SymbolInformation_Kind._(25, _omitEnumNames ? '' : 'Macro');
+  static const SymbolInformation_Kind Method = SymbolInformation_Kind._(26, _omitEnumNames ? '' : 'Method');
+  static const SymbolInformation_Kind MethodAlias = SymbolInformation_Kind._(74, _omitEnumNames ? '' : 'MethodAlias');
+  static const SymbolInformation_Kind MethodReceiver = SymbolInformation_Kind._(27, _omitEnumNames ? '' : 'MethodReceiver');
+  static const SymbolInformation_Kind MethodSpecification = SymbolInformation_Kind._(67, _omitEnumNames ? '' : 'MethodSpecification');
+  static const SymbolInformation_Kind Message = SymbolInformation_Kind._(28, _omitEnumNames ? '' : 'Message');
+  static const SymbolInformation_Kind Mixin = SymbolInformation_Kind._(85, _omitEnumNames ? '' : 'Mixin');
+  static const SymbolInformation_Kind Modifier = SymbolInformation_Kind._(65, _omitEnumNames ? '' : 'Modifier');
+  static const SymbolInformation_Kind Module = SymbolInformation_Kind._(29, _omitEnumNames ? '' : 'Module');
+  static const SymbolInformation_Kind Namespace = SymbolInformation_Kind._(30, _omitEnumNames ? '' : 'Namespace');
+  static const SymbolInformation_Kind Null = SymbolInformation_Kind._(31, _omitEnumNames ? '' : 'Null');
+  static const SymbolInformation_Kind Number = SymbolInformation_Kind._(32, _omitEnumNames ? '' : 'Number');
+  static const SymbolInformation_Kind Object_ = SymbolInformation_Kind._(33, _omitEnumNames ? '' : 'Object');
+  static const SymbolInformation_Kind Operator = SymbolInformation_Kind._(34, _omitEnumNames ? '' : 'Operator');
+  static const SymbolInformation_Kind Package = SymbolInformation_Kind._(35, _omitEnumNames ? '' : 'Package');
+  static const SymbolInformation_Kind PackageObject = SymbolInformation_Kind._(36, _omitEnumNames ? '' : 'PackageObject');
+  static const SymbolInformation_Kind Parameter = SymbolInformation_Kind._(37, _omitEnumNames ? '' : 'Parameter');
+  static const SymbolInformation_Kind ParameterLabel = SymbolInformation_Kind._(38, _omitEnumNames ? '' : 'ParameterLabel');
+  static const SymbolInformation_Kind Pattern = SymbolInformation_Kind._(39, _omitEnumNames ? '' : 'Pattern');
+  static const SymbolInformation_Kind Predicate = SymbolInformation_Kind._(40, _omitEnumNames ? '' : 'Predicate');
+  static const SymbolInformation_Kind Property = SymbolInformation_Kind._(41, _omitEnumNames ? '' : 'Property');
+  static const SymbolInformation_Kind Protocol = SymbolInformation_Kind._(42, _omitEnumNames ? '' : 'Protocol');
+  static const SymbolInformation_Kind ProtocolMethod = SymbolInformation_Kind._(68, _omitEnumNames ? '' : 'ProtocolMethod');
+  static const SymbolInformation_Kind PureVirtualMethod = SymbolInformation_Kind._(69, _omitEnumNames ? '' : 'PureVirtualMethod');
+  static const SymbolInformation_Kind Quasiquoter = SymbolInformation_Kind._(43, _omitEnumNames ? '' : 'Quasiquoter');
+  static const SymbolInformation_Kind SelfParameter = SymbolInformation_Kind._(44, _omitEnumNames ? '' : 'SelfParameter');
+  static const SymbolInformation_Kind Setter = SymbolInformation_Kind._(45, _omitEnumNames ? '' : 'Setter');
+  static const SymbolInformation_Kind Signature = SymbolInformation_Kind._(46, _omitEnumNames ? '' : 'Signature');
+  static const SymbolInformation_Kind SingletonClass = SymbolInformation_Kind._(75, _omitEnumNames ? '' : 'SingletonClass');
+  static const SymbolInformation_Kind SingletonMethod = SymbolInformation_Kind._(76, _omitEnumNames ? '' : 'SingletonMethod');
+  static const SymbolInformation_Kind StaticDataMember = SymbolInformation_Kind._(77, _omitEnumNames ? '' : 'StaticDataMember');
+  static const SymbolInformation_Kind StaticEvent = SymbolInformation_Kind._(78, _omitEnumNames ? '' : 'StaticEvent');
+  static const SymbolInformation_Kind StaticField = SymbolInformation_Kind._(79, _omitEnumNames ? '' : 'StaticField');
+  static const SymbolInformation_Kind StaticMethod = SymbolInformation_Kind._(80, _omitEnumNames ? '' : 'StaticMethod');
+  static const SymbolInformation_Kind StaticProperty = SymbolInformation_Kind._(81, _omitEnumNames ? '' : 'StaticProperty');
+  static const SymbolInformation_Kind StaticVariable = SymbolInformation_Kind._(82, _omitEnumNames ? '' : 'StaticVariable');
+  static const SymbolInformation_Kind String = SymbolInformation_Kind._(48, _omitEnumNames ? '' : 'String');
+  static const SymbolInformation_Kind Struct = SymbolInformation_Kind._(49, _omitEnumNames ? '' : 'Struct');
+  static const SymbolInformation_Kind Subscript = SymbolInformation_Kind._(47, _omitEnumNames ? '' : 'Subscript');
+  static const SymbolInformation_Kind Tactic = SymbolInformation_Kind._(50, _omitEnumNames ? '' : 'Tactic');
+  static const SymbolInformation_Kind Theorem = SymbolInformation_Kind._(51, _omitEnumNames ? '' : 'Theorem');
+  static const SymbolInformation_Kind ThisParameter = SymbolInformation_Kind._(52, _omitEnumNames ? '' : 'ThisParameter');
+  static const SymbolInformation_Kind Trait = SymbolInformation_Kind._(53, _omitEnumNames ? '' : 'Trait');
+  static const SymbolInformation_Kind TraitMethod = SymbolInformation_Kind._(70, _omitEnumNames ? '' : 'TraitMethod');
+  static const SymbolInformation_Kind Type = SymbolInformation_Kind._(54, _omitEnumNames ? '' : 'Type');
+  static const SymbolInformation_Kind TypeAlias = SymbolInformation_Kind._(55, _omitEnumNames ? '' : 'TypeAlias');
+  static const SymbolInformation_Kind TypeClass = SymbolInformation_Kind._(56, _omitEnumNames ? '' : 'TypeClass');
+  static const SymbolInformation_Kind TypeClassMethod = SymbolInformation_Kind._(71, _omitEnumNames ? '' : 'TypeClassMethod');
+  static const SymbolInformation_Kind TypeFamily = SymbolInformation_Kind._(57, _omitEnumNames ? '' : 'TypeFamily');
+  static const SymbolInformation_Kind TypeParameter = SymbolInformation_Kind._(58, _omitEnumNames ? '' : 'TypeParameter');
+  static const SymbolInformation_Kind Union = SymbolInformation_Kind._(59, _omitEnumNames ? '' : 'Union');
+  static const SymbolInformation_Kind Value = SymbolInformation_Kind._(60, _omitEnumNames ? '' : 'Value');
+  static const SymbolInformation_Kind Variable = SymbolInformation_Kind._(61, _omitEnumNames ? '' : 'Variable');
+
+  static const $core.List<SymbolInformation_Kind> values = <SymbolInformation_Kind> [
+    UnspecifiedKind,
+    AbstractMethod,
+    Accessor,
+    Array,
+    Assertion,
+    AssociatedType,
+    Attribute,
+    Axiom,
+    Boolean,
+    Class,
+    Constant,
+    Constructor,
+    Contract,
+    DataFamily,
+    Delegate,
+    Enum,
+    EnumMember,
+    Error,
+    Event,
+    Extension,
+    Fact,
+    Field,
+    File,
+    Function,
+    Getter,
+    Grammar,
+    Instance,
+    Interface,
+    Key,
+    Lang,
+    Lemma,
+    Library,
+    Macro,
+    Method,
+    MethodAlias,
+    MethodReceiver,
+    MethodSpecification,
+    Message,
+    Mixin,
+    Modifier,
+    Module,
+    Namespace,
+    Null,
+    Number,
+    Object_,
+    Operator,
+    Package,
+    PackageObject,
+    Parameter,
+    ParameterLabel,
+    Pattern,
+    Predicate,
+    Property,
+    Protocol,
+    ProtocolMethod,
+    PureVirtualMethod,
+    Quasiquoter,
+    SelfParameter,
+    Setter,
+    Signature,
+    SingletonClass,
+    SingletonMethod,
+    StaticDataMember,
+    StaticEvent,
+    StaticField,
+    StaticMethod,
+    StaticProperty,
+    StaticVariable,
+    String,
+    Struct,
+    Subscript,
+    Tactic,
+    Theorem,
+    ThisParameter,
+    Trait,
+    TraitMethod,
+    Type,
+    TypeAlias,
+    TypeClass,
+    TypeClassMethod,
+    TypeFamily,
+    TypeParameter,
+    Union,
+    Value,
+    Variable,
+  ];
+
+  static final $core.Map<$core.int, SymbolInformation_Kind> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static SymbolInformation_Kind? valueOf($core.int value) => _byValue[value];
+
+  const SymbolInformation_Kind._($core.int v, $core.String n) : super(v, n);
+}
+
+
+const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

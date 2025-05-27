@@ -1,5 +1,49 @@
 # Changelog
 
+## 1.6.1
+- Added a default disabled flag for indexing pubspec.yaml files `--index-pubspec`. 
+
+## 1.6.0
+- Added `--output` flag to configure output location of the generated index file 
+
+## 1.5.4
+- Fixed a bug where constructor references weren't correctly indexed
+
+## 1.5.3
+- Dependency bumps
+
+## 1.5.2
+- Improved support for getters/setters, utilizing `<get>`/`<set>` keywords within indexed symbols
+- Fixed relationship indexing for fields, getters, and setters
+
+## 1.5.1
+- Adds support for missing SymbolInformation.kind on extension, mixin symbols
+
+## 1.5.0
+- Adds support for SymbolInformation.kind on the following symbols: class, enum, type alias, constructor, method, function, variable, parameter, property, and field.
+
+## 1.4.4
+- Minor update to release CI
+
+## 1.4.3
+- Updated the min dart version to `>=2.19 <3.0.0`, this is a pre-step to supporting dart 3
+
+## 1.4.2
+- Minor dependency updates and a test release for auto-tagging
+
+## 1.4.1
+- Added `elementFor` to the exported `SymbolGenerator` that can be used to retrieve the analyzer `Element` that should be used when generating symbols
+- Fixed issue where the synthetic `values` field on `Enum` types was getting indexed (we just dont want to index this)
+- Fixed issue where named normal formal parameters were only declared as references to their targeting field, now they are both a reference and a definition
+
+## 1.4.0
+- Exported `SymbolGenerator` from the `symbol_generator.dart` entrypoint. Making use of this will allow generation of scip symbols outside of scip-darts main use case of indexing all the symbols in a dart repo
+
+## 1.3.0
+- Default `index-relationships` to `true`, now all scip files will be generating relationship data by default
+- Fixed issue where `this.<param>` declared in a constructor (NormalFormalParameters), was incorrectly referencing the `this` part of the parameter
+- Updated the internal protobuf spec to the latest version. This includes populating `signatureDocumentation` as apart of symbol information declarations
+
 ## 1.2.1
 - Fixed a bug discovered with diagnostic reporting, where most diagnostics were missing
 

@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:package_config/package_config.dart';
@@ -17,10 +18,110 @@ class SymbolGenerator {
   /// that should be used for the element. If no element is found,
   /// [_localElementIndex] should be used to generate one.
   ///
-  /// Use []
+  /// Use [_localSymbolFor] to generate new local symbols
   Map<Element, String> _localElementRegistry = {};
 
   SymbolGenerator(this._packageConfig, this._pubspec);
+
+  /// For a given [AstNode], returns the correlating [Element] type
+  /// that should be used to generate the symbol
+  Element? elementFor(AstNode node) {
+    if (node is Declaration) {
+      return node.declaredElement;
+    } else if (node is NormalFormalParameter) {
+      // if this parameter is a child of a GenericFunctionType (can be a
+      // typedef, or a function as a parameter), we don't want to index it
+      // as a definition (nothing is defined, just referenced). Return false
+      // and let the [_visitSimpleIdentifier] declare the reference
+      final parentParameter =
+          node.parent?.thisOrAncestorOfType<GenericFunctionType>();
+      if (parentParameter != null) return null;
+
+      var element = node.declaredElement;
+      if (element == null) return null;
+
+      return element;
+    } else if (node is SimpleIdentifier) {
+      var element = node.staticElement;
+
+      // A SimpleIdentifier with a direct parent of a ConstructorDeclaration
+      // is the reference to the class itself. Skip this declaration
+      if (node.parent is ConstructorDeclaration) {
+        return null;
+      }
+
+      // if we're nested under a ConstructorName identifier, use the constructor
+      // as the element to annotate instead of the reference to the Class
+      final parentConstructor = node.thisOrAncestorOfType<ConstructorName>();
+      if (parentConstructor != null) {
+        // ConstructorNames can also include an import PrefixIdentifier: `math.Rectangle()`
+        // both 'math' and 'Rectangle' are SimpleIdentifiers. We only want the constructor
+        // element for 'Rectangle' in this case
+        final parentPrefixIdentifier =
+            node.thisOrAncestorOfType<PrefixedIdentifier>();
+        if (parentPrefixIdentifier?.prefix == node) return element;
+
+        // Constructors can be named: `Foo.bar()`, both `Foo` and `bar` are SimpleIdentifiers
+        // When the constructor is named, 'bar' is the constructor reference and `Foo` should
+        // reference the class
+        if (parentConstructor.name == node) {
+          return parentConstructor.staticElement;
+        } else if (parentConstructor.name != null) {
+          return element;
+        }
+
+        // Otherwise, constructor is just `Foo()`, so simply return the
+        // constructor's element
+        return parentConstructor.staticElement;
+      }
+
+      // Both `.loadLibrary()`, and `.call()` are synthetic functions that
+      // have no definition. These should therefore should not be indexed.
+      if (element is FunctionElement && element.isSynthetic) {
+        if ([
+          FunctionElement.LOAD_LIBRARY_NAME,
+          FunctionElement.CALL_METHOD_NAME,
+        ].contains(element.name)) return null;
+      }
+
+      // [element] for assignment fields is null. If the parent node
+      // is a `CompoundAssignmentExpression`, we know this node is referring
+      // to an assignment line. In that case, use the read/write element attached
+      // to this node instead of the [node]'s element
+      if (element == null) {
+        final assignmentExpr =
+            node.thisOrAncestorOfType<CompoundAssignmentExpression>();
+        if (assignmentExpr == null) return null;
+
+        element = assignmentExpr.readElement ?? assignmentExpr.writeElement;
+      }
+
+      // When the identifier is a field, the analyzer creates synthetic getters/
+      // setters for it. We need to get the backing field.
+      if (element?.isSynthetic == true && element is PropertyAccessorElement) {
+        // The values field on enums is synthetic, and has no explicit definition like
+        // other fields do. Skip indexing for this case.
+        if (element.enclosingElement is EnumElement &&
+            element.name == 'values') {
+          return null;
+        }
+
+        element = element.variable;
+      }
+
+      // element is null if there's nothing really to do for this node. Example: `void`
+      // TODO: One weird issue found: named parameters of external symbols were element.source
+      //       EX: `color(path, front: Styles.YELLOW);` where `color` comes from the chalk-dart package
+      if (element?.source == null) return null;
+
+      return element;
+    }
+
+    display('WARN: Received unknown ast node type in elementFor: '
+        '${node.runtimeType} ($node). Skipping');
+
+    return null;
+  }
 
   /// For a given `Element` returns the scip symbol form.
   ///
@@ -47,7 +148,7 @@ class SymbolGenerator {
     return [
       'scip-dart',
       _getPackage(element),
-      _getDescriptor(element),
+      descriptor,
     ].join(' ');
   }
 
@@ -187,10 +288,18 @@ class SymbolGenerator {
 
     if (element is PropertyAccessorElement) {
       final parentName = element.enclosingElement.name;
+
+      var prefix = '';
+      if (element.isGetter) {
+        prefix = '<get>';
+      } else if (element.isSetter) {
+        prefix = '<set>';
+      }
+
       return [
         '$namespace/',
         if (parentName != null) '$parentName#',
-        '${element.name}.'
+        '`$prefix${element.variable.name}`.',
       ].join();
     }
 

@@ -1,13 +1,23 @@
 name: Tests
 
 on:
+  pull_request:
   push:
     branches:
       - master
-  pull_request:
 
+permissions:
+  pull-requests: write
+  contents: write
+  id-token: write
 
 jobs:
+  checks:
+    uses: Workiva/gha-dart-oss/.github/workflows/checks.yaml@v0.1.7
+
+  build:
+    uses: Workiva/gha-dart-oss/.github/workflows/build.yaml@v0.1.7
+
   snapshots:
     runs-on: ubuntu-latest
     strategy:
@@ -15,7 +25,7 @@ jobs:
       matrix:
         dir: [basic-project, diagnostics, dart3-features]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install scip cli
         run: |
           bash -c 'curl -L "https://github.com/sourcegraph/scip/releases/download/v0.3.3/scip-linux-amd64.tar.gz"' | tar xzf - scip
@@ -33,7 +43,7 @@ jobs:
 
       - name: Snapshots Diff Check
         run: |
-          dart run scip_dart ./snapshots/input/${{ matrix.dir }}
+          dart run scip_dart ./snapshots/input/${{ matrix.dir }} --index-pubspec
           ./scip snapshot --to ./snapshots/output/${{matrix.dir}}
 
           if [[ -z "$(git status --porcelain ./snapshots/output/${{ matrix.dir }})" ]];
@@ -51,29 +61,30 @@ jobs:
   consumer:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        repo: [
-          "Workiva/over_react",
-          "Workiva/w_module",
-          "rrousselGit/provider",
-          "dart-lang/args",
+        consumer: [
+          { repo: "Workiva/over_react" },
+          { repo: "Workiva/w_module" },
+          { repo: "dart-lang/args", ref: "v2.4.2" } # master requires dart 3
         ]
 
     steps:
       # Setup scip-dart
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: 2.19.6
       - run: dart pub get
 
       # Setup repo to run on
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
-          repo: ${{ matrix.repo }}
-          path: ${{ matrix.repo }}
+          repository: ${{ matrix.consumer.repo }}
+          path: ${{ matrix.consumer.repo}}
+          ref: ${{ matrix.consumer.ref || 'master' }}
       - run: dart pub get
-        working-directory: ${{ matrix.repo }}
+        working-directory: ${{ matrix.consumer.repo }}
 
       - run: |
-          dart run scip_dart ./${{ matrix.repo }} || exit 1
+          dart run scip_dart ./${{ matrix.consumer.repo }} || exit 1
