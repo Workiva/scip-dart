@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR=$(realpath "$(dirname "$0")")
+
 PROJECTS=(
     basic-project
     dart3-features
@@ -7,6 +9,8 @@ PROJECTS=(
 )
 
 for project in "${PROJECTS[@]}"; do
-    dart run scip_dart "./snapshots/input/$project" --index-pubspec
-    scip snapshot --to "./snapshots/output/$project/"
+    pushd "./snapshots/input/$project" > /dev/null || exit
+    dart run "$SCRIPT_DIR/../bin/scip_dart.dart" --index-pubspec
+    scip snapshot --to "../output/$project/"
+    popd > /dev/null || exit
 done
