@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.2
+- Fixed a few minor bugs found in pubspec.yaml indexing (skips publish_to: none pubspecs, and considers "version" optional)
+- Updates version constraints to support running on dart 3 
+
 ## 1.6.1
 - Added a default disabled flag for indexing pubspec.yaml files `--index-pubspec`. 
 
