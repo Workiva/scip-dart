@@ -20,6 +20,14 @@ jobs:
 
   snapshots:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        dir: 
+          - path: basic-project
+          - path: diagnostics
+          - path: dart3-features
+            sdk: 3.7.2
     steps:
       - uses: actions/checkout@v4
       - name: Install scip cli
@@ -29,37 +37,30 @@ jobs:
 
       - uses: dart-lang/setup-dart@v1
         with:
-          # use a fixed version number so changes to 'stable', dont break snapshot diffs (language version is used in the scip symbol)
-          sdk: 2.19.6
-      - name: dart pub get scip-dart package
+          sdk: ${{ matrix.dir.sdk != null && matrix.dir.sdk || '2.19.6' }}
+      - name: pub get scip-dart package
         run: dart pub get
 
-      - name: dart pub get basic-project directory
+      - name: pub get
+        working-directory: ./snapshots/input/${{ matrix.dir.path }}
         run: dart pub get
-        working-directory: ./snapshots/input/basic-project
-
-      - name: dart pub get diagnostics directory
-        run: dart pub get
-        working-directory: ./snapshots/input/diagnostics
 
       - name: Snapshots Diff Check
         run: |
-          dart run scip_dart ./snapshots/input/basic-project --index-pubspec
-          ./scip snapshot --to ./snapshots/output/basic-project
+          dart run scip_dart ./snapshots/input/${{ matrix.dir.path }} --index-pubspec
+          ./scip snapshot --to ./snapshots/output/${{ matrix.dir.path }}
 
-          dart run scip_dart ./snapshots/input/diagnostics --index-pubspec
-          ./scip snapshot --to ./snapshots/output/diagnostics
-
-          if [[ -z "$(git status --porcelain ./snapshots/output)" ]];
+          if [[ -z "$(git status --porcelain ./snapshots/output/${{ matrix.dir.path }})" ]];
           then
             echo "No changes to snapshot files"
           else
             echo
-            echo "Snapshot diff detected differences, run 'make gen-snaps' to re-generate snapshots"
-            git status --short ./snapshots/output
+            echo "Snapshot diff detected differences, run 'make regen-snapshots' to re-generate snapshots"
+            git --no-pager diff ./snapshots/output/${{ matrix.dir.path }}
             echo
             exit 1
           fi
+
 
   consumer:
     runs-on: ubuntu-latest

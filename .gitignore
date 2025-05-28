@@ -3,3 +3,6 @@
 index.scip
 snapshots/input/staging-project/lib/**
 snapshots/output/staging-project/lib/**
+
+# Temporary while we support both dart 2 and 3
+pubspec.lock

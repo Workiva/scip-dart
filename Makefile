@@ -5,6 +5,12 @@ regen-snapshots:
 	dart run scip_dart ./snapshots/input/diagnostics --index-pubspec
 	scip snapshot --to ./snapshots/output/diagnostics
 
+	asdf set dart 3.7.2
+	dart pub upgrade
+	dart run scip_dart ./snapshots/input/dart3-features --index-pubspec
+	scip snapshot --to ./snapshots/output/dart3-features
+	asdf set dart 2.19.6
+
 run:
 	dart run scip_dart ./snapshots/input/staging-project --verbose
 
