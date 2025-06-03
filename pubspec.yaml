@@ -14,7 +14,7 @@ dependencies:
   args: ^2.4.0
   package_config: ^2.1.0
   path: ^1.8.3
-  protobuf: ^3.1.0
+  protobuf: ^4.1.0
   pubspec_parse: ^1.2.1
   pubspec_lock_parse: ^2.2.0
   collection: ^1.18.0
