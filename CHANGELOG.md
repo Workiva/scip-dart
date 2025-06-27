@@ -1,8 +1,5 @@
 # Changelog
 
-# Unreleased
-- New change here
-
 ## 1.6.2
 - Fixed a few minor bugs found in pubspec.yaml indexing (skips publish_to: none pubspecs, and considers "version" optional)
 - Updates version constraints to support running on dart 3 
