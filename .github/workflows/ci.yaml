@@ -13,10 +13,10 @@ permissions:
 
 jobs:
   checks:
-    uses: Workiva/gha-dart-oss/.github/workflows/checks.yaml@v0.1.11
+    uses: Workiva/gha-dart-oss/.github/workflows/checks.yaml@v0.1.12
 
   build:
-    uses: Workiva/gha-dart-oss/.github/workflows/build.yaml@v0.1.11
+    uses: Workiva/gha-dart-oss/.github/workflows/build.yaml@v0.1.12
 
   snapshots:
     runs-on: ubuntu-latest
