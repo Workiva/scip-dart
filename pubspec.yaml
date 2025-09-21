@@ -1,10 +1,10 @@
 name: scip_dart
-version: 1.5.1
+version: 1.6.2
 description: generates scip bindings for dart files
 repository: https://github.com/Workiva/scip-dart
 
 environment:
-  sdk: ">=2.19.0 <3.0.0"
+  sdk: ">=2.19.6 <4.0.0"
 
 executables:
   scip_dart:
@@ -16,10 +16,11 @@ dependencies:
   path: ^1.8.3
   protobuf: ^3.1.0
   pubspec_parse: ^1.2.1
+  pubspec_lock_parse: ^2.2.0
+  collection: ^1.18.0
 
 dev_dependencies:
   chalk: ^1.2.1
-  dart_dev: ^4.2.0
-  dependency_validator: ^4.1.0
+  dart_dev: ^4.2.3
   glob: ^2.1.1
-  workiva_analysis_options: ^1.4.1
+  workiva_analysis_options: ^1.4.3

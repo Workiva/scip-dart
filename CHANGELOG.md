@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.6.2
+- Fixed a few minor bugs found in pubspec.yaml indexing (skips publish_to: none pubspecs, and considers "version" optional)
+- Updates version constraints to support running on dart 3 
+
+## 1.6.1
+- Added a default disabled flag for indexing pubspec.yaml files `--index-pubspec`. 
+
+## 1.6.0
+- Added `--output` flag to configure output location of the generated index file 
+
+## 1.5.4
+- Fixed a bug where constructor references weren't correctly indexed
+
+## 1.5.3
+- Dependency bumps
+
+## 1.5.2
+- Improved support for getters/setters, utilizing `<get>`/`<set>` keywords within indexed symbols
+- Fixed relationship indexing for fields, getters, and setters
+
 ## 1.5.1
 - Adds support for missing SymbolInformation.kind on extension, mixin symbols
 

@@ -1,9 +1,15 @@
 regen-snapshots:
-	dart run scip_dart ./snapshots/input/basic-project
+	dart run scip_dart ./snapshots/input/basic-project --index-pubspec
 	scip snapshot --to ./snapshots/output/basic-project
 
-	dart run scip_dart ./snapshots/input/diagnostics
+	dart run scip_dart ./snapshots/input/diagnostics --index-pubspec
 	scip snapshot --to ./snapshots/output/diagnostics
+
+	asdf set dart 3.7.2
+	dart pub upgrade
+	dart run scip_dart ./snapshots/input/dart3-features --index-pubspec
+	scip snapshot --to ./snapshots/output/dart3-features
+	asdf set dart 2.19.6
 
 run:
 	dart run scip_dart ./snapshots/input/staging-project --verbose
@@ -27,3 +33,7 @@ print:
 test:
 	dart run scip_dart ./test
 	cd ~/go/src/github.com/sourcegraph/scip && go run ./cmd/scip test --from=/Users/matthewnitschke/Repos/Workiva/scip-dart/index.scip /Users/matthewnitschke/Repos/Workiva/scip-dart/test
+	scip print ./index.scip
+
+print-ast:
+	dart run ./tool/ast_printer.dart ./snapshots/input/staging-project

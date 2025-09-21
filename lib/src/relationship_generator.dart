@@ -27,30 +27,42 @@ List<Relationship>? relationshipsFor(
 
   // Since mixins do not support inheritance, we only care about
   // methods that exist on classes
-  if (node is MethodDeclaration && node.parent is ClassDeclaration) {
-    final parentNode = node.parent as ClassDeclaration?;
+  if (element is MethodElement ||
+      element is FieldElement ||
+      element is PropertyAccessorElement) {
+    final parentNode = node.thisOrAncestorOfType<ClassDeclaration>();
     final parentElement = parentNode?.declaredElement;
 
     // this shouldn't happen, but if the parent element happens to be
     // null, just fail fast
     if (parentElement == null) return null;
 
-    // retrieve all of the methods and accessors of every parent type that
-    // has the same name of [node]. These are the elements that this [node]
-    // are overriding
-    final referencingElements = parentElement.allSupertypes
-        .map((type) => [...type.methods, ...type.accessors])
-        .expand((type) => type)
-        .where((type) => type.name == node.name.toString());
-
-    if (referencingElements.isNotEmpty) {
-      return referencingElements
-          .map((type) => Relationship(
-              symbol: symbolGenerator.symbolFor(type),
-              isImplementation: true,
-              isReference: true))
-          .toList();
+    late final Iterable<Element> referencingElements;
+    if (element is MethodElement) {
+      referencingElements = parentElement.allSupertypes
+          .expand((type) => type.methods)
+          .where((type) => type.name == element.name);
+    } else if (element is FieldElement) {
+      referencingElements = parentElement.allSupertypes
+          .expand((type) => type.accessors)
+          .map((acc) => acc.variable)
+          .where((variable) => variable.name == element.name)
+          .toSet(); // remove any duplicates caused from synthetic getters/setters
     }
+    if (element is PropertyAccessorElement) {
+      referencingElements = parentElement.allSupertypes
+          .expand((type) => type.accessors)
+          .where((acc) => acc.isSetter == element.isSetter)
+          .where((acc) => acc.isGetter == element.isGetter)
+          .where((acc) => acc.variable.name == element.variable.name);
+    }
+
+    return referencingElements
+        .map((type) => Relationship(
+            symbol: symbolGenerator.symbolFor(type),
+            isImplementation: true,
+            isReference: true))
+        .toList();
   }
 
   return null;
