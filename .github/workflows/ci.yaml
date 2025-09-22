@@ -29,7 +29,7 @@ jobs:
 
       - uses: ./.github/actions/setup-scip-cli
 
-      - run: make gen-test test p
+      - run: make gen-test test
 
   snapshots:
     runs-on: ubuntu-latest
@@ -58,7 +58,7 @@ jobs:
       - name: Snapshots Diff Check
         run: |
           dart run scip_dart ./snapshots/input/${{ matrix.dir.path }} --index-pubspec
-          ./scip snapshot --to ./snapshots/output/${{ matrix.dir.path }}
+          scip snapshot --to ./snapshots/output/${{ matrix.dir.path }}
 
           if [[ -z "$(git status --porcelain ./snapshots/output/${{ matrix.dir.path }})" ]];
           then
