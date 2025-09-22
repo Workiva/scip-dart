@@ -34,8 +34,7 @@ gen-test:
 
 .PHONY: test
 test:
- 	scip test ./test
-# 	~/go/src/github.com/sourcegraph/scip/scip test ./test
+	scip test ./test
 
 print-ast:
 	dart run ./tool/ast_printer.dart ./snapshots/input/staging-project
