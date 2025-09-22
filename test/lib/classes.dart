@@ -15,3 +15,6 @@ class ComplexClass
   implements CClass, BClass {}
 //           ^^^^^^ reference scip-dart pub scip_dart_test . lib/`classes.dart`/CClass#
 //                   ^^^^^^ reference scip-dart pub scip_dart_test . lib/`classes.dart`/BClass#
+
+void fn(ComplexClass c) {}
+//      ^^^^^^^^^^^^ reference scip-dart pub scip_dart_test . lib/`classes.dart`/ComplexClass# 

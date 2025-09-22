@@ -18,6 +18,16 @@ jobs:
   build:
     uses: Workiva/gha-dart-oss/.github/workflows/build.yaml@v0.1.12
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 2.19.6
+      - run: dart pub get
+      - run: make gen-test test
+
   snapshots:
     runs-on: ubuntu-latest
     strategy:
@@ -60,7 +70,6 @@ jobs:
             echo
             exit 1
           fi
-
 
   consumer:
     runs-on: ubuntu-latest

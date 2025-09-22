@@ -29,11 +29,12 @@ gen-proto:
 print:
 	scip print ./index.scip
 
+gen-test:
+	dart ./bin/scip_dart.dart ./test
+	
 .PHONY: test
 test:
-	dart run scip_dart ./test
-	cd ~/go/src/github.com/sourcegraph/scip && go run ./cmd/scip test --from=/Users/matthewnitschke/Repos/Workiva/scip-dart/index.scip /Users/matthewnitschke/Repos/Workiva/scip-dart/test
-	scip print ./index.scip
+	~/go/src/github.com/sourcegraph/scip/scip test ./test
 
 print-ast:
 	dart run ./tool/ast_printer.dart ./snapshots/input/staging-project
