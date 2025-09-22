@@ -1,0 +1,26 @@
+name: Setup SCIP CLI
+description: Sets up the SCIP cli
+
+inputs:
+  version:
+    description: The version of the scip cli to setup
+    default: 0.5.1
+
+runs:
+  using: composite
+  steps:
+    # scip is very small, doesn't make sense to try and cache it
+    - name: Install SCIP CLI
+      shell: bash
+      run: |
+        bash -c 'curl -L "https://github.com/sourcegraph/scip/releases/download/v${{ inputs.version }}/scip-linux-amd64.tar.gz"' | tar xzf - scip
+
+        ./scip --version
+
+        RUNNER_TOOL_CACHE="/opt/hostedtoolcache"
+        mkdir -p "$RUNNER_TOOL_CACHE/scip/${{ inputs.version }}/x64"
+        mv ./scip "$RUNNER_TOOL_CACHE/scip/${{ inputs.version }}/x64"
+
+    - name: Add scip to PATH
+      shell: bash
+      run: echo "/opt/hostedtoolcache/scip/${{ inputs.version }}/x64" >> $GITHUB_PATH
