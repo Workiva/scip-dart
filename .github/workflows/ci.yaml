@@ -29,7 +29,10 @@ jobs:
 
       - uses: ./.github/actions/setup-scip-cli
 
-      - run: make gen-test test
+      - working-directory: test
+        run: |
+          dart ../bin/scip_dart.dart ./
+          scip test ./
 
   snapshots:
     runs-on: ubuntu-latest
