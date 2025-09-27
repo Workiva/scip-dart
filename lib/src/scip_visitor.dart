@@ -135,6 +135,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
         range: _lineInfo.getRange(offset, length),
         symbol: symbol,
         diagnostics: meta.diagnostics,
+        enclosingRange: _lineInfo.getRange(node.parent!.offset, node.parent!.length)
       ));
 
       if (!element.source!.fullName.startsWith(_projectRoot)) {
@@ -179,6 +180,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
       symbol: symbol,
       symbolRoles: SymbolRole.Definition.value,
       diagnostics: meta.diagnostics,
+      enclosingRange: _lineInfo.getRange(node.parent!.offset, node.parent!.length)
     ));
   }
 }
