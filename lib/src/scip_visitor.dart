@@ -132,11 +132,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
     if (symbol != null) {
       final meta = getSymbolMetadata(element, offset, _analysisErrors);
       occurrences.add(Occurrence(
-          range: _lineInfo.getRange(offset, length),
-          symbol: symbol,
-          diagnostics: meta.diagnostics,
-          enclosingRange:
-              _lineInfo.getRange(node.parent!.offset, node.parent!.length)));
+        range: _lineInfo.getRange(offset, length),
+        symbol: symbol,
+        diagnostics: meta.diagnostics,
+      ));
 
       if (!element.source!.fullName.startsWith(_projectRoot)) {
         if (!globalExternalSymbols.any(
@@ -144,10 +143,11 @@ class ScipVisitor extends GeneralizingAstVisitor {
         )) {
           final meta = getSymbolMetadata(element, offset, _analysisErrors);
           globalExternalSymbols.add(SymbolInformation(
-              symbol: symbol,
-              documentation: meta.documentation,
-              signatureDocumentation: meta.signatureDocumentation,
-              kind: symbolKindFor(element)));
+            symbol: symbol,
+            documentation: meta.documentation,
+            signatureDocumentation: meta.signatureDocumentation,
+            kind: symbolKindFor(element),
+          ));
         }
       }
     }
@@ -176,11 +176,11 @@ class ScipVisitor extends GeneralizingAstVisitor {
     ));
 
     occurrences.add(Occurrence(
-        range: _lineInfo.getRange(element.nameOffset, element.nameLength),
-        symbol: symbol,
-        symbolRoles: SymbolRole.Definition.value,
-        diagnostics: meta.diagnostics,
-        enclosingRange:
-            _lineInfo.getRange(node.parent!.offset, node.parent!.length)));
+      range: _lineInfo.getRange(element.nameOffset, element.nameLength),
+      symbol: symbol,
+      symbolRoles: SymbolRole.Definition.value,
+      diagnostics: meta.diagnostics,
+      enclosingRange: _lineInfo.getRange(node.offset, node.end),
+    ));
   }
 }
