@@ -34,12 +34,24 @@ void display(String input, {DisplayLevel level = DisplayLevel.warn}) {
 
 extension LineInfoExtension on LineInfo {
   List<int> getRange(int offset, int nameLength) {
-    final loc = getLocation(offset);
-    return [
-      loc.lineNumber - 1,
-      loc.columnNumber - 1,
-      loc.columnNumber - 1 + nameLength
+    final start = getLocation(offset);
+    final end = getLocation(offset + nameLength);
+
+    final res = [
+      start.lineNumber - 1,
+      start.columnNumber - 1,
+      end.lineNumber - 1,
+      end.columnNumber - 1,
     ];
+
+    // if the range starts and ends on the same line, only return
+    // 3 elements, where the first is the line number, and the others
+    // are startCol and endCol. This is apart of the scip spec
+    if (res[0] == res[2]) {
+      res.removeAt(2);
+    }
+
+    return res;
   }
 }
 
