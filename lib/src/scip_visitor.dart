@@ -180,7 +180,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
       symbol: symbol,
       symbolRoles: SymbolRole.Definition.value,
       diagnostics: meta.diagnostics,
-      enclosingRange: _lineInfo.getRange(node.offset, node.end),
+      enclosingRange: _lineInfo.getRange(node.offset, node.length),
     ));
   }
 }

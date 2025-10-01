@@ -33,9 +33,9 @@ void display(String input, {DisplayLevel level = DisplayLevel.warn}) {
 }
 
 extension LineInfoExtension on LineInfo {
-  List<int> getRange(int offset, int nameLength) {
+  List<int> getRange(int offset, int length) {
     final start = getLocation(offset);
-    final end = getLocation(offset + nameLength);
+    final end = getLocation(offset + length);
 
     final res = [
       start.lineNumber - 1,
