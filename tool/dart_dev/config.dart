@@ -7,5 +7,6 @@ final config = {
     ..exclude = [
       Glob('snapshots/**'),
       Glob('lib/src/gen/*.dart'),
+      Glob('test/**')
     ],
 };
