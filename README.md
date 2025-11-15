@@ -1,3 +1,9 @@
+[![Slack Channel](https://img.shields.io/badge/Support_Channel-Slack-purple)](https://slack.com/app_redirect?channel=support-frontend-dx)
+[![Maintainer](https://img.shields.io/badge/maintainer-FEDX-silver)](https://wiki.atl.workiva.net/display/FEF/Frontend+Dev+Experience)
+[![Documentation](https://img.shields.io/badge/Additional_Documentation-blue)](https://frontend.workiva.dev)
+[![CI](https://github.com/Workiva/scip-dart/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/Workiva/scip-dart/actions/workflows/ci.yaml)
+[![codecov](https://codecov.io/gh/Workiva/scip-dart/branch/master/graph/badge.svg?token=7S7VXS0TSJ)](https://codecov.io/gh/Workiva/scip-dart)
+
 # scip-dart
 
 Implementation of a [scip](https://github.com/sourcegraph/scip) indexer for [dart](https://github.com/dart-lang)
