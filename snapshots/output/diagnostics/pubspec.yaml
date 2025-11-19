@@ -1,6 +1,6 @@
   name: dart_test_diagnostics
-// definition scip-dart pub dart_test_diagnostics 1.0.0 `pubspec.yaml`/
   version: 1.0.0
+  publish_to: none
   
   environment:
     sdk: '>=2.19.0 <3.0.0'
