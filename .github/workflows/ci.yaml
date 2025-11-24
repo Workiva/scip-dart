@@ -13,10 +13,10 @@ permissions:
 
 jobs:
   checks:
-    uses: Workiva/gha-dart-oss/.github/workflows/checks.yaml@v0.1.13
+    uses: Workiva/gha-dart-oss/.github/workflows/checks.yaml@v0.1.14
 
   build:
-    uses: Workiva/gha-dart-oss/.github/workflows/build.yaml@v0.1.13
+    uses: Workiva/gha-dart-oss/.github/workflows/build.yaml@v0.1.14
 
   snapshots:
     runs-on: ubuntu-latest
@@ -29,7 +29,7 @@ jobs:
           - path: dart3-features
             sdk: 3.7.2
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Install scip cli
         run: |
           bash -c 'curl -L "https://github.com/sourcegraph/scip/releases/download/v0.3.3/scip-linux-amd64.tar.gz"' | tar xzf - scip
@@ -75,14 +75,14 @@ jobs:
 
     steps:
       # Setup scip-dart
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: dart-lang/setup-dart@v1
         with:
           sdk: 2.19.6
       - run: dart pub get
 
       # Setup repo to run on
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           repository: ${{ matrix.consumer.repo }}
           path: ${{ matrix.consumer.repo}}
