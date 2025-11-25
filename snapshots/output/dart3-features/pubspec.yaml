@@ -1,6 +1,6 @@
   name: dart3_features
-// definition scip-dart pub dart3_features 1.0.0 `pubspec.yaml`/
   version: 1.0.0
+  publish_to: none
   
   environment:
     sdk: ">=3.0.0 <4.0.0"
