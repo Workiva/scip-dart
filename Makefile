@@ -29,5 +29,12 @@ gen-proto:
 print:
 	scip print ./index.scip
 
+gen-test:
+	dart ./bin/scip_dart.dart ./test
+
+.PHONY: test
+test:
+	scip test ./test
+
 print-ast:
 	dart run ./tool/ast_printer.dart ./snapshots/input/staging-project

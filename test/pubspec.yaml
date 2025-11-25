@@ -1,0 +1,8 @@
+name: scip_dart_test
+version: 1.0.0
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+
+dependencies:
+  test: ^1.24.3
