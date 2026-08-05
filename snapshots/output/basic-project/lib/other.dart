@@ -5,16 +5,16 @@
   class Foo {
 //      ^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#
     int _far;
-//  ^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`int.dart`/int#
+//  ^^^ reference scip-dart pub dart:core 3.12.0 dart:core/`int.dart`/int#
 //      ^^^^ definition local 0
     bool value;
-//  ^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`bool.dart`/bool#
+//  ^^^^ reference scip-dart pub dart:core 3.12.0 dart:core/`bool.dart`/bool#
 //       ^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value.
     String value2;
-//  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
+//  ^^^^^^ reference scip-dart pub dart:core 3.12.0 dart:core/`string.dart`/String#
 //         ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value2.
     double? value3;
-//  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`double.dart`/double#
+//  ^^^^^^ reference scip-dart pub dart:core 3.12.0 dart:core/`double.dart`/double#
 //          ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#value3.
     Foo(
 //  ^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().
@@ -31,7 +31,7 @@
 //         ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Foo#`<constructor>`().(value3)
     }) {
       print(_far);
-//    ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
+//    ^^^^^ reference scip-dart pub dart:core 3.12.0 dart:core/`print.dart`/print().
 //          ^^^^ reference local 0
     }
   }
@@ -39,7 +39,7 @@
   class Bar {
 //      ^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Bar#
     String _someValue;
-//  ^^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`string.dart`/String#
+//  ^^^^^^ reference scip-dart pub dart:core 3.12.0 dart:core/`string.dart`/String#
 //         ^^^^^^^^^^ definition local 1
     Bar(this._someValue);
 //  ^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/Bar#`<constructor>`().
@@ -50,7 +50,7 @@
       _someValue = 'asdf';
 //    ^^^^^^^^^^ reference local 1
       print(_someValue);
-//    ^^^^^ reference scip-dart pub dart:core 2.19.0 dart:core/`print.dart`/print().
+//    ^^^^^ reference scip-dart pub dart:core 3.12.0 dart:core/`print.dart`/print().
 //          ^^^^^^^^^^ reference local 1
     }
   }
@@ -59,7 +59,7 @@
 //     ^^^^ definition scip-dart pub dart_test 1.0.0 lib/`other.dart`/main().
     more.loadLibrary().then((_) => {
 //  ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/more.
-//                     ^^^^ reference scip-dart pub dart:async 2.19.0 dart:async/`future.dart`/Future#then().
+//                     ^^^^ reference scip-dart pub dart:async 3.12.0 dart:async/`future.dart`/Future#then().
 //                           ^ definition local 2
       Bar('a').someMethod.call()
 //    ^^^ reference scip-dart pub dart_test 1.0.0 lib/`other.dart`/Bar#`<constructor>`().
