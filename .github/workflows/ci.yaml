@@ -27,7 +27,7 @@ jobs:
           - path: basic-project
           - path: diagnostics
           - path: dart3-features
-            sdk: 3.7.2
+            sdk: 3.12.2
     steps:
       - uses: actions/checkout@v6
       - name: Install scip cli
@@ -37,7 +37,7 @@ jobs:
 
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: ${{ matrix.dir.sdk != null && matrix.dir.sdk || '2.19.6' }}
+          sdk: ${{ matrix.dir.sdk != null && matrix.dir.sdk || '3.12.2' }}
       - name: pub get scip-dart package
         run: dart pub get
 
@@ -78,7 +78,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: 2.19.6
+          sdk: 3.12.2
       - run: dart pub get
 
       # Setup repo to run on
