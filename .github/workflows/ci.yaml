@@ -14,9 +14,14 @@ permissions:
 jobs:
   checks:
     uses: Workiva/gha-dart-oss/.github/workflows/checks.yaml@v0.1.14
+    with:
+      sdk: 3.12.2
+      format-check: false
 
   build:
     uses: Workiva/gha-dart-oss/.github/workflows/build.yaml@v0.1.14
+    with:
+      sdk: 3.12.2
 
   snapshots:
     runs-on: ubuntu-latest
