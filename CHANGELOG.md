@@ -2,6 +2,7 @@
 
 ## Unreleased
 - Added support for `enclosing_range` on occurrences definitions
+- Upgraded to Dart 3.12.2
 
 ## 1.6.2
 - Fixed a few minor bugs found in pubspec.yaml indexing (skips publish_to: none pubspecs, and considers "version" optional)
