@@ -34,11 +34,13 @@ Document indexPubspec({
   if (pubspec.publishTo != 'none') {
     final info = _buildFileSymbol(pubspec);
     symbols.add(info);
-    occurrences.add(Occurrence(
-      symbol: info.symbol,
-      symbolRoles: SymbolRole.Definition.value,
-      range: [0, 0, 0],
-    ));
+    occurrences.add(
+      Occurrence(
+        symbol: info.symbol,
+        symbolRoles: SymbolRole.Definition.value,
+        range: [0, 0, 0],
+      ),
+    );
   }
 
   final deps = {
@@ -50,10 +52,12 @@ Document indexPubspec({
     for (final dep in deps[kind]!.entries) {
       final info = _buildSymbol(dep.key, pubspecLock);
       symbols.add(info);
-      occurrences.add(Occurrence(
-        symbol: info.symbol,
-        range: pubspecLineInfo.getDependencyRange(pubspecStr, dep.key, kind),
-      ));
+      occurrences.add(
+        Occurrence(
+          symbol: info.symbol,
+          range: pubspecLineInfo.getDependencyRange(pubspecStr, dep.key, kind),
+        ),
+      );
     }
   }
 
@@ -80,10 +84,7 @@ SymbolInformation _buildFileSymbol(Pubspec pubspec) {
         .UnspecifiedKind, // TODO: Add SymbolInformation_Kind.Dependency
     signatureDocumentation: Document(
       language: Language.YAML.name,
-      text: [
-        'name: ${pubspec.name}',
-        'version: ${pubspec.version}',
-      ].join('\n'),
+      text: ['name: ${pubspec.name}', 'version: ${pubspec.version}'].join('\n'),
     ),
   );
 }
@@ -92,7 +93,8 @@ SymbolInformation _buildSymbol(String depName, PubspecLock lock) {
   final depVersion = lock.packages[depName]?.version.toString();
   if (depVersion == null) {
     throw Exception(
-        'Unable to find ${depName} in pubspec.lock. Have you ran pub get?');
+      'Unable to find ${depName} in pubspec.lock. Have you ran pub get?',
+    );
   }
 
   final symbol = [
@@ -110,10 +112,7 @@ SymbolInformation _buildSymbol(String depName, PubspecLock lock) {
         .UnspecifiedKind, // TODO: Add SymbolInformation_Kind.Dependency and SymbolInformation_Kind.DevDependency
     signatureDocumentation: Document(
       language: Language.YAML.name,
-      text: [
-        'name: $depName',
-        'version: $depVersion',
-      ].join('\n'),
+      text: ['name: $depName', 'version: $depVersion'].join('\n'),
     ),
   );
 }
@@ -129,12 +128,18 @@ enum DependencyKind {
 
 extension _PubspecLineInfo on LineInfo {
   List<int> getDependencyRange(
-      String pubspecStr, String name, DependencyKind kind) {
-    final section =
-        getYamlSection(pubspecStr, RegExp(kind.matcher, multiLine: true));
+    String pubspecStr,
+    String name,
+    DependencyKind kind,
+  ) {
+    final section = getYamlSection(
+      pubspecStr,
+      RegExp(kind.matcher, multiLine: true),
+    );
     if (section == null) {
       throw Exception(
-          'Unable to find section "${kind.matcher}" in pubspec.yaml');
+        'Unable to find section "${kind.matcher}" in pubspec.yaml',
+      );
     }
     final sectionStart = pubspecStr.indexOf(section);
     final depStart = section.indexOf('  ${name}:') + 2;

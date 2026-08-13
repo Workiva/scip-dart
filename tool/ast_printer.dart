@@ -26,10 +26,7 @@ Future<void> main(List<String> args) async {
       .toList();
 
   final collection = AnalysisContextCollection(
-    includedPaths: [
-      ...allPackageRoots,
-      dirPath,
-    ],
+    includedPaths: [...allPackageRoots, dirPath],
   );
 
   final context = collection.contextFor(dirPath);
@@ -55,7 +52,8 @@ class AstPrinter extends GeneralizingAstVisitor {
   void visitNode(AstNode node) {
     final indentStr = List.filled(indent, '    ').join('');
     print(
-        '$indentStr${chalk.green(node.toString())} ${chalk.faint(node.runtimeType.toString())}');
+      '$indentStr${chalk.green(node.toString())} ${chalk.faint(node.runtimeType.toString())}',
+    );
 
     indent++;
     super.visitNode(node);

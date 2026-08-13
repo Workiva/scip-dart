@@ -11,46 +11,48 @@ import 'package:scip_dart/src/pubspec_indexer.dart';
 import 'package:scip_dart/src/version.dart';
 
 Future<void> main(List<String> args) async {
-  final result = (ArgParser()
-        ..addOption(
-          'output',
-          abbr: 'o',
-          defaultsTo: 'index.scip',
-          help:
-              'The output file to write the index to. Use "-" to write to stdout',
-        )
-        ..addFlag(
-          'index-pubspec',
-          defaultsTo: false,
-          help: 'Whether or not to index the pubspec.yaml file',
-        )
-        ..addFlag(
-          'performance',
-          aliases: ['perf'],
-          defaultsTo: false,
-          help: 'Whether or not to output performance metrics during indexing',
-        )
-        ..addFlag(
-          'verbose',
-          abbr: 'v',
-          defaultsTo: false,
-          help: 'Whether or not to display debugging text during indexing',
-        )
-        ..addFlag(
-          'version',
-          defaultsTo: false,
-          help: 'Display the current version of scip-dart',
-        )
-        ..addFlag(
-          'index-relationships',
-          help: 'DEPRECATED, has no effect on executed code',
-        )
-        ..addMultiOption(
-          'path',
-          abbr: 'p',
-          help: 'DEPRECATED, has no effect on executed code',
-        ))
-      .parse(args);
+  final result =
+      (ArgParser()
+            ..addOption(
+              'output',
+              abbr: 'o',
+              defaultsTo: 'index.scip',
+              help:
+                  'The output file to write the index to. Use "-" to write to stdout',
+            )
+            ..addFlag(
+              'index-pubspec',
+              defaultsTo: false,
+              help: 'Whether or not to index the pubspec.yaml file',
+            )
+            ..addFlag(
+              'performance',
+              aliases: ['perf'],
+              defaultsTo: false,
+              help:
+                  'Whether or not to output performance metrics during indexing',
+            )
+            ..addFlag(
+              'verbose',
+              abbr: 'v',
+              defaultsTo: false,
+              help: 'Whether or not to display debugging text during indexing',
+            )
+            ..addFlag(
+              'version',
+              defaultsTo: false,
+              help: 'Display the current version of scip-dart',
+            )
+            ..addFlag(
+              'index-relationships',
+              help: 'DEPRECATED, has no effect on executed code',
+            )
+            ..addMultiOption(
+              'path',
+              abbr: 'p',
+              help: 'DEPRECATED, has no effect on executed code',
+            ))
+          .parse(args);
 
   if (result['version'] as bool) {
     print(scipDartVersion);
@@ -67,8 +69,9 @@ Future<void> main(List<String> args) async {
     );
   }
 
-  final packageRoot =
-      result.rest.isNotEmpty ? result.rest.first : Directory.current.path;
+  final packageRoot = result.rest.isNotEmpty
+      ? result.rest.first
+      : Directory.current.path;
 
   final packageConfig = await findPackageConfig(Directory(packageRoot));
   if (packageConfig == null) {
@@ -90,16 +93,19 @@ Future<void> main(List<String> args) async {
     final pubspecLockFile = File(p.join(packageRoot, 'pubspec.lock'));
     if (!pubspecLockFile.existsSync()) {
       stderr.writeln(
-          'ERROR: Unable to locate pubspec.lock. Have you ran pub get?');
+        'ERROR: Unable to locate pubspec.lock. Have you ran pub get?',
+      );
       exit(1);
     }
     final pubspecLock = PubspecLock.parse(pubspecLockFile.readAsStringSync());
 
-    index.documents.add(indexPubspec(
-      pubspec: pubspec,
-      pubspecStr: pubspecStr,
-      pubspecLock: pubspecLock,
-    ));
+    index.documents.add(
+      indexPubspec(
+        pubspec: pubspec,
+        pubspecStr: pubspecStr,
+        pubspecLock: pubspecLock,
+      ),
+    );
   }
 
   if (result['output'] as String == '-') {

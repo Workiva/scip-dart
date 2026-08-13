@@ -33,8 +33,8 @@ class SymbolGenerator {
       // typedef, or a function as a parameter), we don't want to index it
       // as a definition (nothing is defined, just referenced). Return false
       // and let the [_visitSimpleIdentifier] declare the reference
-      final parentParameter =
-          node.parent?.thisOrAncestorOfType<GenericFunctionType>();
+      final parentParameter = node.parent
+          ?.thisOrAncestorOfType<GenericFunctionType>();
       if (parentParameter != null) return null;
 
       var element = node.declaredElement;
@@ -57,8 +57,8 @@ class SymbolGenerator {
         // ConstructorNames can also include an import PrefixIdentifier: `math.Rectangle()`
         // both 'math' and 'Rectangle' are SimpleIdentifiers. We only want the constructor
         // element for 'Rectangle' in this case
-        final parentPrefixIdentifier =
-            node.thisOrAncestorOfType<PrefixedIdentifier>();
+        final parentPrefixIdentifier = node
+            .thisOrAncestorOfType<PrefixedIdentifier>();
         if (parentPrefixIdentifier?.prefix == node) return element;
 
         // Constructors can be named: `Foo.bar()`, both `Foo` and `bar` are SimpleIdentifiers
@@ -81,7 +81,8 @@ class SymbolGenerator {
         if ([
           FunctionElement.LOAD_LIBRARY_NAME,
           FunctionElement.CALL_METHOD_NAME,
-        ].contains(element.name)) return null;
+        ].contains(element.name))
+          return null;
       }
 
       // [element] for assignment fields is null. If the parent node
@@ -89,8 +90,8 @@ class SymbolGenerator {
       // to an assignment line. In that case, use the read/write element attached
       // to this node instead of the [node]'s element
       if (element == null) {
-        final assignmentExpr =
-            node.thisOrAncestorOfType<CompoundAssignmentExpression>();
+        final assignmentExpr = node
+            .thisOrAncestorOfType<CompoundAssignmentExpression>();
         if (assignmentExpr == null) return null;
 
         element = assignmentExpr.readElement ?? assignmentExpr.writeElement;
@@ -117,8 +118,10 @@ class SymbolGenerator {
       return element;
     }
 
-    display('WARN: Received unknown ast node type in elementFor: '
-        '${node.runtimeType} ($node). Skipping');
+    display(
+      'WARN: Received unknown ast node type in elementFor: '
+      '${node.runtimeType} ($node). Skipping',
+    );
 
     return null;
   }
@@ -145,11 +148,7 @@ class SymbolGenerator {
     if (descriptor == null) return null;
 
     // Symbol Form: '<scheme> ' ' <package> ' ' (<descriptor>)+ | 'local ' <local-id>'
-    return [
-      'scip-dart',
-      _getPackage(element),
-      descriptor,
-    ].join(' ');
+    return ['scip-dart', _getPackage(element), descriptor].join(' ');
   }
 
   String fileSymbolFor(String path) {
@@ -176,21 +175,23 @@ class SymbolGenerator {
     // and name must be handled custom
     if (_isInSdk(element)) {
       final packageName = _pathForSdkElement(element).split('/').first;
-      final packageVersion =
-          element.library!.languageVersion.package.toString();
+      final packageVersion = element.library!.languageVersion.package
+          .toString();
       return 'pub $packageName $packageVersion';
     }
 
-    final package =
-        _packageConfig.packageOf(Uri.file(element.source!.fullName));
+    final package = _packageConfig.packageOf(
+      Uri.file(element.source!.fullName),
+    );
     if (package == null) {
       // this should only happen if the source references a package that is not defined
       // in the pubspec (as a main or transitive dep)
       throw Exception('Unable to find package within packageConfig');
     }
 
-    final packageVersion =
-        PackageVersionCache.versionFor(package.root.toFilePath());
+    final packageVersion = PackageVersionCache.versionFor(
+      package.root.toFilePath(),
+    );
     return 'pub ${package.name} $packageVersion';
   }
 
@@ -231,7 +232,8 @@ class SymbolGenerator {
       final config = _packageConfig.packageOf(Uri.file(sourcePath));
       if (config == null) {
         throw Exception(
-            'Could not find package for $sourcePath. Have you run pub get?');
+          'Could not find package for $sourcePath. Have you run pub get?',
+        );
       }
 
       filePath = sourcePath.substring(config.root.toFilePath().length);
@@ -246,8 +248,9 @@ class SymbolGenerator {
 
     if (element is ConstructorElement) {
       final className = element.enclosingElement.name;
-      final constructorName =
-          element.name.isNotEmpty ? element.name : '`<constructor>`';
+      final constructorName = element.name.isNotEmpty
+          ? element.name
+          : '`<constructor>`';
       return '$namespace/$className#$constructorName().';
     }
 
@@ -342,7 +345,8 @@ class SymbolGenerator {
       return element.enclosingElement!.source!.uri.toString();
     } else {
       throw Exception(
-          'Unable to find path to dart sdk element: ${element.source!.fullName}');
+        'Unable to find path to dart sdk element: ${element.source!.fullName}',
+      );
     }
   }
 }

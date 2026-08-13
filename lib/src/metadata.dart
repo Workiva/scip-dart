@@ -58,15 +58,18 @@ SymbolMetadata getSymbolMetadata(
 
   final diagnostics = analysisErrors
       .where((error) => error.offset == offset)
-      .map((error) => proto.Diagnostic(
-              code: error.errorCode.name,
-              message: error.message,
-              severity: error.severity.toProto(),
-              tags: [
-                if (element.hasDeprecated) proto.DiagnosticTag.Deprecated,
-                if (_unusedHintCodes.contains(error.errorCode.uniqueName))
-                  proto.DiagnosticTag.Unnecessary,
-              ]))
+      .map(
+        (error) => proto.Diagnostic(
+          code: error.errorCode.name,
+          message: error.message,
+          severity: error.severity.toProto(),
+          tags: [
+            if (element.hasDeprecated) proto.DiagnosticTag.Deprecated,
+            if (_unusedHintCodes.contains(error.errorCode.uniqueName))
+              proto.DiagnosticTag.Unnecessary,
+          ],
+        ),
+      )
       .toList();
 
   return SymbolMetadata(
