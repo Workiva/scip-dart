@@ -16,11 +16,7 @@ Future<List<String>> pubspecPathsFor(String rootDirectory) async {
       .toList();
 }
 
-enum DisplayLevel {
-  info,
-  warn,
-  error,
-}
+enum DisplayLevel { info, warn, error }
 
 void display(String input, {DisplayLevel level = DisplayLevel.warn}) {
   if (!Flags.instance.verbose) return;
@@ -72,18 +68,22 @@ String? getYamlSection(
   final sectionKeyIndentSize =
       sectionKeyLine.length - sectionKeyLine.trimLeft().length;
 
-  final inSectionIndent =
-      List.filled(sectionKeyIndentSize + indentSize, ' ').join();
+  final inSectionIndent = List.filled(
+    sectionKeyIndentSize + indentSize,
+    ' ',
+  ).join();
 
   final inSectionLines = sectionAndAfterLines
       .skip(1) // skip the section key line
       .takeWhile(
-          (line) => line.trim().isEmpty || line.startsWith(inSectionIndent))
+        (line) => line.trim().isEmpty || line.startsWith(inSectionIndent),
+      )
       .toList();
 
-  return [if (!skipMatchedLine) sectionKeyLine, ...inSectionLines]
-      .where((line) => line.trim().isNotEmpty)
-      .join('\n');
+  return [
+    if (!skipMatchedLine) sectionKeyLine,
+    ...inSectionLines,
+  ].where((line) => line.trim().isNotEmpty).join('\n');
 }
 
 int getYamlIndentSize(String str) {

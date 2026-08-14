@@ -18,10 +18,12 @@ List<Relationship>? relationshipsFor(
 
     return element.allSupertypes
         .where((type) => !type.isDartCoreObject)
-        .map((type) => Relationship(
-              symbol: symbolGenerator.symbolFor(type.element),
-              isImplementation: true,
-            ))
+        .map(
+          (type) => Relationship(
+            symbol: symbolGenerator.symbolFor(type.element),
+            isImplementation: true,
+          ),
+        )
         .toList();
   }
 
@@ -58,10 +60,13 @@ List<Relationship>? relationshipsFor(
     }
 
     return referencingElements
-        .map((type) => Relationship(
+        .map(
+          (type) => Relationship(
             symbol: symbolGenerator.symbolFor(type),
             isImplementation: true,
-            isReference: true))
+            isReference: true,
+          ),
+        )
         .toList();
   }
 

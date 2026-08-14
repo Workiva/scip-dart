@@ -31,21 +31,18 @@ Future<Index> indexPackage(
       .map((package) => p.normalize(package.packageUriRoot.toFilePath()))
       .toList();
 
-  final nestedPackages = (await pubspecPathsFor(root))
-      .map((path) => p.dirname(path))
-      .where((path) => path != root)
-      .toList();
+  final nestedPackages = (await pubspecPathsFor(
+    root,
+  )).map((path) => p.dirname(path)).where((path) => path != root).toList();
 
   if (Flags.instance.verbose) print('Ignoring subdirectories: $nestedPackages');
 
   final collection = AnalysisContextCollection(
-      includedPaths: [
-        ...allPackageRoots,
-        dirPath,
-      ],
-      // only index dart files of the current dart package, to index nested
-      // packages, scip indexing can simply be re-run for that nested package
-      excludedPaths: nestedPackages);
+    includedPaths: [...allPackageRoots, dirPath],
+    // only index dart files of the current dart package, to index nested
+    // packages, scip indexing can simply be re-run for that nested package
+    excludedPaths: nestedPackages,
+  );
 
   if (Flags.instance.performance) print('Analyzing Source');
   final st = Stopwatch()..start();
@@ -64,8 +61,9 @@ Future<Index> indexPackage(
     print('Parsing Ast');
   }
 
-  final documents =
-      resolvedUnits.whereType<ResolvedUnitResult>().map((resUnit) {
+  final documents = resolvedUnits.whereType<ResolvedUnitResult>().map((
+    resUnit,
+  ) {
     final relativePath = p.relative(resUnit.path, from: dirPath);
 
     final visitor = ScipVisitor(
