@@ -13,12 +13,12 @@ permissions:
 
 jobs:
   checks:
-    uses: Workiva/gha-dart-oss/.github/workflows/checks.yaml@v0.1.14
+    uses: Workiva/gha-dart-oss/.github/workflows/checks.yaml@v3.0.1
     with:
       sdk: 3.12.2
 
   build:
-    uses: Workiva/gha-dart-oss/.github/workflows/build.yaml@v0.1.14
+    uses: Workiva/gha-dart-oss/.github/workflows/build.yaml@v3.0.1
     with:
       sdk: 3.12.2
 
